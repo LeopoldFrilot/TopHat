@@ -51,7 +51,7 @@ public class AIBaseComponent : MonoBehaviour
             {
                 continue;
             }
-            
+            module.GetComponent<AIBaseModule>().Reset();
             Destroy(module);
         }
         
@@ -68,5 +68,15 @@ public class AIBaseComponent : MonoBehaviour
             AIBaseModule aiBaseModule = newModule.GetComponent<AIBaseModule>(); 
             aiBaseModule.Initialize(GetComponent<Player>());
         }
+    }
+
+    public void Activate()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Deactivate()
+    {
+        InstallAIModules(null, null, null);
     }
 }

@@ -9,6 +9,6 @@ public class AIMovementAvoid : AIMovementModule
             return;
         }
 
-        movementRef.RegisterHorizontalInput(otherPlayerRef.transform.position.x < transform.position.x ? 1 : -1);
+        movementRef.RegisterHorizontalInput(GetMovementValueForBackward());
     }
 }

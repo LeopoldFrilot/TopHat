@@ -40,12 +40,16 @@ public class Player : MonoBehaviour
     private int landedBlowsThisGame = 0;
     private int launches = 0;
     private bool AIControlled = false;
+    private AIBaseComponent AIBaseComponent;
+    private InputHandler inputHandler;
 
     private void Awake()
     {
         playerClothing = GetComponent<PlayerClothing>();
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
+        AIBaseComponent = GetComponent<AIBaseComponent>();
+        inputHandler = GetComponent<InputHandler>();
     }
 
     private void Start()
@@ -58,9 +62,8 @@ public class Player : MonoBehaviour
 
         spawnedFists = new List<PlayerFist>{ outSpawnedFist, inSpawnedFist };
 
-        var inputManager = GetComponent<InputHandler>();
-        inputManager.OnActionStarted += OnActionStarted;
-        inputManager.OnActionCancelled += OnActionCancelled;
+        inputHandler.OnActionStarted += OnActionStarted;
+        inputHandler.OnActionCancelled += OnActionCancelled;
         UpdateCLothing();
     }
 
@@ -305,9 +308,18 @@ public class Player : MonoBehaviour
     public void SetAIControlled(bool newValue)
     {
         AIControlled = newValue;
-        GetComponent<AIBaseComponent>().SetActive(AIControlled);
-        var inputManager = GetComponent<InputHandler>();
-        inputManager.SetActive(!AIControlled);
+        if (AIControlled)
+        {
+            AIBaseComponent.SetActive(true);
+            AIBaseComponent.Activate();
+        }
+        else
+        {
+            AIBaseComponent.Deactivate();
+            AIBaseComponent.SetActive(false);
+        }
+        
+        inputHandler.SetActive(!AIControlled);
     }
 
     public void AddLaunches(int i)
@@ -322,6 +334,6 @@ public class Player : MonoBehaviour
 
     public void InstallAIModules(GameObject attackModule, GameObject defenseModule, GameObject movementModule)
     {
-        GetComponent<AIBaseComponent>().InstallAIModules(attackModule, defenseModule, movementModule);
+        AIBaseComponent.InstallAIModules(attackModule, defenseModule, movementModule);
     }
 }

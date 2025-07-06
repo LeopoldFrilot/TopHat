@@ -83,9 +83,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnVerticalInputChanged(float value)
     {
-        if (value > .75f && !IsJumping())
+        if (value > .75f)
         {
-            StartJump();
+            Jump();
         }
     }
 
@@ -110,5 +110,13 @@ public class PlayerMovement : MonoBehaviour
         }
         
         rb2d.AddForce(power, ForceMode2D.Impulse);
+    }
+
+    public void Jump()
+    {
+        if (!IsJumping())
+        {
+            StartJump();
+        }
     }
 }

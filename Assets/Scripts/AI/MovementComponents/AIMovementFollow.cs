@@ -9,6 +9,6 @@ public class AIMovementFollow : AIMovementModule
             return;
         }
 
-        movementRef.RegisterHorizontalInput(otherPlayerRef.transform.position.x < transform.position.x ? -1 : 1);
+        movementRef.RegisterHorizontalInput(GetMovementValueForForward());
     }
 }
