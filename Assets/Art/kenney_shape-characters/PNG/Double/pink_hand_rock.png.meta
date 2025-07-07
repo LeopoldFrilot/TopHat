@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pink_hand_rock_0: -4310142560995189959
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

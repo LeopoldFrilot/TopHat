@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pink_hand_peace_0: 2268453859400721401
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

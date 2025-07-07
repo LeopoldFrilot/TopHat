@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      hand_yellow_peace_0: 429220671746883217
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      purple_body_rhombus_0: -3691281411541021669
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

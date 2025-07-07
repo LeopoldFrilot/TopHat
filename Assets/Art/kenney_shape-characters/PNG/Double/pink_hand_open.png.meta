@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pink_hand_open_0: 4346300551982006346
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

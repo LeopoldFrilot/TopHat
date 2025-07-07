@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pink_body_rhombus_0: -2657550926409546677
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

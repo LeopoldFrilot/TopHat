@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      blue_hand_open_0: -7639361224682347556
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

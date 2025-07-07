@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      facial_part_mouth_happy_0: 2669482779724101711
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

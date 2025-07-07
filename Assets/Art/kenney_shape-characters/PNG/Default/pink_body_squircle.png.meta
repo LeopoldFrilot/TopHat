@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      pink_body_squircle_0: 3840272596804038892
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

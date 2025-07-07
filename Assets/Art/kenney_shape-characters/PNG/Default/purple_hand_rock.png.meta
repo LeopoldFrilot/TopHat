@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      purple_hand_rock_0: -7468733787863423414
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

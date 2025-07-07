@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      blue_hand_peace_0: 2325897815239747658
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

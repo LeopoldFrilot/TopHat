@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      hand_yellow_rock_0: 392264415338052408
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
