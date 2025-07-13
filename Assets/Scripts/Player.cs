@@ -42,14 +42,24 @@ public class Player : MonoBehaviour
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
     private InputHandler inputHandler;
+    private bool initialized = false;
 
     private void Awake()
+    {
+        if (!initialized)
+        {
+            Initialize();
+        }
+    }
+
+    private void Initialize()
     {
         playerClothing = GetComponent<PlayerClothing>();
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
         inputHandler = GetComponent<InputHandler>();
+        initialized = true;
     }
 
     private void Start()
@@ -307,6 +317,10 @@ public class Player : MonoBehaviour
 
     public void SetAIControlled(bool newValue)
     {
+        if (!initialized)
+        {
+            Initialize();
+        }
         AIControlled = newValue;
         if (AIControlled)
         {
