@@ -4,7 +4,9 @@
     "references": [
         "GUID:ab3e916c6c0effd4ea4be8391d5e1dac",
         "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:89666baa089ba2b448388394b7399e50",
+        "FixedPoint"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
