@@ -1,0 +1,9 @@
+{
+  "name": "fixed-point",
+  "version": "0.2.0",
+  "displayName": "Fixed Point",
+  "unity": "2021.2",
+  "description": "Fixed point math.",
+  "author": "nilpunch",
+  "_fingerprint": "8380493e3074dea49b2087420412c3115a70a972"
+}
