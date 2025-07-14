@@ -19,12 +19,12 @@ namespace SharedGame {
 
             var connections = new List<Connections>();
             connections.Add(new Connections() {
-                ip = "127.0.0.1",
+                ip = "192.168.1.231",
                 port = 7000,
                 spectator = false
             });
             connections.Add(new Connections() {
-                ip = "127.0.0.1",
+                ip = "192.168.1.178",
                 port = 7001,
                 spectator = false
             });
@@ -46,6 +46,10 @@ namespace SharedGame {
         }
 
         private void OnDestroy() {
+            if (!gameManager)
+            {
+                return;
+            }
             gameManager.OnRunningChanged -= OnRunningChanged;
             btnConnect.onClick.RemoveListener(OnConnect);
         }

@@ -30,6 +30,8 @@ namespace SharedGame {
         }
 
         private void OnDestroy() {
+            if(!gameManager) 
+                return;
             gameManager.OnStatus -= OnStatus;
             gameManager.OnRunningChanged -= OnRunningChanged;
 
