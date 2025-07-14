@@ -1127,6 +1127,8 @@ MonoBehaviour:
   hitKnockbackPower: 13
   hitEffectPrefab: {fileID: 4209640813906056705, guid: 7b9aa78dcb8bdb24795042246dfa75ba, type: 3}
   blockEffectPrefab: {fileID: 4209640813906056705, guid: a29ac508324d3b542a6a2bc32388fd0f, type: 3}
+  mainBodyAnimator: {fileID: 8261680427056463553}
+  animatorSpeedFloatName: Speed
   grappleSound: {fileID: 8300000, guid: 848784606ebedc94296fcd0461382f8f, type: 3}
 --- !u!114 &9135749140268649174
 MonoBehaviour:

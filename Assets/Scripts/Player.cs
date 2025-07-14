@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum TurnState
 {
@@ -23,6 +24,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float hitKnockbackPower = 10;
     [SerializeField] private GameObject hitEffectPrefab;
     [SerializeField] private GameObject blockEffectPrefab;
+
+    [Header("Animation")] 
+    [SerializeField] private Animator mainBodyAnimator;
+    [SerializeField] private string animatorSpeedFloatName = "speed";
     
     [Header("Audio")]
     [SerializeField] AudioClip grappleSound;
@@ -75,6 +80,13 @@ public class Player : MonoBehaviour
         inputHandler.OnActionStarted += OnActionStarted;
         inputHandler.OnActionCancelled += OnActionCancelled;
         UpdateCLothing();
+    }
+
+    private void Update()
+    {
+        float speed = playerMovement.GetHorizontalSpeed();
+        Debug.Log(speed);
+        mainBodyAnimator.SetFloat(animatorSpeedFloatName, speed);
     }
 
     public bool IsAIControlled()

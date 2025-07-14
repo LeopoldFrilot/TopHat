@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     private Rigidbody2D rb2d;
 
+    private Vector3 lastPosition;
+    private Vector2 currentSpeed;
+
     private void Awake()
     {
         inputHandler = GetComponent<InputHandler>();
@@ -42,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position += new Vector3(GetWalkSpeed() * currentXVal * Time.deltaTime, 0, 0);
         }
+
+        Vector3 difference = transform.position - lastPosition;
+        currentSpeed = new Vector2(difference.x / Time.deltaTime, difference.y / Time.deltaTime);
+        lastPosition = transform.position;
     }
 
     private void FixedUpdate()
@@ -118,5 +125,10 @@ public class PlayerMovement : MonoBehaviour
         {
             StartJump();
         }
+    }
+
+    public float GetHorizontalSpeed()
+    {
+        return Mathf.Abs(currentSpeed.x);
     }
 }
