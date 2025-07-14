@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5489812495742301117}
-  - component: {fileID: 5489812495742301116}
+  - component: {fileID: 8457317799386599268}
   m_Layer: 0
   m_Name: GgpoPerformancePanel
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5489812495742301116
+--- !u!114 &8457317799386599268
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5489812495742301119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edd19b423fc9a79439325310c448634d, type: 3}
+  m_Script: {fileID: 11500000, guid: 27a8cf283fafdb546a2f1e07f9e28a5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  show: 0
   fairnessRect:
     serializedVersion: 2
     x: 0
@@ -62,11 +63,13 @@ MonoBehaviour:
     y: 25
     width: 600
     height: 200
-  toggle: 0
+  drawGraphs: 1
+  drawGraphBackground: 0
+  resetTimers: 0
+  stallHack: 0
   random: 0
   _num_players: 2
   step: 1
   textUpdateMs: 500
-  drawGraphBackground: 0
   pointsToDraw: 500
-  drawGraphs: 1
+  stallFrames: 3
