@@ -1,0 +1,10 @@
+{
+  "name": "unityggpo.sharedgame",
+  "version": "1.0.1",
+  "displayName": "UnityGGPO Shared Game Library",
+  "description": "UnityGGPO Shared Game Library",
+  "dependencies": {
+    "unityggpo.plugin": "1.0.1"
+  },
+  "_fingerprint": "3c49dde3664e5eac9e0acbd38cbe574e9c21fc93"
+}
