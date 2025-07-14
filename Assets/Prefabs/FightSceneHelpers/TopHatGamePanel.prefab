@@ -1036,7 +1036,7 @@ GameObject:
   - component: {fileID: 3951821846882260029}
   - component: {fileID: 8705478549989657499}
   m_Layer: 5
-  m_Name: GamePanel
+  m_Name: TopHatGamePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
