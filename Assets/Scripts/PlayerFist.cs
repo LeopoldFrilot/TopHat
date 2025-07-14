@@ -178,13 +178,13 @@ public class PlayerFist : MonoBehaviour
     {
         SwitchState(PlayerFistState.Block);
         block = transform.DOMove(blockPosition.position, .2f).SetEase(Ease.InCubic);
-        //blockGrowth = artTransform.DOScale(Vector3.one * 1.5f, .2f).SetEase(Ease.InCubic);
+        blockGrowth = artTransform.DOScale(Vector3.one * 1.5f, .2f).SetEase(Ease.InCubic);
     }
 
     public void StopBlock(bool fast)
     {
         blockGrowth.Complete();
-        //blockGrowth = artTransform.DOScale(Vector3.one, .2f).SetEase(Ease.InCubic);
+        blockGrowth = artTransform.DOScale(Vector3.one, .2f).SetEase(Ease.InCubic);
         if (block.IsActive())
         {
             block.OnComplete(() =>
@@ -208,7 +208,7 @@ public class PlayerFist : MonoBehaviour
     public void HandleCollisionWithPlayer(Player player1, bool wasBlocked)
     {
        rb2d.linearVelocity = Vector2.zero;
-       //artTransform.DOShakeScale(.5f);
+       artTransform.DOShakeScale(.5f);
        if (!wasBlocked)
        {
            player.AddPoints(1);
