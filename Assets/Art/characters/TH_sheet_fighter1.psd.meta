@@ -324,6 +324,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: TH_sheet_fighter1_0
+      rect:
+        serializedVersion: 2
+        x: 1139
+        y: 976
+        width: 435
+        height: 261
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d14304385119664b904fc37e1b4a94b
+      internalID: 1632655585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_fighter1_1
+      rect:
+        serializedVersion: 2
+        x: 1592
+        y: 972
+        width: 388
+        height: 288
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3b66904c3ec2e74b904643f1f9c4899
+      internalID: 81944900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -338,6 +382,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      TH_sheet_fighter1_0: 1632655585
+      TH_sheet_fighter1_1: 81944900
       TH_sheet_fighter1_5: -5595296091610805967
       TH_sheet_fighter1_6: 6051122038281460300
       TH_sheet_fighter1_8: 6619471238739626631
