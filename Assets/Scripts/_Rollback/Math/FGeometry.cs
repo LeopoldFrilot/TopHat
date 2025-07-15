@@ -1,18 +1,23 @@
 ﻿
 using System;
 using Mathematics.Fixed;
+using UnityEngine;
 
 public interface IShape
 {
     void SetPosition(FVector2 attachedShapeOffset);
     FVector2 GetCenter();
+    FP MinX { get;}
+    FP MaxX { get;}
+    FP MinY { get;}
+    FP MaxY { get;}
 }
 
 [Serializable]
 public struct FRect : IShape
 {
-    public FVector2 topLeft;
-    public FVector2 bottomRight;
+    [HideInInspector] public FVector2 topLeft;
+    [HideInInspector] public FVector2 bottomRight;
     public FP height;
     public FP width;
     public FVector2 center;
@@ -65,6 +70,11 @@ public struct FCircle : IShape
         this.centerPoint = centerPoint;
         this.radius = radius;
     }
+
+    public FP MinX => centerPoint.X - radius;
+    public FP MaxX => centerPoint.X + radius;
+    public FP MinY => centerPoint.Y - radius;
+    public FP MaxY => centerPoint.Y + radius;
 
     public void SetPosition(FVector2 newPosition)
     {
