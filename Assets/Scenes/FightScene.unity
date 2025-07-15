@@ -3270,7 +3270,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  m_PlayerPrefab: {fileID: 8514386353918108479, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
+  m_PlayerPrefab: {fileID: 7108673974971550655, guid: e428a25d3b2286e4e8fc1aa99c0b770c, type: 3}
   m_SplitScreen: 0
   m_MaintainAspectRatioInSplitScreen: 0
   m_FixedNumberOfSplitScreens: -1
@@ -3313,6 +3313,8 @@ MonoBehaviour:
   player2Location: {fileID: 581772331}
   grappleResetPower: 20
   attackerHatPrefab: {fileID: 1140113374656715590, guid: 22759f210f0ecfc43aec29ab33ddd0c8, type: 3}
+  player1Prefab: {fileID: 8514386353918108479, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
+  player2Prefab: {fileID: 4170276716760717819, guid: 377c78099a5453d4fb87107abc4340f6, type: 3}
 --- !u!114 &1328233074
 MonoBehaviour:
   m_ObjectHideFlags: 0

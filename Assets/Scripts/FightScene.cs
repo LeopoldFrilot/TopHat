@@ -10,6 +10,8 @@ public class FightScene : MonoBehaviour
     [SerializeField] private Transform player2Location;
     [SerializeField] private float grappleResetPower = 5f;
     [SerializeField] private GameObject attackerHatPrefab;
+    [SerializeField] private GameObject player1Prefab;
+    [SerializeField] private GameObject player2Prefab;
     
     private PlayerHat attackerHat;
     private List<Player> players = new();
@@ -52,7 +54,8 @@ public class FightScene : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput player)
     {
-        Player playerRef = player.GetComponent<Player>();
+        Player playerRef = Instantiate(players.Count == 0 ? player1Prefab : player2Prefab).GetComponent<Player>();
+        playerRef.Initialize(player);
         players.Add(playerRef);
         playerRef.SetPlayerIndex(players.IndexOf(playerRef) + 1);
         if (players.Count == 2)

@@ -2,7 +2,6 @@
 using DG.Tweening;
 using UnityEngine;
 
-[RequireComponent(typeof(InputHandler))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 4f;
@@ -22,11 +21,27 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        inputHandler = GetComponent<InputHandler>();
-        inputHandler.OnHorizontalInputChanged += OnHorizontalInputChanged;
-        inputHandler.OnVerticalInputChanged += OnVerticalInputChanged;
         player = GetComponent<Player>();
         rb2d = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        if (player.IsInitioalized())
+        {
+            Initialize();
+        }
+        else
+        {
+            player.OnInitialized += Initialize;
+        }
+    }
+
+    private void Initialize()
+    {
+        inputHandler = player.GetInputHandler();
+        inputHandler.OnHorizontalInputChanged += OnHorizontalInputChanged;
+        inputHandler.OnVerticalInputChanged += OnVerticalInputChanged;
     }
 
     public void RegisterHorizontalInput(float value)

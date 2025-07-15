@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public enum TurnState
@@ -34,8 +35,8 @@ public class Player : MonoBehaviour
     private PlayerBlock playerBlock;
     private bool facingLeft;
     private TurnState currentTurnState = TurnState.Attacking;
-    private PlayerClothing playerClothing;
     private PlayerMovement playerMovement;
+    private InputHandler inputHandler;
     private int playerIndex = 0;
 
     private int hitsThisRound = 0;
@@ -44,25 +45,24 @@ public class Player : MonoBehaviour
     private int launches = 0;
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
-    private InputHandler inputHandler;
     private bool initialized = false;
 
-    private void Awake()
+    public void Initialize(PlayerInput player)
     {
-        if (!initialized)
-        {
-            Initialize();
-        }
-    }
-
-    private void Initialize()
-    {
-        playerClothing = GetComponent<PlayerClothing>();
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
-        inputHandler = GetComponent<InputHandler>();
+        inputHandler = player.GetComponent<InputHandler>();
+        inputHandler.OnActionStarted += OnActionStarted;
+        inputHandler.OnActionCancelled += OnActionCancelled;
         initialized = true;
+        TriggerInitialized();
+    }
+
+    public Action OnInitialized;
+    public void TriggerInitialized()
+    {
+        OnInitialized?.Invoke();
     }
 
     private void Start()
@@ -78,10 +78,6 @@ public class Player : MonoBehaviour
         outSpawnedFist.Iniialize(this, outFistLocation, blockLocation);
 
         spawnedFists = new List<PlayerFist>{ outSpawnedFist, inSpawnedFist };
-
-        inputHandler.OnActionStarted += OnActionStarted;
-        inputHandler.OnActionCancelled += OnActionCancelled;
-        UpdateCLothing();
     }
 
     private void Update()
@@ -112,17 +108,6 @@ public class Player : MonoBehaviour
     public void SetPlayerIndex(int inPlayerIndex)
     {
         playerIndex = inPlayerIndex;
-    }
-
-    private void UpdateCLothing()
-    {
-        if (playerClothing)
-        {
-            if (spawnedFists.Count > 0)
-            {
-                playerClothing.SetPlayerIndex(playerIndex, spawnedFists);
-            }
-        }
     }
 
     public void CancelAction()
@@ -272,7 +257,6 @@ public class Player : MonoBehaviour
         {
             currentTurnState = newState;
             TriggerTurnStateChanged(currentTurnState);
-            UpdateCLothing();
             StartRound();
         }
     }
@@ -330,10 +314,6 @@ public class Player : MonoBehaviour
 
     public void SetAIControlled(bool newValue)
     {
-        if (!initialized)
-        {
-            Initialize();
-        }
         AIControlled = newValue;
         if (AIControlled)
         {
@@ -362,5 +342,15 @@ public class Player : MonoBehaviour
     public void InstallAIModules(GameObject attackModule, GameObject defenseModule, GameObject movementModule)
     {
         AIBaseComponent.InstallAIModules(attackModule, defenseModule, movementModule);
+    }
+
+    public InputHandler GetInputHandler()
+    {
+        return inputHandler;
+    }
+
+    public bool IsInitioalized()
+    {
+        return initialized;
     }
 }
