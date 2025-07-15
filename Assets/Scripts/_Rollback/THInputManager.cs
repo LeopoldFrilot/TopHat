@@ -22,6 +22,8 @@ public class THInputManager
         CheckInput(input, THConstants.INPUT_UP);
         CheckInput(input, THConstants.INPUT_DOWN);
         CheckInput(input, THConstants.INPUT_ACTION);
+        
+        previousInput = input;
     }
 
     private void CheckInput(long currentInputCollection, int inputToCheck)
@@ -70,6 +72,7 @@ public class THInputManager
                 TriggerInputEnded(enumEquivalent);
             }
         }
+
     }
 
     private bool ContainsInput(long inputCollection, int inputToCheck)

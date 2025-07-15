@@ -1,7 +1,13 @@
-﻿public class THMovementManager
+﻿using Mathematics.Fixed;
+using UnityEngine;
+
+public class THMovementManager
 {
     private THInputManager inputManagerRef;
     private THPlayer playerRef;
+
+    private FP movementVector;
+    
     public THMovementManager(THPlayer player)
     {
         playerRef = player;
@@ -13,16 +19,48 @@
 
     private void OnInputEnded(THInputs input)
     {
-        throw new System.NotImplementedException();
+        switch (input)
+        {
+            case THInputs.Left:
+                if (movementVector < 0)
+                {
+                    movementVector = FP.Zero;
+                }
+                break;
+            case THInputs.Right:
+                if (movementVector > 0)
+                {
+                    movementVector = FP.Zero;
+                }
+                break;
+        }
     }
 
     private void OnInputHeld(THInputs input)
     {
-        throw new System.NotImplementedException();
     }
 
     private void OnInputStarted(THInputs input)
     {
-        throw new System.NotImplementedException();
+        switch (input)
+        {
+            case THInputs.Left:
+                movementVector = FP.MinusOne;
+                break;
+            case THInputs.Right:
+                movementVector = FP.One;
+                break;
+        }
+    }
+
+    public void Update()
+    {
+        playerRef.GenerateAppliedForce(new FVector2(movementVector * playerRef.playerRules.groundSpeed, FP.Zero), AppliedForceTypes.Impulse);
+    }
+
+    public FVector2 GetCurrentSpeedClamp()
+    {
+        // Eventually differentiate between grounded and aerial
+        return playerRef.playerRules.groundedVelocityClamp;
     }
 }

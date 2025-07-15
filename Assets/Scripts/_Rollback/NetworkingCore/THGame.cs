@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Mathematics.Fixed;
 using SharedGame;
 using Unity.Collections;
+using UnityEngine.Serialization;
 
 public static class THConstants {
     public const int MAX_PLAYERS = 2;
@@ -17,18 +19,25 @@ public static class THConstants {
 [Serializable]
 public struct THGameRules
 {
-    public FRect gameBounds;
+    public FP gameBoundsWidth;
+    public FP gameBoundsHeight;
+    public FVector2 gameBoundsCenter;
     public THPlayerRules player1Rules;
     public THPlayerRules player2Rules;
     public FP spawnDistance;
+    public FP gravityForce;
+    public FP frictionForce;
+    public FP velocityTooLowThreshold;
 }
 
 [Serializable]
 public struct THPlayerRules
 {
     public FP bodyCollisionWidth;
-    public FP bodyCollisionWHeight;
+    public FP bodyCollisionHeight;
     public FVector2 bodyCollisionOffset;
+    public FVector2 groundedVelocityClamp;
+    public FP groundSpeed;
 }
 
 public class THGame : IGame
@@ -38,19 +47,25 @@ public class THGame : IGame
     private List<THPlayer> players = new();
     private THPlayer player1;
     private THPlayer player2;
+    private THPhysicsManager physics;
+    public FRect gameBounds;
     
     public THGame(THGameRules rules)
     {
         gameRules = rules;
         Framenumber = 0;
+        physics = new THPhysicsManager();
+        gameBounds = new FRect(rules.gameBoundsHeight, rules.gameBoundsWidth, rules.gameBoundsCenter);
         
-        FP player1X = rules.gameBounds.center.X - rules.spawnDistance;
-        player1 = new THPlayer(new(player1X, rules.gameBounds.MinY), rules.player1Rules);
+        FP player1X = gameBounds.center.X - rules.spawnDistance;
+        player1 = new THPlayer(new(player1X, gameBounds.MinY), rules.player1Rules);
         players.Add(player1);
+        physics.RegisterPhysicsObject(player1);
         
-        FP player2X = rules.gameBounds.center.X + rules.spawnDistance;
-        player2 = new THPlayer(new(player2X, rules.gameBounds.MinY), rules.player2Rules);
+        FP player2X = gameBounds.center.X + rules.spawnDistance;
+        player2 = new THPlayer(new(player2X, gameBounds.MinY), rules.player2Rules);
         players.Add(player2);
+        physics.RegisterPhysicsObject(player2);
     }
     
     public int Framenumber { get; private set; }
@@ -64,30 +79,91 @@ public class THGame : IGame
         {
             players[i].inputmanager.ParseInputs(inputs[i]);
         }
+        
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].movementmanager.Update();
+        }
+        
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].ApplyAllForces(1, players[i].movementmanager.GetCurrentSpeedClamp());
+        }
+        
+        physics.ResolveCollisions(gameBounds);
     }
 
-    public void FromBytes(NativeArray<byte> data)
+    public void FromBytes(NativeArray<byte> bytes)
     {
-        throw new System.NotImplementedException();
     }
 
     public NativeArray<byte> ToBytes()
     {
-        throw new System.NotImplementedException();
+        return new();
     }
 
-    public long ReadInputs(int controllerId)
+    public long ReadInputs(int id)
     {
-        throw new System.NotImplementedException();
+        long input = 0;
+        if (id == 0)
+        {
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.W))
+            {
+                input |= THConstants.INPUT_UP;
+            }
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.S))
+            {
+                input |= THConstants.INPUT_DOWN;
+            }
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.A))
+            {
+                input |= THConstants.INPUT_LEFT;
+            }
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.D))
+            {
+                input |= THConstants.INPUT_RIGHT;
+            }
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Space))
+            {
+                input |= THConstants.INPUT_ACTION;
+            }
+        }
+        else if (id == 1)
+        {
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.UpArrow)) 
+            {
+                input |= THConstants.INPUT_UP;
+            }
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.DownArrow)) 
+            {
+                input |= THConstants.INPUT_DOWN;
+            }
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftArrow)) 
+            {
+                input |= THConstants.INPUT_LEFT;
+            }
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.RightArrow)) 
+            {
+                input |= THConstants.INPUT_RIGHT;
+            }
+            if (UnityEngine.Input.GetKey(UnityEngine.KeyCode.Period))
+            {
+                input |= THConstants.INPUT_ACTION;
+            }
+        }
+        return input;
     }
 
     public void LogInfo(string filename)
     {
-        throw new System.NotImplementedException();
     }
 
     public void FreeBytes(NativeArray<byte> data)
     {
-        throw new System.NotImplementedException();
+    }
+
+    public List<THPlayer> GetPlayers()
+    {
+        return players;
     }
 }
