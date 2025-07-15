@@ -84,6 +84,11 @@ public class Player : MonoBehaviour
     {
         float speed = playerMovement.GetHorizontalVelocity();
         mainBodyAnimator.SetFloat(animatorSpeedFloatName, speed);
+        if (playerMovement.IsJumping())
+            {
+               mainBodyAnimator.SetBool("Jump", true);
+            }
+ 
     }
 
     public bool IsAIControlled()
@@ -248,7 +253,9 @@ public class Player : MonoBehaviour
         if (other.transform.root.CompareTag("Ground"))
         {
             playerMovement.Land();
+            mainBodyAnimator.SetBool("Jump", false);
         }
+        
     }
 
     public void SwitchTurnState(TurnState newState)
