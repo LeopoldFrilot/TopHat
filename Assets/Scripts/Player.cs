@@ -16,8 +16,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform outFistLocation;
     [SerializeField] private Transform blockLocation;
     [SerializeField] private Transform playerHatLocation;
-    [SerializeField] private GameObject inFistPrefab;
-    [SerializeField] private GameObject outFistPrefab;
     [SerializeField] private Collider2D crosslineTrigger;
     [SerializeField] private int pointsForGrapple = 5;
     [SerializeField] private float blockKnockbackPower = 4;
@@ -69,10 +67,14 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        var inSpawnedFist = Instantiate(inFistPrefab).GetComponent<PlayerFist>();
+        var inSpawnedFist = inFistLocation.GetComponentInChildren<PlayerFist>();
+        inSpawnedFist.transform.SetParent(null);
+        inSpawnedFist.transform.localScale = Vector3.one;
         inSpawnedFist.Iniialize(this, inFistLocation, blockLocation);
         
-        var outSpawnedFist = Instantiate(outFistPrefab).GetComponent<PlayerFist>();
+        var outSpawnedFist = outFistLocation.GetComponentInChildren<PlayerFist>();
+        outSpawnedFist.transform.SetParent(null);
+        outSpawnedFist.transform.localScale = Vector3.one;
         outSpawnedFist.Iniialize(this, outFistLocation, blockLocation);
 
         spawnedFists = new List<PlayerFist>{ outSpawnedFist, inSpawnedFist };
@@ -84,8 +86,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        float speed = playerMovement.GetHorizontalSpeed();
-        Debug.Log(speed);
+        float speed = playerMovement.GetHorizontalVelocity();
         mainBodyAnimator.SetFloat(animatorSpeedFloatName, speed);
     }
 
@@ -170,7 +171,7 @@ public class Player : MonoBehaviour
 
     public void FaceLeft()
     {
-        artRoot.localScale = new Vector3(-1, 1, 1);
+        artRoot.localScale = new Vector3(-1 * Mathf.Abs(artRoot.localScale.x), artRoot.localScale.y, artRoot.localScale.z);
         foreach (var spawnedFist in spawnedFists)
         {
             spawnedFist.GetComponent<PlayerFistUI>().FaceRight(false);
@@ -180,7 +181,7 @@ public class Player : MonoBehaviour
 
     public void FaceRight()
     {
-        artRoot.localScale = new Vector3(1, 1, 1);
+        artRoot.localScale = new Vector3(Mathf.Abs(artRoot.localScale.x), artRoot.localScale.y, artRoot.localScale.z);
         foreach (var spawnedFist in spawnedFists)
         {
             spawnedFist.GetComponent<PlayerFistUI>().FaceRight(true);

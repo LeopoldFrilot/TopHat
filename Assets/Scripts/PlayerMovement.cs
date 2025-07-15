@@ -127,8 +127,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public float GetHorizontalSpeed()
+    public float GetHorizontalVelocity()
     {
-        return Mathf.Abs(currentSpeed.x);
+        return currentSpeed.x;
     }
 }
