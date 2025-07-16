@@ -139,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TH_sheet_fighter2_ArmR
+      name: TH_sheet_fighter2_FistR
       rect:
         serializedVersion: 2
         x: 0
@@ -183,7 +183,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TH_sheet_fighter2_armL
+      name: TH_sheet_fighter2_FistL
       rect:
         serializedVersion: 2
         x: 392
@@ -227,7 +227,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TH_sheet_fighter2_eyes
+      name: TH_sheet_fighter2_eyes1
       rect:
         serializedVersion: 2
         x: 1149
@@ -249,7 +249,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TH_sheet_fighter2_6
+      name: TH_sheet_fighter2_mouth1
       rect:
         serializedVersion: 2
         x: 1710
@@ -271,7 +271,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TH_sheet_fighter2_eyes_closed
+      name: TH_sheet_fighter2_eyes2
       rect:
         serializedVersion: 2
         x: 1146
@@ -318,7 +318,7 @@ TextureImporter:
       name: TH_sheet_fighter2_LegR
       rect:
         serializedVersion: 2
-        x: 795
+        x: 799
         y: 1
         width: 175
         height: 258
@@ -358,6 +358,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: TH_sheet_fighter2_mouth2
+      rect:
+        serializedVersion: 2
+        x: 1697
+        y: 987
+        width: 191
+        height: 203
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b57bd5e7c770b68418e030c5c9dfee73
+      internalID: 322862802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -373,15 +395,16 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       TH_sheet_fighter2_3: -5120348711761390365
-      TH_sheet_fighter2_6: 1617032189425422845
-      TH_sheet_fighter2_ArmR: -4159369228381272831
+      TH_sheet_fighter2_FistL: -9189443869861150885
+      TH_sheet_fighter2_FistR: -4159369228381272831
       TH_sheet_fighter2_LegL: 1217151063048997811
       TH_sheet_fighter2_LegR: -1976726529973353150
-      TH_sheet_fighter2_armL: -9189443869861150885
       TH_sheet_fighter2_body: -6864765436714571834
-      TH_sheet_fighter2_eyes: 7704955272561668946
-      TH_sheet_fighter2_eyes_closed: -6205404062471294697
+      TH_sheet_fighter2_eyes1: 7704955272561668946
+      TH_sheet_fighter2_eyes2: -6205404062471294697
       TH_sheet_fighter2_hair: -4028598549072695041
+      TH_sheet_fighter2_mouth1: 1617032189425422845
+      TH_sheet_fighter2_mouth2: 322862802
   mipmapLimitGroupName: 
   pSDRemoveMatte: 1
   userData: 

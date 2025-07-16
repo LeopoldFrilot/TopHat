@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e6fedc2472449cead18ef23b5cb30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library:
+  - m_Name: Eyes
+    m_Hash: 120101800
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: New Label
+      m_Hash: 259326342
+      m_Sprite: {fileID: 7704955272561668946, guid: 6365baaade71f914199772eb6cd49303, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 7704955272561668946, guid: 6365baaade71f914199772eb6cd49303, type: 3}
+    - m_Name: New Label_0
+      m_Hash: 16589798
+      m_Sprite: {fileID: -6205404062471294697, guid: 6365baaade71f914199772eb6cd49303, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: -6205404062471294697, guid: 6365baaade71f914199772eb6cd49303, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: Mouth
+    m_Hash: 520385427
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: New Label
+      m_Hash: 259326342
+      m_Sprite: {fileID: 1617032189425422845, guid: 6365baaade71f914199772eb6cd49303, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 1617032189425422845, guid: 6365baaade71f914199772eb6cd49303, type: 3}
+    - m_Name: New Label_0
+      m_Hash: 16589798
+      m_Sprite: {fileID: 322862802, guid: 6365baaade71f914199772eb6cd49303, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 322862802, guid: 6365baaade71f914199772eb6cd49303, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  m_PrimaryLibraryGUID: 
+  m_ModificationHash: 638882558290236011
+  m_Version: 1

@@ -274,27 +274,74 @@ AnimationClip:
       m_RotationOrder: 4
     path: ArtRoot/LegR (1)
   m_ScaleCurves: []
-  m_FloatCurves: []
-  m_PPtrCurves:
+  m_FloatCurves:
   - serializedVersion: 2
     curve:
-    - time: 0
-      value: {fileID: -5595296091610805967, guid: 109218d4ecc6de140933075d254c028c, type: 3}
-    - time: 0.7
-      value: {fileID: -6205404062471294697, guid: 6365baaade71f914199772eb6cd49303, type: 3}
-    - time: 0.78333336
-      value: {fileID: -5595296091610805967, guid: 109218d4ecc6de140933075d254c028c, type: 3}
-    - time: 1
-      value: {fileID: -5595296091610805967, guid: 109218d4ecc6de140933075d254c028c, type: 3}
-    - time: 1.3
-      value: {fileID: -6205404062471294697, guid: 6365baaade71f914199772eb6cd49303, type: 3}
-    - time: 1.3833333
-      value: {fileID: -5595296091610805967, guid: 109218d4ecc6de140933075d254c028c, type: 3}
-    attribute: m_Sprite
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 6.202066e-20
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.75
+        value: 3.1312167e-18
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.81666666
+        value: 6.202066e-20
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1.35
+        value: 3.1312167e-18
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1.4333333
+        value: 6.202066e-20
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 2.0833333
+        value: 6.202066e-20
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_SpriteHash
     path: ArtRoot/Body/FaceRoot/Eyes
-    classID: 212
-    script: {fileID: 0}
-    flags: 2
+    classID: 114
+    script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+    flags: 1
+  m_PPtrCurves: []
   m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
@@ -322,12 +369,12 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 3162220228
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-      isIntCurve: 0
+      attribute: 3843704414
+      script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 0
+      isIntCurve: 1
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 1112260671
@@ -365,13 +412,7 @@ AnimationClip:
       isPPtrCurve: 0
       isIntCurve: 0
       isSerializeReferenceCurve: 0
-    pptrCurveMapping:
-    - {fileID: -5595296091610805967, guid: 109218d4ecc6de140933075d254c028c, type: 3}
-    - {fileID: -6205404062471294697, guid: 6365baaade71f914199772eb6cd49303, type: 3}
-    - {fileID: -5595296091610805967, guid: 109218d4ecc6de140933075d254c028c, type: 3}
-    - {fileID: -5595296091610805967, guid: 109218d4ecc6de140933075d254c028c, type: 3}
-    - {fileID: -6205404062471294697, guid: 6365baaade71f914199772eb6cd49303, type: 3}
-    - {fileID: -5595296091610805967, guid: 109218d4ecc6de140933075d254c028c, type: 3}
+    pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -1257,6 +1298,72 @@ AnimationClip:
     classID: 4
     script: {fileID: 0}
     flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 6.202066e-20
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.75
+        value: 3.1312167e-18
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.81666666
+        value: 6.202066e-20
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1.35
+        value: 3.1312167e-18
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1.4333333
+        value: 6.202066e-20
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 2.0833333
+        value: 6.202066e-20
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_SpriteHash
+    path: ArtRoot/Body/FaceRoot/Eyes
+    classID: 114
+    script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+    flags: 1
   m_EulerEditorCurves:
   - serializedVersion: 2
     curve:
