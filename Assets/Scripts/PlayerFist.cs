@@ -45,6 +45,7 @@ public class PlayerFist : MonoBehaviour
     private Tweener retract = null;
     private Tweener block = null;
     private Tweener blockGrowth = null;
+      private Tweener blockRotate = null;
     private TweenCallback shakeTweenComplete;
     private AudioSource windupAudio;
 
@@ -179,12 +180,14 @@ public class PlayerFist : MonoBehaviour
         SwitchState(PlayerFistState.Block);
         block = transform.DOMove(blockPosition.position, .2f).SetEase(Ease.InCubic);
         blockGrowth = artTransform.DOScale(Vector3.one * 1.5f, .2f).SetEase(Ease.InCubic);
+        blockRotate = artTransform.DORotate(new Vector3(0, 0, 90), .2f, RotateMode.Fast);
     }
 
     public void StopBlock(bool fast)
     {
         blockGrowth.Complete();
         blockGrowth = artTransform.DOScale(Vector3.one, .2f).SetEase(Ease.InCubic);
+        blockRotate = artTransform.DORotate(new Vector3(0, 0, 0), .2f, RotateMode.Fast);
         if (block.IsActive())
         {
             block.OnComplete(() =>
