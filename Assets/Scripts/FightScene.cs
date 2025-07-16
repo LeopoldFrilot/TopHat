@@ -122,12 +122,15 @@ public class FightScene : MonoBehaviour
 
     private IEnumerator StartSwapRoles()
     {
-        Player originalAttacker = players[0].GetTurnState() == TurnState.Attacking ? players[0] : players[1];
-        Player originalDefender = GetOpponent(originalAttacker);
-        originalAttacker.SwitchTurnState(TurnState.Defending);
-        attackerHat.SetNewTarget(originalDefender.GetHatLocation());
-        yield return new WaitUntil(()=>attackerHat.IsInTransition() == false);
-        originalDefender.SwapTurnState();
+        if (players.Count > 1)
+        {
+            Player originalAttacker = players[0].GetTurnState() == TurnState.Attacking ? players[0] : players[1];
+            Player originalDefender = GetOpponent(originalAttacker);
+            originalAttacker.SwitchTurnState(TurnState.Defending);
+            attackerHat.SetNewTarget(originalDefender.GetHatLocation());
+            yield return new WaitUntil(()=>attackerHat.IsInTransition() == false);
+            originalDefender.SwapTurnState();
+        }
     }
 
     private void OnPlayerEarnedPoints(Player obj)

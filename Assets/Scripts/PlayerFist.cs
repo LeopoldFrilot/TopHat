@@ -180,7 +180,7 @@ public class PlayerFist : MonoBehaviour
         SwitchState(PlayerFistState.Block);
         block = transform.DOMove(blockPosition.position, .2f).SetEase(Ease.InCubic);
         blockGrowth = artTransform.DOScale(Vector3.one * 1.5f, .2f).SetEase(Ease.InCubic);
-        blockRotate = artTransform.DORotate(new Vector3(0, 0, 90), .2f, RotateMode.Fast);
+        blockRotate = artTransform.DORotate(new Vector3(0, 0, player.IsFacingLeft() ? -90 : 90), .2f, RotateMode.Fast);
     }
 
     public void StopBlock(bool fast)
