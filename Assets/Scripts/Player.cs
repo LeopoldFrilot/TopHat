@@ -257,10 +257,10 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.transform.root.CompareTag("Ground"))
+        if (other.transform.CompareTag("Ground"))
         {
             playerMovement.Land();
-            mainBodyAnimator.SetBool("Jump", false);
+            mainBodyAnimator.SetBool(animatorJumpBoolName, false);
         }
         
     }
