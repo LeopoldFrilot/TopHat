@@ -130,7 +130,7 @@ TextureImporter:
         width: 1138
         height: 122
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -152,7 +152,7 @@ TextureImporter:
         width: 347
         height: 355
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -174,7 +174,7 @@ TextureImporter:
         width: 340
         height: 360
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -183,6 +183,226 @@ TextureImporter:
       bones: []
       spriteID: 86e2ddd0659451642a03450efee1d18d
       internalID: -1133128389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 397
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 433a4bdff8532b64abdbf9b19ce2c2df
+      internalID: 1185203032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_5
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 0
+        width: 393
+        height: 701
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0846d01698eedb2488eec309869926e6
+      internalID: 741051825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_6
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 1
+        width: 399
+        height: 472
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfbbbf76d5524ba40acfd1dbbb6adfe3
+      internalID: -701224094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_7
+      rect:
+        serializedVersion: 2
+        x: 1773
+        y: 0
+        width: 275
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67a403a11ce82b44cb816b0cd4a7bab3
+      internalID: -312752114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_8
+      rect:
+        serializedVersion: 2
+        x: 1252
+        y: 349
+        width: 159
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bfd2c033a33da14f8bbc5d0ddc98c09
+      internalID: 108678425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_9
+      rect:
+        serializedVersion: 2
+        x: 1463
+        y: 140
+        width: 152
+        height: 340
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f15bb98741bce2449a0e220d750fa305
+      internalID: -1284768611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_10
+      rect:
+        serializedVersion: 2
+        x: 1251
+        y: 250
+        width: 160
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6424d6bb273f71545bf1ea7666f9096a
+      internalID: -1609114429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_11
+      rect:
+        serializedVersion: 2
+        x: 1212
+        y: 203
+        width: 210
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b94bb0ae209f0ed4f899c2b1ad62f5d2
+      internalID: 270384356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_12
+      rect:
+        serializedVersion: 2
+        x: 1232
+        y: 2
+        width: 177
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b737fe9d04d1b6641b9aba4c9ee4e997
+      internalID: -1389629389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TH_sheet_environment1_13
+      rect:
+        serializedVersion: 2
+        x: 1461
+        y: 9
+        width: 179
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0cfbbd0a3460cb42b28852f1f2e5cd1
+      internalID: 374803056
       vertices: []
       indices: 
       edges: []
@@ -203,8 +423,18 @@ TextureImporter:
     nameFileIdTable:
       TH_sheet_environment1_0: -3705348440116035870
       TH_sheet_environment1_1: 1350294356
+      TH_sheet_environment1_10: -1609114429
+      TH_sheet_environment1_11: 270384356
+      TH_sheet_environment1_12: -1389629389
+      TH_sheet_environment1_13: 374803056
       TH_sheet_environment1_2: -159359703
       TH_sheet_environment1_3: -1133128389
+      TH_sheet_environment1_4: 1185203032
+      TH_sheet_environment1_5: 741051825
+      TH_sheet_environment1_6: -701224094
+      TH_sheet_environment1_7: -312752114
+      TH_sheet_environment1_8: 108678425
+      TH_sheet_environment1_9: -1284768611
   mipmapLimitGroupName: 
   pSDRemoveMatte: 1
   userData: 
