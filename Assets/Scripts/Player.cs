@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     [Header("Animation")] 
     [SerializeField] private Animator mainBodyAnimator;
     [SerializeField] private string animatorSpeedFloatName = "speed";
+    [SerializeField] private string animatorJumpBoolName = "Jump";
     
     [Header("Audio")]
     [SerializeField] AudioClip grappleSound;
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
     private PlayerMovement playerMovement;
     private InputHandler inputHandler;
     private int playerIndex = 0;
+    private FightScene fightScene;
 
     private int hitsThisRound = 0;
     private int blocksThisRound = 0;
@@ -47,8 +49,9 @@ public class Player : MonoBehaviour
     private AIBaseComponent AIBaseComponent;
     private bool initialized = false;
 
-    public void Initialize(PlayerInput player)
+    public void Initialize(PlayerInput player, FightScene fightScene)
     {
+        this.fightScene = fightScene;
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
@@ -85,10 +88,9 @@ public class Player : MonoBehaviour
         float speed = playerMovement.GetHorizontalVelocity();
         mainBodyAnimator.SetFloat(animatorSpeedFloatName, speed);
         if (playerMovement.IsJumping())
-            {
-               mainBodyAnimator.SetBool("Jump", true);
-            }
- 
+        {
+            mainBodyAnimator.SetBool(animatorJumpBoolName, true);
+        }
     }
 
     public bool IsAIControlled()
@@ -139,6 +141,11 @@ public class Player : MonoBehaviour
 
     private void OnActionStarted()
     {
+        if (fightScene.IsInCountdown())
+        {
+            return;
+        }
+        
         if (currentTurnState == TurnState.Attacking)
         {
             foreach (var spawnedFist in spawnedFists)
@@ -276,7 +283,7 @@ public class Player : MonoBehaviour
 
     public bool CanMove()
     {
-        return !playerBlock.IsBlocking();
+        return !playerBlock.IsBlocking() && !fightScene.IsInCountdown();
     }
 
     public void AddPoints(int amount)

@@ -100,11 +100,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnHorizontalInputChanged(float value)
     {
+        if (!player.CanMove())
+        {
+            value = 0;
+        }
+
         currentXVal = value;
     }
 
     private void OnVerticalInputChanged(float value)
     {
+        if (!player.CanMove())
+        {
+            value = 0;
+        }
+        
         if (value > .75f)
         {
             Jump();
@@ -136,10 +146,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        if (!IsJumping())
+        if (CanJump())
         {
             StartJump();
         }
+    }
+
+    private bool CanJump()
+    {
+        return !IsJumping() && player.CanMove();
     }
 
     public float GetHorizontalVelocity()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 using Random = UnityEngine.Random;
 
 public class FightScene : MonoBehaviour
@@ -12,14 +13,15 @@ public class FightScene : MonoBehaviour
     [SerializeField] private GameObject attackerHatPrefab;
     [SerializeField] private GameObject player1Prefab;
     [SerializeField] private GameObject player2Prefab;
+    [SerializeField] private PlayableDirector countdownTimeline;
     
     private PlayerHat attackerHat;
     private List<Player> players = new();
     private PlayerInputManager inputManager;
-    private bool started = false;
     private FightSceneUI fightSceneUI;
     private bool vsAI;
     private AIPickerUI pickerUI;
+    private bool inCountdown;
 
     public void Awake()
     {
@@ -55,7 +57,7 @@ public class FightScene : MonoBehaviour
     private void OnPlayerJoined(PlayerInput player)
     {
         Player playerRef = Instantiate(players.Count == 0 ? player1Prefab : player2Prefab).GetComponent<Player>();
-        playerRef.Initialize(player);
+        playerRef.Initialize(player, this);
         players.Add(playerRef);
         playerRef.SetPlayerIndex(players.IndexOf(playerRef) + 1);
         if (players.Count == 2)
@@ -69,7 +71,7 @@ public class FightScene : MonoBehaviour
                 players[1].SetAIControlled(false);
             }
             
-            StartFight();
+            Restart();
         }
     }
 
@@ -82,6 +84,7 @@ public class FightScene : MonoBehaviour
 
     private void StartFight()
     {
+        inCountdown = true;
         int randomFirst = Random.Range(0, 2);
         players[0].transform.position = player1Location.position;
         players[0].SwitchTurnState(randomFirst == 0 ? TurnState.Attacking : TurnState.Defending);
@@ -93,8 +96,13 @@ public class FightScene : MonoBehaviour
             attackerHat = Instantiate(attackerHatPrefab).GetComponent<PlayerHat>();
         }
         StartCoroutine(StartSwapRoles());
-        started = true;
+        countdownTimeline.Play();
+    }
+
+    public void OnCountdownFinished()
+    {
         EventHub.TriggerGameStarted();
+        inCountdown = false;
     }
 
     public Player GetOpponent(Player player)
@@ -118,6 +126,11 @@ public class FightScene : MonoBehaviour
         }
         
         players[1].InstallAIModules(attackModule, defenseModule, movementModule);
+    }
+
+    public bool IsInCountdown()
+    {
+        return inCountdown;
     }
 
     private IEnumerator StartSwapRoles()
