@@ -230,10 +230,10 @@ TextureImporter:
       name: TH_sheet_fighter2_eyes1
       rect:
         serializedVersion: 2
-        x: 1149
+        x: 1139
         y: 1251
-        width: 423
-        height: 263
+        width: 444
+        height: 280
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -274,10 +274,10 @@ TextureImporter:
       name: TH_sheet_fighter2_eyes2
       rect:
         serializedVersion: 2
-        x: 1146
-        y: 999
-        width: 427
-        height: 239
+        x: 1140
+        y: 980
+        width: 443
+        height: 260
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -367,7 +367,7 @@ TextureImporter:
         width: 191
         height: 203
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
