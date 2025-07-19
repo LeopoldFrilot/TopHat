@@ -5,26 +5,26 @@ using UnityEngine;
 public class AutoTurnaround : MonoBehaviour
 {
     private FightScene fightScene;
-    private Player playerRef;
+    private Fighter _fighterRef;
 
     private void Awake()
     {
         fightScene = FindFirstObjectByType<FightScene>();
-        playerRef = GetComponent<Player>();
+        _fighterRef = GetComponent<Fighter>();
     }
 
     private void Update()
     {
-        var otherPlayer = fightScene.GetOpponent(playerRef);
+        var otherPlayer = fightScene.GetOpponent(_fighterRef);
         if (otherPlayer != null)
         {
             if (transform.position.x < otherPlayer.transform.position.x)
             {
-                playerRef.FaceRight();
+                _fighterRef.FaceRight();
             }
             else
             {
-                playerRef.FaceLeft();
+                _fighterRef.FaceLeft();
             }
         }
     }

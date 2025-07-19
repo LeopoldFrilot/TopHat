@@ -10,7 +10,7 @@ public enum TurnState
     Defending
 }
 
-public class Player : MonoBehaviour
+public class Fighter : MonoBehaviour
 {
     [SerializeField] private Transform artRoot;
     [SerializeField] private Transform inFistLocation;

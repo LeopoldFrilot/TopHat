@@ -7,6 +7,6 @@
     
     protected override bool IsActive()
     {
-        return base.IsActive() && playerRef.GetTurnState() == TurnState.Attacking;
+        return base.IsActive() && FighterRef.GetTurnState() == TurnState.Attacking;
     }
 }

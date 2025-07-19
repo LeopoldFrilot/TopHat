@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     
     private InputHandler inputHandler;
     private float currentXVal = 0;
-    private Player player;
+    private Fighter _fighter;
     private bool isJumping = false;
     private Rigidbody2D rb2d;
 
@@ -21,25 +21,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponent<Player>();
+        _fighter = GetComponent<Fighter>();
         rb2d = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
-        if (player.IsInitioalized())
+        if (_fighter.IsInitioalized())
         {
             Initialize();
         }
         else
         {
-            player.OnInitialized += Initialize;
+            _fighter.OnInitialized += Initialize;
         }
     }
 
     private void Initialize()
     {
-        inputHandler = player.GetInputHandler();
+        inputHandler = _fighter.GetInputHandler();
         inputHandler.OnHorizontalInputChanged += OnHorizontalInputChanged;
         inputHandler.OnVerticalInputChanged += OnVerticalInputChanged;
     }
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (player.CanMove())
+        if (_fighter.CanMove())
         {
             transform.position += new Vector3(GetWalkSpeed() * currentXVal * Time.deltaTime, 0, 0);
         }
@@ -87,7 +87,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         int fistsInMotion = 0;
-        foreach (var spawnedFist in player.GetSpawnedFists())
+        foreach (var spawnedFist in _fighter.GetSpawnedFists())
         {
             if (spawnedFist.GetCurrentState() != PlayerFistState.Idle)
             {
@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnHorizontalInputChanged(float value)
     {
-        if (!player.CanMove())
+        if (!_fighter.CanMove())
         {
             value = 0;
         }
@@ -110,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnVerticalInputChanged(float value)
     {
-        if (!player.CanMove())
+        if (!_fighter.CanMove())
         {
             value = 0;
         }
@@ -154,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJump()
     {
-        return !IsJumping() && player.CanMove();
+        return !IsJumping() && _fighter.CanMove();
     }
 
     public float GetHorizontalVelocity()

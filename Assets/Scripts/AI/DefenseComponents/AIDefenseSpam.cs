@@ -14,12 +14,12 @@ public class AIDefenseSpam : AIDefenseModule
 
         if (lastLaunchTime == 0)
         {
-            playerRef.StartAction();
+            FighterRef.StartAction();
             lastLaunchTime = Time.time;
         }
         else if (lastLaunchTime + windupTime <= Time.time)
         {
-            playerRef.CancelAction();
+            FighterRef.CancelAction();
             lastLaunchTime = 0;
         }
     }

@@ -11,8 +11,8 @@ public enum AIModuleTypes
 public abstract class AIBaseModule : MonoBehaviour
 {
     protected PlayerMovement movementRef;
-    protected Player playerRef;
-    protected Player otherPlayerRef;
+    protected Fighter FighterRef;
+    protected Fighter OtherFighterRef;
     protected AIBaseComponent aiRef;
     protected FightScene fightSceneRef;
 
@@ -21,19 +21,19 @@ public abstract class AIBaseModule : MonoBehaviour
         fightSceneRef = FindFirstObjectByType<FightScene>();
     }
 
-    public void Initialize(Player player)
+    public void Initialize(Fighter fighter)
     {
-        playerRef = player;
-        otherPlayerRef = fightSceneRef.GetOpponent(playerRef);
-        movementRef = playerRef.GetComponent<PlayerMovement>();
-        aiRef = playerRef.GetComponent<AIBaseComponent>();
+        FighterRef = fighter;
+        OtherFighterRef = fightSceneRef.GetOpponent(FighterRef);
+        movementRef = FighterRef.GetComponent<PlayerMovement>();
+        aiRef = FighterRef.GetComponent<AIBaseComponent>();
     }
 
     abstract public AIModuleTypes GetAIModuleType();
 
     private void OnGameStarted()
     {
-        otherPlayerRef = fightSceneRef.GetOpponent(playerRef);
+        OtherFighterRef = fightSceneRef.GetOpponent(FighterRef);
     }
 
     private void OnEnable()
@@ -48,7 +48,7 @@ public abstract class AIBaseModule : MonoBehaviour
 
     virtual protected bool IsActive()
     {
-        return otherPlayerRef != null && aiRef.IsActive();
+        return OtherFighterRef != null && aiRef.IsActive();
     }
 
     virtual public void Reset()

@@ -3,23 +3,23 @@ using UnityEngine;
 
 public static class EventHub
 {
-    public static event Action<Player, PlayerFist, PlayerFistState> OnFistConnected;
+    public static event Action<Fighter, PlayerFist, PlayerFistState> OnFistConnected;
 
-    public static void TriggerFistConnected(Player playerHit, PlayerFist fistLanded, PlayerFistState fistState)
+    public static void TriggerFistConnected(Fighter fighterHit, PlayerFist fistLanded, PlayerFistState fistState)
     {
-        OnFistConnected?.Invoke(playerHit, fistLanded, fistState);
+        OnFistConnected?.Invoke(fighterHit, fistLanded, fistState);
     }
     
-    public static event Action<Player> OnPlayerEarnedPoints;
-    public static void TriggerPlayerEarnedPoints(Player player)
+    public static event Action<Fighter> OnPlayerEarnedPoints;
+    public static void TriggerPlayerEarnedPoints(Fighter fighter)
     {
-        OnPlayerEarnedPoints?.Invoke(player);
+        OnPlayerEarnedPoints?.Invoke(fighter);
     }
 
-    public static event Action<Player> OnPlayerGrappled;
-    public static void TriggerPlayerGrappled(Player player)
+    public static event Action<Fighter> OnPlayerGrappled;
+    public static void TriggerPlayerGrappled(Fighter fighter)
     {
-        OnPlayerGrappled?.Invoke(player);
+        OnPlayerGrappled?.Invoke(fighter);
     }
 
     public static event Action<AudioClip, float> OnPlaySoundRequested;
@@ -28,10 +28,10 @@ public static class EventHub
         OnPlaySoundRequested?.Invoke(clip, volume);
     }
 
-    public static event Action<Player> OnTurnEnded;
-    public static void TriggerTurnEnded(Player player)
+    public static event Action<Fighter> OnTurnEnded;
+    public static void TriggerTurnEnded(Fighter fighter)
     {
-        OnTurnEnded?.Invoke(player);
+        OnTurnEnded?.Invoke(fighter);
     }
 
     public static event Action OnGameStarted;

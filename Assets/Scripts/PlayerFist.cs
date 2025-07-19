@@ -39,7 +39,7 @@ public class PlayerFist : MonoBehaviour
     private Rigidbody2D rb2d;
     private Transform restingPosition;
     private Transform blockPosition;
-    private Player player;
+    private Fighter _fighter;
     private Tweener idleFollow = null;
     private Tweener windupShake = null;
     private Tweener retract = null;
@@ -74,7 +74,7 @@ public class PlayerFist : MonoBehaviour
         {
             windup = Mathf.Clamp(windup + Time.deltaTime * windupSpeed, 0, maxWindup);
             currentOffset = windup * windupOffset;
-            transform.position = restingPosition.position - new Vector3((player.IsFacingLeft() ? -1 : 1) * currentOffset.x, currentOffset.y, 0);
+            transform.position = restingPosition.position - new Vector3((_fighter.IsFacingLeft() ? -1 : 1) * currentOffset.x, currentOffset.y, 0);
         }
         else if(currentState == PlayerFistState.Launch)
         {
@@ -85,10 +85,10 @@ public class PlayerFist : MonoBehaviour
         }
     }
 
-    public void Iniialize(Player player, Transform restingPosition, Transform blockPosition)
+    public void Iniialize(Fighter fighter, Transform restingPosition, Transform blockPosition)
     {
         this.restingPosition = restingPosition;
-        this.player = player;
+        this._fighter = fighter;
         this.blockPosition = blockPosition;
     }
 
@@ -134,7 +134,7 @@ public class PlayerFist : MonoBehaviour
             
             case PlayerFistState.Launch:
                 rb2d.bodyType = RigidbodyType2D.Dynamic;
-                rb2d.AddForceX((player.IsFacingLeft() ? -1 : 1) * (windup + baseWindup) * launchStrength, ForceMode2D.Impulse);
+                rb2d.AddForceX((_fighter.IsFacingLeft() ? -1 : 1) * (windup + baseWindup) * launchStrength, ForceMode2D.Impulse);
                 EventHub.TriggerPlaySoundRequested(fistReleaseSound, .5f);
                 GetOwner().AddLaunches(1);
                 break;
@@ -180,7 +180,7 @@ public class PlayerFist : MonoBehaviour
         SwitchState(PlayerFistState.Block);
         block = transform.DOMove(blockPosition.position, .2f).SetEase(Ease.InCubic);
         blockGrowth = artTransform.DOScale(Vector3.one * 1.5f, .2f).SetEase(Ease.InCubic);
-        blockRotate = artTransform.DORotate(new Vector3(0, 0, player.IsFacingLeft() ? -90 : 90), .2f, RotateMode.Fast);
+        blockRotate = artTransform.DORotate(new Vector3(0, 0, _fighter.IsFacingLeft() ? -90 : 90), .2f, RotateMode.Fast);
     }
 
     public void StopBlock(bool fast)
@@ -208,19 +208,19 @@ public class PlayerFist : MonoBehaviour
         }
     }
 
-    public void HandleCollisionWithPlayer(Player player1, bool wasBlocked)
+    public void HandleCollisionWithPlayer(Fighter player1, bool wasBlocked)
     {
        rb2d.linearVelocity = Vector2.zero;
        artTransform.DOShakeScale(.5f);
        if (!wasBlocked)
        {
-           player.AddPoints(1);
+           _fighter.AddPoints(1);
        }
        EventHub.TriggerPlaySoundRequested(wasBlocked ? fistBlockedSound : fistHitSound);
     }
 
-    public Player GetOwner()
+    public Fighter GetOwner()
     {
-        return player;
+        return _fighter;
     }
 }

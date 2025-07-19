@@ -7,15 +7,15 @@ public class AIBaseComponent : MonoBehaviour
     private AIMovementModule movementModule;
     private AIAttackModule attackModule;
     private AIDefenseModule defenseModule;
-    private Player playerRef;
+    private Fighter _fighterRef;
     private bool active = false;
     
     private List<GameObject> installedModules = new();
 
     private void Awake()
     {
-        playerRef = GetComponent<Player>();
-        playerRef.OnTurnStateChanged += OnTurnStateChanged;
+        _fighterRef = GetComponent<Fighter>();
+        _fighterRef.OnTurnStateChanged += OnTurnStateChanged;
         movementModule = GetComponent<AIMovementModule>();
         attackModule = GetComponent<AIAttackModule>();
         defenseModule = GetComponent<AIDefenseModule>();
@@ -66,7 +66,7 @@ public class AIBaseComponent : MonoBehaviour
             
             GameObject newModule = Instantiate(module, transform);
             AIBaseModule aiBaseModule = newModule.GetComponent<AIBaseModule>(); 
-            aiBaseModule.Initialize(GetComponent<Player>());
+            aiBaseModule.Initialize(GetComponent<Fighter>());
         }
     }
 

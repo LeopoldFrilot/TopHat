@@ -8,11 +8,11 @@ public class PlayerBlock : MonoBehaviour
     private bool blocking = false;
     private float blockingCooldownStart;
     private float blockingTimeStart;
-    private Player playerRef;
+    private Fighter _fighterRef;
 
     private void Awake()
     {
-        playerRef = gameObject.GetComponent<Player>();
+        _fighterRef = gameObject.GetComponent<Fighter>();
     }
 
     private void Update()
@@ -34,7 +34,7 @@ public class PlayerBlock : MonoBehaviour
         {
             blocking = true;
             blockingTimeStart = Time.time;
-            foreach (var fists in playerRef.GetSpawnedFists())
+            foreach (var fists in _fighterRef.GetSpawnedFists())
             {
                 fists.StartBlock();
             }
@@ -51,7 +51,7 @@ public class PlayerBlock : MonoBehaviour
             blockingCooldownStart = Time.time;
         }
         
-        foreach (var fists in playerRef.GetSpawnedFists())
+        foreach (var fists in _fighterRef.GetSpawnedFists())
         {
             fists.StopBlock(cancelLag);
         }

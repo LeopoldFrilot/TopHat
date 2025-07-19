@@ -16,7 +16,7 @@ public class FightScene : MonoBehaviour
     [SerializeField] private PlayableDirector countdownTimeline;
     
     private PlayerHat attackerHat;
-    private List<Player> players = new();
+    private List<Fighter> players = new();
     private PlayerInputManager inputManager;
     private FightSceneUI fightSceneUI;
     private bool vsAI;
@@ -56,10 +56,10 @@ public class FightScene : MonoBehaviour
 
     private void OnPlayerJoined(PlayerInput player)
     {
-        Player playerRef = Instantiate(players.Count == 0 ? player1Prefab : player2Prefab).GetComponent<Player>();
-        playerRef.Initialize(player, this);
-        players.Add(playerRef);
-        playerRef.SetPlayerIndex(players.IndexOf(playerRef) + 1);
+        Fighter fighterRef = Instantiate(players.Count == 0 ? player1Prefab : player2Prefab).GetComponent<Fighter>();
+        fighterRef.Initialize(player, this);
+        players.Add(fighterRef);
+        fighterRef.SetPlayerIndex(players.IndexOf(fighterRef) + 1);
         if (players.Count == 2)
         {
             if (vsAI)
@@ -75,11 +75,11 @@ public class FightScene : MonoBehaviour
         }
     }
 
-    private void EnableAIForPlayer(Player playerRef)
+    private void EnableAIForPlayer(Fighter fighterRef)
     {
         
         pickerUI.TriggerModuleInstallation();
-        playerRef.SetAIControlled(true);
+        fighterRef.SetAIControlled(true);
     }
 
     private void StartFight()
@@ -105,11 +105,11 @@ public class FightScene : MonoBehaviour
         inCountdown = false;
     }
 
-    public Player GetOpponent(Player player)
+    public Fighter GetOpponent(Fighter fighter)
     {
         foreach (var player1 in players)
         {
-            if (player1 != player)
+            if (player1 != fighter)
             {
                 return player1;
             }
@@ -137,8 +137,8 @@ public class FightScene : MonoBehaviour
     {
         if (players.Count > 1)
         {
-            Player originalAttacker = players[0].GetTurnState() == TurnState.Attacking ? players[0] : players[1];
-            Player originalDefender = GetOpponent(originalAttacker);
+            Fighter originalAttacker = players[0].GetTurnState() == TurnState.Attacking ? players[0] : players[1];
+            Fighter originalDefender = GetOpponent(originalAttacker);
             originalAttacker.SwitchTurnState(TurnState.Defending);
             attackerHat.SetNewTarget(originalDefender.GetHatLocation());
             yield return new WaitUntil(()=>attackerHat.IsInTransition() == false);
@@ -146,18 +146,18 @@ public class FightScene : MonoBehaviour
         }
     }
 
-    private void OnPlayerEarnedPoints(Player obj)
+    private void OnPlayerEarnedPoints(Fighter obj)
     {
         fightSceneUI.UpdatePointsText(players[0].GetPointsThisGame(), players[1].GetPointsThisGame());
     }
 
-    private void OnPlayerGrappled(Player playerGrappled)
+    private void OnPlayerGrappled(Fighter fighterGrappled)
     {
-        playerGrappled.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2((GetOpponent(playerGrappled).IsFacingLeft() ? 1f : -1f) * 1.2f, 1f) * grappleResetPower);
+        fighterGrappled.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2((GetOpponent(fighterGrappled).IsFacingLeft() ? 1f : -1f) * 1.2f, 1f) * grappleResetPower);
         StartCoroutine(StartSwapRoles());
     }
 
-    private void OnTurnEnded(Player player)
+    private void OnTurnEnded(Fighter fighter)
     {
         StartCoroutine(StartSwapRoles());
     }

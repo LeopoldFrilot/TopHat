@@ -1,8 +1,9 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputHandler : MonoBehaviour
+public class InputHandler : NetworkBehaviour
 {
     private float actionTimeStart = -1;
     private bool active = true;
@@ -10,7 +11,7 @@ public class InputHandler : MonoBehaviour
     public event Action<float> OnVerticalInputChanged;
     public void Vertical(InputAction.CallbackContext ctx)
     {
-        if (!active)
+        if (!IsActive())
         {
             return;
         }
@@ -21,7 +22,7 @@ public class InputHandler : MonoBehaviour
     public event Action<float> OnHorizontalInputChanged;
     public void Horizontal(InputAction.CallbackContext ctx)
     {
-        if (!active)
+        if (!IsActive())
         {
             return;
         }
@@ -33,7 +34,7 @@ public class InputHandler : MonoBehaviour
     public event Action<float> OnActionCancelled;
     public void ActionPerformed(InputAction.CallbackContext ctx)
     {
-        if (!active)
+        if (!IsActive())
         {
             return;
         }
@@ -53,6 +54,21 @@ public class InputHandler : MonoBehaviour
     public float GetCurrentActionHoldTime()
     {
         return Time.time - actionTimeStart;
+    }
+
+    private bool IsActive()
+    {
+        if (!active)
+        {
+            return false;
+        }
+
+        if (GameWizard.Instance.IsNetworkedGame())
+        {
+            return IsOwner;
+        }
+        
+        return true;
     }
 
     public void SetActive(bool newValue)

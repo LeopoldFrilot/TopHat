@@ -6,6 +6,8 @@ using UnityEngine.Serialization;
 public class GameWizard : MonoBehaviour
 {
     public List<GameObject> allAIModules = new();
+    
+    private bool isNetworkedGame = false;
 
     #region Singleton
 
@@ -34,5 +36,15 @@ public class GameWizard : MonoBehaviour
     private void NonSingletonAwake()
     {
         
+    }
+
+    public void SetGameAsNetworked()
+    {
+        isNetworkedGame = true;
+    }
+
+    public bool IsNetworkedGame()
+    {
+        return isNetworkedGame;
     }
 }
