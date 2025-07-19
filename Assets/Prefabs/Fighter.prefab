@@ -1418,8 +1418,6 @@ GameObject:
   - component: {fileID: 1345889205945301477}
   - component: {fileID: 3342531721457426399}
   - component: {fileID: 9135749140268649174}
-  - component: {fileID: 4587795742680046530}
-  - component: {fileID: 608938192136267586}
   - component: {fileID: 2728930296739472218}
   - component: {fileID: 3762138827360222222}
   - component: {fileID: 5017118212934078332}
@@ -1492,44 +1490,6 @@ MonoBehaviour:
   horizontalJumpPower: 4
   risingGravity: 3
   fallingGravity: 8
---- !u!114 &4587795742680046530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8514386353918108479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 0
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
---- !u!114 &608938192136267586
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8514386353918108479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0eca8b8e43edc02429b46c6301abce4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!50 &2728930296739472218
 Rigidbody2D:
   serializedVersion: 5

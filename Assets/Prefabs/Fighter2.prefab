@@ -106,19 +106,17 @@ PrefabInstance:
       objectReference: {fileID: 1217151063048997811, guid: 6365baaade71f914199772eb6cd49303, type: 3}
     - target: {fileID: 8514386353918108479, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
       propertyPath: m_Name
-      value: Player2
+      value: Fighter2
       objectReference: {fileID: 0}
     - target: {fileID: 9161683672286644069, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 7704955272561668946, guid: 6365baaade71f914199772eb6cd49303, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4587795742680046530, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8514386353918108479, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 1845056856678689527}
     - targetCorrespondingSourceObject: {fileID: 9214032040357746429, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2086344023306477709}
@@ -167,36 +165,6 @@ MonoBehaviour:
   m_labelHash: 1.2079726e-29
   m_SpriteKey: 0
   m_SpriteHash: 529690928
---- !u!1 &4170276716760717819 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8514386353918108479, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
-  m_PrefabInstance: {fileID: 5762041070496135876}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1845056856678689527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4170276716760717819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4051758862
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!1 &8007013600977538250 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2371217364661237262, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
