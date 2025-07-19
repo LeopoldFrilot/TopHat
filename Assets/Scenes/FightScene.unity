@@ -7609,7 +7609,7 @@ MonoBehaviour:
     NetworkProfilingMetrics: 1
     OldPrefabList: []
   RunInBackground: 1
-  LogLevel: 1
+  LogLevel: 0
 --- !u!1 &1620066585
 GameObject:
   m_ObjectHideFlags: 0
@@ -10325,14 +10325,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -37.88675
       objectReference: {fileID: 0}
-    - target: {fileID: 1529051263062893825, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1732315394}
-    - target: {fileID: 1800380415210636885, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1732315394}
     - target: {fileID: 1877844546689743098, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -10353,10 +10345,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2454156858444276667, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1732315394}
     - target: {fileID: 4349166317884254684, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -10457,10 +10445,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -40.903168
       objectReference: {fileID: 0}
-    - target: {fileID: 6681399927966777791, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1328233073}
     - target: {fileID: 7027706653369689563, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
       propertyPath: m_Name
       value: OptionsRoot
