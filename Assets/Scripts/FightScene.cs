@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
@@ -17,18 +18,23 @@ public class FightScene : MonoBehaviour
     
     private PlayerHat attackerHat;
     private List<Fighter> players = new();
-    private PlayerInputManager inputManager;
     private FightSceneUI fightSceneUI;
     private bool vsAI;
     private AIPickerUI pickerUI;
     private bool inCountdown;
+    private PlayerInputManager playerInput;
 
     public void Awake()
     {
-        inputManager = GetComponent<PlayerInputManager>();
         fightSceneUI = GetComponent<FightSceneUI>();
         pickerUI = FindFirstObjectByType<AIPickerUI>();
-        inputManager.onPlayerJoined += OnPlayerJoined;
+        playerInput = GetComponent<PlayerInputManager>();
+        playerInput.onPlayerJoined += OnPlayerJoined;
+    }
+
+    private void OnPlayerJoined(PlayerInput playerInput)
+    {
+        playerInput.GetComponent<NetworkedFighterController>().OnPlayerJoined(playerInput);
     }
 
     public void Restart()
@@ -54,10 +60,9 @@ public class FightScene : MonoBehaviour
         }
     }
 
-    private void OnPlayerJoined(PlayerInput player)
+    public void RegisterFighter(NetworkedFighterController networkedFighterController)
     {
-        Fighter fighterRef = Instantiate(players.Count == 0 ? player1Prefab : player2Prefab).GetComponent<Fighter>();
-        fighterRef.Initialize(player, this);
+        Fighter fighterRef = networkedFighterController.SpawnFighter(players.Count == 0 ? player1Prefab : player2Prefab, Vector3.zero, Quaternion.identity);
         players.Add(fighterRef);
         fighterRef.SetPlayerIndex(players.IndexOf(fighterRef) + 1);
         if (players.Count == 2)

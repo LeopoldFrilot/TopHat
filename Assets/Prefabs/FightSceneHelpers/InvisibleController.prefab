@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8788400257410903960}
   - component: {fileID: 6916533121961080948}
   - component: {fileID: 4413096900181570645}
+  - component: {fileID: 7629770004944843525}
   m_Layer: 0
   m_Name: InvisibleController
   m_TagString: Untagged
@@ -147,6 +148,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0eca8b8e43edc02429b46c6301abce4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &7629770004944843525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7108673974971550655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1882dd89b174d20b50505ae2520a885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1

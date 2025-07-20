@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour

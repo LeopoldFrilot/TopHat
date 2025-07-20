@@ -8,6 +8,7 @@ public class GameWizard : MonoBehaviour
     public List<GameObject> allAIModules = new();
     
     private bool isNetworkedGame = false;
+    private bool isLocalGame = false;
 
     #region Singleton
 
@@ -41,10 +42,22 @@ public class GameWizard : MonoBehaviour
     public void SetGameAsNetworked()
     {
         isNetworkedGame = true;
+        isLocalGame = false;
+    }
+
+    public void SetGameAsLocal()
+    {
+        isNetworkedGame = false;
+        isLocalGame = true;
     }
 
     public bool IsNetworkedGame()
     {
         return isNetworkedGame;
+    }
+
+    public bool IsLocalGame()
+    {
+        return isLocalGame;
     }
 }

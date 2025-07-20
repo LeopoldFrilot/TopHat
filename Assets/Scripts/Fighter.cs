@@ -49,13 +49,16 @@ public class Fighter : MonoBehaviour
     private AIBaseComponent AIBaseComponent;
     private bool initialized = false;
 
-    public void Initialize(PlayerInput player, FightScene fightScene)
+    private NetworkedFighterController networkedFighterController;
+
+    public void Initialize(NetworkedFighterController networkedFighterController, FightScene fightScene)
     {
         this.fightScene = fightScene;
+        this.networkedFighterController = networkedFighterController;
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
-        inputHandler = player.GetComponent<InputHandler>();
+        inputHandler = networkedFighterController.GetComponent<InputHandler>();
         inputHandler.OnActionStarted += OnActionStarted;
         inputHandler.OnActionCancelled += OnActionCancelled;
         initialized = true;
