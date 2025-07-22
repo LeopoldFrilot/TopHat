@@ -45,7 +45,7 @@ public class PlayerFist : MonoBehaviour
     private Tweener retract = null;
     private Tweener block = null;
     private Tweener blockGrowth = null;
-      private Tweener blockRotate = null;
+    private Tweener blockRotate = null;
     private TweenCallback shakeTweenComplete;
     private AudioSource windupAudio;
 
@@ -108,7 +108,7 @@ public class PlayerFist : MonoBehaviour
         switch (prevState)
         {
             case PlayerFistState.Idle:
-                idleFollow.Complete();
+                PauseFistControl();
                 break;
             
             case PlayerFistState.Windup:
@@ -122,8 +122,7 @@ public class PlayerFist : MonoBehaviour
         switch (currentState)
         {
             case PlayerFistState.Idle:
-                idleFollow = transform.DOMove(restingPosition.position, idleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
-                idleFollow.OnUpdate(() => idleFollow.ChangeEndValue(restingPosition.position, true).Restart());
+                ResumeFistControl();
                 windup = 0;
                 break;
                 
@@ -222,5 +221,19 @@ public class PlayerFist : MonoBehaviour
     public Fighter GetOwner()
     {
         return _fighter;
+    }
+
+    public void PauseFistControl()
+    {
+        idleFollow.Complete();
+    }
+
+    public void ResumeFistControl()
+    {
+        if (currentState == PlayerFistState.Idle)
+        {
+            idleFollow = transform.DOMove(restingPosition.position, idleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
+            idleFollow.OnUpdate(() => idleFollow.ChangeEndValue(restingPosition.position, true).Restart());
+        }
     }
 }

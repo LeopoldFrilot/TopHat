@@ -370,4 +370,20 @@ public class Fighter : MonoBehaviour
     {
         return initialized;
     }
+
+    public void PauseFistControl()
+    {
+        foreach (var fist in spawnedFists)
+        {
+            fist.PauseFistControl();
+        }
+    }
+
+    public void ResumeFistControl()
+    {
+        foreach (var fist in spawnedFists)
+        {
+            fist.ResumeFistControl();
+        }
+    }
 }
