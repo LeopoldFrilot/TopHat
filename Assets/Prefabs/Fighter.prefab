@@ -1474,6 +1474,8 @@ MonoBehaviour:
   mainBodyAnimator: {fileID: 8261680427056463553}
   animatorSpeedFloatName: Speed
   animatorJumpBoolName: Jump
+  animatorGrappleTriggerName: Grapple1
+  animatorGrappledTriggerName: Grapple2
   grappleSound: {fileID: 8300000, guid: 848784606ebedc94296fcd0461382f8f, type: 3}
 --- !u!114 &9135749140268649174
 MonoBehaviour:

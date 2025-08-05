@@ -50,6 +50,7 @@ public class Fighter : MonoBehaviour
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
     private bool initialized = false;
+    private bool stunned = false;
 
     private NetworkedFighterController networkedFighterController;
 
@@ -146,7 +147,7 @@ public class Fighter : MonoBehaviour
 
     private void OnActionStarted()
     {
-        if (fightScene.IsInCountdown())
+        if (fightScene.IsInCountdown() || stunned)
         {
             return;
         }
@@ -207,11 +208,9 @@ public class Fighter : MonoBehaviour
         {
              if (fist.GetOwner().IsBlocking())
              {
-                 fist.GetOwner().AddPoints(pointsForGrapple);
-                 EventHub.TriggerPlaySoundRequested(grappleSound);
-                 EventHub.TriggerPlayerGrappled(this);
+                 Stun();
+                 fightScene.GetOpponent(this).Stun();
                  fightScene.GetOpponent(this).StartGrappleAnimation();
-                 StartGrappledAnimation();
              }
         }
         else
@@ -257,6 +256,28 @@ public class Fighter : MonoBehaviour
         }
     }
 
+    private void Stun()
+    {
+        stunned = true;
+    }
+
+    private void CancelStun()
+    {
+        stunned = false;
+    }
+
+    public void TriggerGrappleComplete()
+    {
+        AddPoints(pointsForGrapple);
+        EventHub.TriggerPlaySoundRequested(grappleSound);
+        Fighter opponent = fightScene.GetOpponent(this);
+        EventHub.TriggerPlayerGrappled(opponent);
+        opponent.StartGrappledAnimation();
+        CancelStun();
+        opponent.CancelStun();
+        
+    }
+
     private void StartGrappleAnimation()
     {
         mainBodyAnimator.SetTrigger(animatorGrappleTriggerName);
@@ -300,7 +321,7 @@ public class Fighter : MonoBehaviour
 
     public bool CanMove()
     {
-        return !playerBlock.IsBlocking() && !fightScene.IsInCountdown();
+        return !stunned && !playerBlock.IsBlocking() && !fightScene.IsInCountdown();
     }
 
     public void AddPoints(int amount)
@@ -387,17 +408,29 @@ public class Fighter : MonoBehaviour
 
     public void PauseFistControl()
     {
-        foreach (var fist in spawnedFists)
-        {
-            fist.PauseFistControl();
-        }
+        var outSpawnedFist = spawnedFists[0];
+        outSpawnedFist.transform.SetParent(outFistLocation);
+        outSpawnedFist.transform.localScale = Vector3.one;
+        outSpawnedFist.transform.localPosition = Vector3.zero;
+        outSpawnedFist.PauseFistControl();
+        
+        var inSpawnedFist = spawnedFists[0];
+        inSpawnedFist.transform.SetParent(inFistLocation);
+        inSpawnedFist.transform.localScale = Vector3.one;
+        inSpawnedFist.transform.localPosition = Vector3.zero;
+        inSpawnedFist.PauseFistControl();
     }
 
     public void ResumeFistControl()
     {
-        foreach (var fist in spawnedFists)
-        {
-            fist.ResumeFistControl();
-        }
+        var outSpawnedFist = spawnedFists[0];
+        outSpawnedFist.transform.SetParent(null);
+        outSpawnedFist.ResumeFistControl();
+        outSpawnedFist.transform.localScale = Vector3.one;
+        
+        var inSpawnedFist = spawnedFists[0];
+        inSpawnedFist.transform.SetParent(null);
+        inSpawnedFist.ResumeFistControl();
+        inSpawnedFist.transform.localScale = Vector3.one;
     }
 }

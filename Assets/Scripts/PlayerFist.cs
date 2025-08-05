@@ -108,7 +108,7 @@ public class PlayerFist : MonoBehaviour
         switch (prevState)
         {
             case PlayerFistState.Idle:
-                PauseFistControl();
+                idleFollow.Complete();
                 break;
             
             case PlayerFistState.Windup:
@@ -122,7 +122,8 @@ public class PlayerFist : MonoBehaviour
         switch (currentState)
         {
             case PlayerFistState.Idle:
-                ResumeFistControl();
+                idleFollow = transform.DOMove(restingPosition.position, idleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
+                idleFollow.OnUpdate(() => idleFollow.ChangeEndValue(restingPosition.position, true).Restart());
                 windup = 0;
                 break;
                 
