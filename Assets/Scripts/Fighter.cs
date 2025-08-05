@@ -28,6 +28,8 @@ public class Fighter : MonoBehaviour
     [SerializeField] private Animator mainBodyAnimator;
     [SerializeField] private string animatorSpeedFloatName = "speed";
     [SerializeField] private string animatorJumpBoolName = "Jump";
+    [SerializeField] private string animatorGrappleTriggerName = "Grapple1";
+    [SerializeField] private string animatorGrappledTriggerName = "Grapple2";
     
     [Header("Audio")]
     [SerializeField] AudioClip grappleSound;
@@ -208,6 +210,8 @@ public class Fighter : MonoBehaviour
                  fist.GetOwner().AddPoints(pointsForGrapple);
                  EventHub.TriggerPlaySoundRequested(grappleSound);
                  EventHub.TriggerPlayerGrappled(this);
+                 fightScene.GetOpponent(this).StartGrappleAnimation();
+                 StartGrappledAnimation();
              }
         }
         else
@@ -251,6 +255,16 @@ public class Fighter : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void StartGrappleAnimation()
+    {
+        mainBodyAnimator.SetTrigger(animatorGrappleTriggerName);
+    }
+
+    private void StartGrappledAnimation()
+    {
+        mainBodyAnimator.SetTrigger(animatorGrappledTriggerName);
     }
 
     public bool IsBlocking()

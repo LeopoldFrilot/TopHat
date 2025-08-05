@@ -158,7 +158,7 @@ public class FightScene : MonoBehaviour
 
     private void OnPlayerGrappled(Fighter fighterGrappled)
     {
-        fighterGrappled.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2((GetOpponent(fighterGrappled).IsFacingLeft() ? 1f : -1f) * 1.2f, 1f) * grappleResetPower);
+        fighterGrappled.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2(((fighterGrappled.transform.position.x > 0) ? -1f : 1f) * 1.2f, 1f) * grappleResetPower);
         StartCoroutine(StartSwapRoles());
     }
 
