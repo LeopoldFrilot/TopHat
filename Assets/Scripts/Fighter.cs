@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -10,7 +11,7 @@ public enum TurnState
     Defending
 }
 
-public class Fighter : MonoBehaviour
+public class Fighter : NetworkBehaviour
 {
     [SerializeField] private Transform artRoot;
     [SerializeField] private Transform inFistLocation;
@@ -55,12 +56,15 @@ public class Fighter : MonoBehaviour
     {
         this.fightScene = fightScene;
         this.networkedFighterController = networkedFighterController;
+        if (networkedFighterController)
+        {
+            inputHandler = networkedFighterController.GetComponent<InputHandler>();
+            inputHandler.OnActionStarted += OnActionStarted;
+            inputHandler.OnActionCancelled += OnActionCancelled;
+        }
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
-        inputHandler = networkedFighterController.GetComponent<InputHandler>();
-        inputHandler.OnActionStarted += OnActionStarted;
-        inputHandler.OnActionCancelled += OnActionCancelled;
         initialized = true;
         TriggerInitialized();
     }
@@ -84,10 +88,20 @@ public class Fighter : MonoBehaviour
         outSpawnedFist.Iniialize(this, outFistLocation, blockLocation);
 
         spawnedFists = new List<PlayerFist>{ outSpawnedFist, inSpawnedFist };
+
+        if (!IsServer)
+        {
+            Initialize(null, FindFirstObjectByType<FightScene>());
+        }
     }
 
     private void Update()
     {
+        if (!initialized)
+        {
+            return;
+        }
+        
         float speed = playerMovement.GetHorizontalVelocity();
         mainBodyAnimator.SetFloat(animatorSpeedFloatName, speed);
         if (playerMovement.IsJumping())

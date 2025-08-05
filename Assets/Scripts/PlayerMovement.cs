@@ -3,7 +3,7 @@ using DG.Tweening;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private float speed = 4f;
     [SerializeField] private float verticalJumpPower = 8f;
@@ -41,8 +41,11 @@ public class PlayerMovement : MonoBehaviour
     private void Initialize()
     {
         inputHandler = _fighter.GetInputHandler();
-        inputHandler.OnHorizontalInputChanged += OnHorizontalInputChanged;
-        inputHandler.OnVerticalInputChanged += OnVerticalInputChanged;
+        if (inputHandler)
+        {
+            inputHandler.OnHorizontalInputChanged += OnHorizontalInputChanged;
+            inputHandler.OnVerticalInputChanged += OnVerticalInputChanged;
+        }
     }
 
     public void RegisterHorizontalInput(float value)
