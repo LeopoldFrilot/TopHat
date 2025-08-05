@@ -11,7 +11,6 @@ public class PlayerFistUI : MonoBehaviour
 
     public void FaceRight(bool faceRight)
     {
-        Debug.Log($"{transform.root.gameObject}: {faceRight}");
         sprite.transform.localScale = new Vector3(
             (faceRight ? 1f : -1f) * Mathf.Abs(sprite.transform.localScale.x), 
             sprite.transform.localScale.y, 

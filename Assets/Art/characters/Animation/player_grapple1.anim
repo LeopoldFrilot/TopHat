@@ -3131,8 +3131,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: ArtRoot/OutFistLocation
+    attribute: m_LocalEulerAngles.z
+    path: ArtRoot/LegR
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -3144,7 +3144,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: ArtRoot/OutFistLocation
+    path: ArtRoot/LegR
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -3155,8 +3155,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: ArtRoot/OutFistLocation
+    attribute: m_LocalEulerAngles.x
+    path: ArtRoot/LegR
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -3204,7 +3204,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: ArtRoot/LegR
+    path: ArtRoot/OutFistLocation
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -3216,7 +3216,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: ArtRoot/LegR
+    path: ArtRoot/OutFistLocation
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -3228,7 +3228,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: ArtRoot/LegR
+    path: ArtRoot/OutFistLocation
     classID: 4
     script: {fileID: 0}
     flags: 0
@@ -3237,6 +3237,13 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: PauseFistControl
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.28333333
+    functionName: TriggerGrappleComplete
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
