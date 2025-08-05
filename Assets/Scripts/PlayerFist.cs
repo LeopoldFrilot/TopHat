@@ -225,6 +225,7 @@ public class PlayerFist : MonoBehaviour
 
     public void PauseFistControl()
     {
+        block.Complete();
         idleFollow.Complete();
     }
 
