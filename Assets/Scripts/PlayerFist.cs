@@ -63,7 +63,7 @@ public class PlayerFist : MonoBehaviour
         SwitchState(PlayerFistState.Idle, true);
         shakeTweenComplete = () =>
         {
-            windupShake = artTransform.DOShakePosition(.1f, .003f * windup * windup).SetRelative()
+            windupShake = artTransform.DOShakePosition(.1f, .003f * (baseWindup + windup) * (baseWindup + windup)).SetRelative()
                 .OnComplete(shakeTweenComplete);
         };
     }
@@ -72,8 +72,8 @@ public class PlayerFist : MonoBehaviour
     {
         if (currentState == PlayerFistState.Windup)
         {
-            windup = Mathf.Clamp(windup + Time.deltaTime * windupSpeed, 0, maxWindup);
-            currentOffset = windup * windupOffset;
+            windup = Mathf.Clamp(windup + Time.deltaTime * windupSpeed, 0, maxWindup - baseWindup);
+            currentOffset = (windup + baseWindup) * windupOffset;
             transform.position = restingPosition.position - new Vector3((_fighter.IsFacingLeft() ? -1 : 1) * currentOffset.x, currentOffset.y, 0);
         }
         else if(currentState == PlayerFistState.Launch)
@@ -136,17 +136,12 @@ public class PlayerFist : MonoBehaviour
                 rb2d.bodyType = RigidbodyType2D.Dynamic;
                 rb2d.AddForceX((_fighter.IsFacingLeft() ? -1 : 1) * (windup + baseWindup) * launchStrength, ForceMode2D.Impulse);
                 EventHub.TriggerPlaySoundRequested(fistReleaseSound, .5f);
-                GetOwner().AddLaunches(1);
                 break;
             
             case PlayerFistState.Retract:
                 rb2d.bodyType = RigidbodyType2D.Kinematic;
                 retract = transform.DOMove(restingPosition.position, retractTime).SetEase(Ease.InCubic)
                     .OnComplete(()=>SwitchState(PlayerFistState.Idle));
-                if (GetOwner().GetLaunchCount() >= 3)
-                {
-                    EventHub.TriggerTurnEnded(GetOwner());
-                }
                 break;
         }
 
@@ -159,10 +154,7 @@ public class PlayerFist : MonoBehaviour
 
     public void StartWindup()
     {
-        if (GetOwner().GetLaunchCount() < 3)
-        {
-            SwitchState(PlayerFistState.Windup);
-        }
+        SwitchState(PlayerFistState.Windup);
     }
 
     public void Retract()
@@ -212,10 +204,6 @@ public class PlayerFist : MonoBehaviour
     {
        rb2d.linearVelocity = Vector2.zero;
        artTransform.DOShakeScale(.5f);
-       if (!wasBlocked)
-       {
-           _fighter.AddPoints(1);
-       }
        EventHub.TriggerPlaySoundRequested(wasBlocked ? fistBlockedSound : fistHitSound);
     }
 
@@ -237,5 +225,10 @@ public class PlayerFist : MonoBehaviour
             idleFollow = transform.DOMove(restingPosition.position, idleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
             idleFollow.OnUpdate(() => idleFollow.ChangeEndValue(restingPosition.position, true).Restart());
         }
+    }
+
+    public float GetWindupNormalized()
+    {
+        return (windup+baseWindup) / maxWindup;
     }
 }

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public enum TurnState
 {
@@ -17,12 +15,12 @@ public class Fighter : MonoBehaviour
     [SerializeField] private Transform outFistLocation;
     [SerializeField] private Transform blockLocation;
     [SerializeField] private Transform playerHatLocation;
-    [SerializeField] private Collider2D crosslineTrigger;
-    [SerializeField] private int pointsForGrapple = 5;
     [SerializeField] private float blockKnockbackPower = 4;
     [SerializeField] private float hitKnockbackPower = 10;
+    [SerializeField] private float grappleResetPower = 20f;
     [SerializeField] private GameObject hitEffectPrefab;
     [SerializeField] private GameObject blockEffectPrefab;
+    [SerializeField] private AnimationCurve dizzyDamageCurve;
 
     [Header("Animation")] 
     [SerializeField] private Animator mainBodyAnimator;
@@ -42,15 +40,14 @@ public class Fighter : MonoBehaviour
     private InputHandler inputHandler;
     private int playerIndex = 0;
     private FightScene fightScene;
+    private PlayerDizziness playerDizziness;
+    private PlayerStatus playerStatus;
 
-    private int hitsThisRound = 0;
-    private int blocksThisRound = 0;
-    private int landedBlowsThisGame = 0;
-    private int launches = 0;
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
     private bool initialized = false;
-    private bool stunned = false;
+
+    private int grappledHandle = -1;
 
     private NetworkedFighterController networkedFighterController;
 
@@ -61,11 +58,17 @@ public class Fighter : MonoBehaviour
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
+        playerDizziness = GetComponent<PlayerDizziness>();
+        playerStatus = GetComponent<PlayerStatus>();
         inputHandler = networkedFighterController.GetComponent<InputHandler>();
         inputHandler.OnActionStarted += OnActionStarted;
         inputHandler.OnActionCancelled += OnActionCancelled;
         initialized = true;
         TriggerInitialized();
+    }
+
+    public void Restart()
+    {
     }
 
     public Action OnInitialized;
@@ -108,13 +111,6 @@ public class Fighter : MonoBehaviour
     {
         return playerHatLocation;
     }
-
-    private void StartRound()
-    {
-        hitsThisRound = 0;
-        blocksThisRound = 0;
-        launches = 0;
-    }
     
     public List<PlayerFist> GetSpawnedFists() => spawnedFists;
 
@@ -147,7 +143,7 @@ public class Fighter : MonoBehaviour
 
     private void OnActionStarted()
     {
-        if (fightScene.IsInCountdown() || stunned)
+        if (!CanStartAction())
         {
             return;
         }
@@ -170,6 +166,27 @@ public class Fighter : MonoBehaviour
                 playerBlock.TryToBLock();
             }
         }
+    }
+
+    public bool CanStartAction()
+    {
+        if (fightScene.IsInCountdown())
+        {
+            return false;
+        }
+
+        var effects = playerStatus.GetActiveStatusEffects();
+        if (effects.Contains(StatusType.Grappled) || effects.Contains(StatusType.Stunned))
+        {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public bool CanMove()
+    {
+        return CanStartAction() && !playerBlock.IsBlocking();
     }
 
     public void FaceLeft()
@@ -204,12 +221,13 @@ public class Fighter : MonoBehaviour
         {
             return;
         }
+        
         if (currentTurnState == TurnState.Attacking)
         {
              if (fist.GetOwner().IsBlocking())
              {
-                 Stun();
-                 fightScene.GetOpponent(this).Stun();
+                 SetGrappled();
+                 fightScene.GetOpponent(this).SetGrappled();
                  fightScene.GetOpponent(this).StartGrappleAnimation();
              }
         }
@@ -217,64 +235,50 @@ public class Fighter : MonoBehaviour
         {
             if (fist.GetCurrentState() == PlayerFistState.Launch)
             {
-                bool hitCrossline = false;
-                List<Collider2D> otherColliders = new List<Collider2D>();
-                other.Overlap(otherColliders);
-                if (otherColliders.Contains(crosslineTrigger))
-                {
-                    hitCrossline = true;
-                }
-            
-                PlayerFistState state = fist.GetCurrentState();
                 bool blocked = playerBlock.IsBlocking();
-                if (!hitCrossline)
-                {
-                    fist.HandleCollisionWithPlayer(this, blocked);
+                
+                fist.HandleCollisionWithPlayer(this, blocked);
             
-                    if (blocked)
-                    {
-                        playerBlock.CancelBlockLag();
-                        blocksThisRound++;
-                        Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
-                    }
-                    else
-                    {
-                        Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
-                    }
-                }
-
-                hitsThisRound++;
-                EventHub.TriggerFistConnected(this, fist, state);
-
-                if (!hitCrossline)
+                if (blocked)
                 {
-                    playerMovement.LaunchPlayer(
-                        new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) 
-                        * (blocked ? blockKnockbackPower : hitKnockbackPower));
+                    playerBlock.CancelBlockLag();
+                    Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
                 }
+                else
+                {
+                    Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
+                }
+
+                playerMovement.LaunchPlayer(
+                    new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) 
+                    * (blocked ? blockKnockbackPower : hitKnockbackPower));
+                
+                playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized()));
             }
         }
     }
 
-    private void Stun()
+    private void SetGrappled()
     {
-        stunned = true;
+        CancelGrappled();
+        grappledHandle = playerStatus.AddStatusEffect(StatusType.Grappled);
     }
 
-    private void CancelStun()
+    private void CancelGrappled()
     {
-        stunned = false;
+        playerStatus.RemoveStatusEffect(grappledHandle);
+        grappledHandle = -1;
     }
 
     public void TriggerGrappleComplete()
     {
-        AddPoints(pointsForGrapple);
         EventHub.TriggerPlaySoundRequested(grappleSound);
         Fighter opponent = fightScene.GetOpponent(this);
-        EventHub.TriggerPlayerGrappled(opponent);
+        
+        opponent.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2(((opponent.transform.position.x > 0) ? -1f : 1f) * 1.2f, 1f) * grappleResetPower);
         opponent.StartGrappledAnimation();
-        CancelStun();
-        opponent.CancelStun();
+        CancelGrappled();
+        opponent.CancelGrappled();
         
     }
 
@@ -309,7 +313,6 @@ public class Fighter : MonoBehaviour
         {
             currentTurnState = newState;
             TriggerTurnStateChanged(currentTurnState);
-            StartRound();
         }
     }
     
@@ -317,22 +320,6 @@ public class Fighter : MonoBehaviour
     private void TriggerTurnStateChanged(TurnState newState)
     {
         OnTurnStateChanged?.Invoke(newState);
-    }
-
-    public bool CanMove()
-    {
-        return !stunned && !playerBlock.IsBlocking() && !fightScene.IsInCountdown();
-    }
-
-    public void AddPoints(int amount)
-    {
-        landedBlowsThisGame += amount;
-        EventHub.TriggerPlayerEarnedPoints(this);
-    }
-
-    public int GetHitsThisRound()
-    {
-        return hitsThisRound;
     }
 
     public void SwapTurnState()
@@ -345,18 +332,6 @@ public class Fighter : MonoBehaviour
         {
             SwitchTurnState(TurnState.Attacking);
         }
-    }
-
-    public void Restart()
-    {
-        landedBlowsThisGame = 0;
-        EventHub.TriggerPlayerEarnedPoints(this);
-        StartRound();
-    }
-
-    public int GetPointsThisGame()
-    {
-        return landedBlowsThisGame;
     }
 
     public TurnState GetTurnState()
@@ -379,16 +354,6 @@ public class Fighter : MonoBehaviour
         }
         
         inputHandler.SetActive(!AIControlled);
-    }
-
-    public void AddLaunches(int i)
-    {
-        launches += i;
-    }
-
-    public int GetLaunchCount()
-    {
-        return launches;
     }
 
     public void InstallAIModules(GameObject attackModule, GameObject defenseModule, GameObject movementModule)

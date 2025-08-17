@@ -10,7 +10,6 @@ public class FightScene : MonoBehaviour
 {
     [SerializeField] private Transform player1Location;
     [SerializeField] private Transform player2Location;
-    [SerializeField] private float grappleResetPower = 5f;
     [SerializeField] private GameObject attackerHatPrefab;
     [SerializeField] private GameObject player1Prefab;
     [SerializeField] private GameObject player2Prefab;
@@ -82,7 +81,6 @@ public class FightScene : MonoBehaviour
 
     private void EnableAIForPlayer(Fighter fighterRef)
     {
-        
         pickerUI.TriggerModuleInstallation();
         fighterRef.SetAIControlled(true);
     }
@@ -151,17 +149,6 @@ public class FightScene : MonoBehaviour
         }
     }
 
-    private void OnPlayerEarnedPoints(Fighter obj)
-    {
-        fightSceneUI.UpdatePointsText(players[0].GetPointsThisGame(), players[1].GetPointsThisGame());
-    }
-
-    private void OnPlayerGrappled(Fighter fighterGrappled)
-    {
-        fighterGrappled.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2(((fighterGrappled.transform.position.x > 0) ? -1f : 1f) * 1.2f, 1f) * grappleResetPower);
-        StartCoroutine(StartSwapRoles());
-    }
-
     private void OnTurnEnded(Fighter fighter)
     {
         StartCoroutine(StartSwapRoles());
@@ -170,14 +157,10 @@ public class FightScene : MonoBehaviour
     private void OnEnable()
     {
         EventHub.OnTurnEnded += OnTurnEnded;
-        EventHub.OnPlayerEarnedPoints += OnPlayerEarnedPoints;
-        EventHub.OnPlayerGrappled += OnPlayerGrappled;
     }
 
     private void OnDisable()
     {
         EventHub.OnTurnEnded -= OnTurnEnded;
-        EventHub.OnPlayerEarnedPoints -= OnPlayerEarnedPoints;
-        EventHub.OnPlayerGrappled -= OnPlayerGrappled;
     }
 }
