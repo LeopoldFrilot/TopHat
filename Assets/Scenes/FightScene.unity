@@ -6162,7 +6162,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1Location: {fileID: 1172788424}
   player2Location: {fileID: 581772331}
-  grappleResetPower: 20
   attackerHatPrefab: {fileID: 1140113374656715590, guid: 22759f210f0ecfc43aec29ab33ddd0c8, type: 3}
   player1Prefab: {fileID: 8514386353918108479, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
   player2Prefab: {fileID: 4170276716760717819, guid: 377c78099a5453d4fb87107abc4340f6, type: 3}
@@ -10757,6 +10756,7 @@ SceneRoots:
   - {fileID: 588288732}
   - {fileID: 1547755766}
   - {fileID: 8996495532977334701}
+  - {fileID: 1618228401}
   - {fileID: 242196391}
   - {fileID: 249028858}
   - {fileID: 1328233072}
@@ -10766,4 +10766,3 @@ SceneRoots:
   - {fileID: 7142788442608919811}
   - {fileID: 1330445447}
   - {fileID: 905024082}
-  - {fileID: 1618228401}

@@ -2076,12 +2076,44 @@ MonoBehaviour:
   outFistLocation: {fileID: 4643464560084846745}
   blockLocation: {fileID: 3662762342808355139}
   playerHatLocation: {fileID: 8350552367242473314}
-  crosslineTrigger: {fileID: 0}
   blockKnockbackPower: 6
   hitKnockbackPower: 13
   grappleResetPower: 20
   hitEffectPrefab: {fileID: 4209640813906056705, guid: 7b9aa78dcb8bdb24795042246dfa75ba, type: 3}
   blockEffectPrefab: {fileID: 4209640813906056705, guid: a29ac508324d3b542a6a2bc32388fd0f, type: 3}
+  dizzyDamageCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.73824006
+      value: 2.0543404
+      inSlope: 4.0784116
+      outSlope: 4.0784116
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 3
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   mainBodyAnimator: {fileID: 8261680427056463553}
   animatorSpeedFloatName: Speed
   animatorJumpBoolName: Jump
@@ -2275,9 +2307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87d0583baa042808a0a0f5cad890479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStature: 5
-  statureRecoveryRate: 10
-  delayBeforeRecovery: 0.5
+  maxDizziness: 5
+  dizzyRecoveryRate: 3
+  delayBeforeRecovery: 1.5
 --- !u!114 &4915518682772512237
 MonoBehaviour:
   m_ObjectHideFlags: 0

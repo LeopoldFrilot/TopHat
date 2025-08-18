@@ -10,6 +10,12 @@ public class PlayerDizziness : MonoBehaviour
     
     private float dizzy;
     private float nextTimeToRecover;
+    private Fighter fighterRef;
+
+    private void Awake()
+    {
+        fighterRef = GetComponent<Fighter>();
+    }
 
     private void Start()
     {
@@ -18,13 +24,19 @@ public class PlayerDizziness : MonoBehaviour
 
     private void Update()
     {
+        if (fighterRef.IsStunned())
+        {
+            SetNewStature(maxDizziness);
+            return;
+        }
+        
         if (Time.time >= nextTimeToRecover)
         {
             SetNewStature(dizzy - Time.deltaTime * dizzyRecoveryRate);
         }
     }
 
-    private void ResetDizzy()
+    public void ResetDizzy()
     {
         SetNewStature(0);
         nextTimeToRecover = 0;
@@ -32,6 +44,11 @@ public class PlayerDizziness : MonoBehaviour
 
     public void DealDizzyDamage(float damage)
     {
+        if (fighterRef.IsStunned())
+        {
+            return;
+        }
+        
         if (damage > 0)
         {
             Debug.Log($"Dealing damage: {damage}");

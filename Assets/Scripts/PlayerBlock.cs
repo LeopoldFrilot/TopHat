@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class PlayerBlock : MonoBehaviour
 {
-    [SerializeField] private float blockingTime = 0.3f;
+    [SerializeField] private float blockingTime = 0.5f;
+    [SerializeField] private float perfectBlockTime = .2f;
     [SerializeField] private float blockingCooldown = 0.5f;
     private bool blocking = false;
     private float blockingCooldownStart;
@@ -60,5 +61,10 @@ public class PlayerBlock : MonoBehaviour
     private bool CanBlock()
     {
         return !blocking && Time.time >= (blockingCooldownStart + blockingCooldown);
+    }
+
+    public bool IsPerfectBlock()
+    {
+        return blocking && blockingTimeStart + perfectBlockTime >= Time.time;
     }
 }

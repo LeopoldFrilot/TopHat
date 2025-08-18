@@ -15,7 +15,7 @@ public class FightScene : MonoBehaviour
     [SerializeField] private GameObject player2Prefab;
     [SerializeField] private PlayableDirector countdownTimeline;
     
-    private PlayerHat attackerHat;
+    private PlayerHat defenderHat;
     private List<Fighter> players = new();
     private FightSceneUI fightSceneUI;
     private bool vsAI;
@@ -94,9 +94,9 @@ public class FightScene : MonoBehaviour
         players[1].transform.position = player2Location.position;
         players[1].SwitchTurnState(randomFirst == 1 ? TurnState.Attacking : TurnState.Defending);
         players[1].FaceLeft();
-        if (!attackerHat)
+        if (!defenderHat)
         {
-            attackerHat = Instantiate(attackerHatPrefab).GetComponent<PlayerHat>();
+            defenderHat = Instantiate(attackerHatPrefab).GetComponent<PlayerHat>();
         }
         StartCoroutine(StartSwapRoles());
         countdownTimeline.Play();
@@ -143,8 +143,8 @@ public class FightScene : MonoBehaviour
             Fighter originalAttacker = players[0].GetTurnState() == TurnState.Attacking ? players[0] : players[1];
             Fighter originalDefender = GetOpponent(originalAttacker);
             originalAttacker.SwitchTurnState(TurnState.Defending);
-            attackerHat.SetNewTarget(originalDefender.GetHatLocation());
-            yield return new WaitUntil(()=>attackerHat.IsInTransition() == false);
+            defenderHat.SetNewTarget(originalAttacker.GetHatLocation());
+            yield return new WaitUntil(()=>defenderHat.IsInTransition() == false);
             originalDefender.SwapTurnState();
         }
     }

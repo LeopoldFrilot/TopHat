@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +19,7 @@ public class Fighter : MonoBehaviour
     [SerializeField] private float blockKnockbackPower = 4;
     [SerializeField] private float hitKnockbackPower = 10;
     [SerializeField] private float grappleResetPower = 20f;
+    [SerializeField] private float dizzyStunTimeLength = 3f;
     [SerializeField] private GameObject hitEffectPrefab;
     [SerializeField] private GameObject blockEffectPrefab;
     [SerializeField] private AnimationCurve dizzyDamageCurve;
@@ -48,6 +50,7 @@ public class Fighter : MonoBehaviour
     private bool initialized = false;
 
     private int grappledHandle = -1;
+    private int dizzyStunHandle = -2;
 
     private NetworkedFighterController networkedFighterController;
 
@@ -58,13 +61,37 @@ public class Fighter : MonoBehaviour
         playerBlock = GetComponent<PlayerBlock>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
-        playerDizziness = GetComponent<PlayerDizziness>();
         playerStatus = GetComponent<PlayerStatus>();
+        
+        playerDizziness = GetComponent<PlayerDizziness>();
+        playerDizziness.OnDizzinessChanged += OnDizzinessChanged;
+        
+        
         inputHandler = networkedFighterController.GetComponent<InputHandler>();
         inputHandler.OnActionStarted += OnActionStarted;
         inputHandler.OnActionCancelled += OnActionCancelled;
+        
         initialized = true;
         TriggerInitialized();
+    }
+
+    private void OnDizzinessChanged(float obj)
+    {
+        float normalizedDizzy = playerDizziness.GetNormalizedDizziness();
+        if (normalizedDizzy >= 0.99f)
+        {
+            StartCoroutine(DizzyStun());
+        }
+    }
+
+    private IEnumerator DizzyStun()
+    {
+        playerStatus.RemoveStatusEffect(dizzyStunHandle);
+        dizzyStunHandle = playerStatus.AddStatusEffect(StatusType.Stunned);
+        yield return new WaitForSeconds(dizzyStunTimeLength);
+        playerStatus.RemoveStatusEffect(dizzyStunHandle);
+        playerDizziness.ResetDizzy();
+        dizzyStunHandle = -1;
     }
 
     public void Restart()
@@ -236,6 +263,7 @@ public class Fighter : MonoBehaviour
             if (fist.GetCurrentState() == PlayerFistState.Launch)
             {
                 bool blocked = playerBlock.IsBlocking();
+                bool wasPerfectBlock = playerBlock.IsPerfectBlock();
                 
                 fist.HandleCollisionWithPlayer(this, blocked);
             
@@ -243,17 +271,22 @@ public class Fighter : MonoBehaviour
                 {
                     playerBlock.CancelBlockLag();
                     Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
+                    if (wasPerfectBlock)
+                    {
+                        return;
+                    }
+                    
+                    playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
                 }
                 else
                 {
                     Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
+                    playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized()));
                 }
 
                 playerMovement.LaunchPlayer(
                     new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) 
                     * (blocked ? blockKnockbackPower : hitKnockbackPower));
-                
-                playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized()));
             }
         }
     }
@@ -397,5 +430,10 @@ public class Fighter : MonoBehaviour
         inSpawnedFist.transform.SetParent(null);
         inSpawnedFist.ResumeFistControl();
         inSpawnedFist.transform.localScale = Vector3.one;
+    }
+
+    public bool IsStunned()
+    {
+        return playerStatus.GetActiveStatusEffects().Contains(StatusType.Stunned);
     }
 }
