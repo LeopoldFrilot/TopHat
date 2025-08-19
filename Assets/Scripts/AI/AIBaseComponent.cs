@@ -72,7 +72,6 @@ public class AIBaseComponent : MonoBehaviour
 
     public void Activate()
     {
-        throw new NotImplementedException();
     }
 
     public void Deactivate()

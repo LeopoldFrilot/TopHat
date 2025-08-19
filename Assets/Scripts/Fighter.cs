@@ -50,7 +50,10 @@ public class Fighter : MonoBehaviour
     private bool initialized = false;
 
     private int grappledHandle = -1;
-    private int dizzyStunHandle = -2;
+    private int dizzyStunHandle = -1;
+
+    private float hatTime;
+    private bool knockedOff = false;
 
     private NetworkedFighterController networkedFighterController;
 
@@ -80,14 +83,14 @@ public class Fighter : MonoBehaviour
         float normalizedDizzy = playerDizziness.GetNormalizedDizziness();
         if (normalizedDizzy >= 0.99f)
         {
+            playerStatus.RemoveStatusEffect(dizzyStunHandle);
+            dizzyStunHandle = playerStatus.AddStatusEffect(StatusType.Stunned);
             StartCoroutine(DizzyStun());
         }
     }
 
     private IEnumerator DizzyStun()
     {
-        playerStatus.RemoveStatusEffect(dizzyStunHandle);
-        dizzyStunHandle = playerStatus.AddStatusEffect(StatusType.Stunned);
         yield return new WaitForSeconds(dizzyStunTimeLength);
         playerStatus.RemoveStatusEffect(dizzyStunHandle);
         playerDizziness.ResetDizzy();
@@ -96,6 +99,14 @@ public class Fighter : MonoBehaviour
 
     public void Restart()
     {
+        hatTime = 0;
+        
+        playerStatus.RemoveStatusEffect(dizzyStunHandle);
+        playerDizziness.ResetDizzy();
+        dizzyStunHandle = -1;
+        
+        playerStatus.RemoveStatusEffect(grappledHandle);
+        grappledHandle = -1;
     }
 
     public Action OnInitialized;
@@ -126,6 +137,11 @@ public class Fighter : MonoBehaviour
         if (playerMovement.IsJumping())
         {
             mainBodyAnimator.SetBool(animatorJumpBoolName, true);
+        }
+
+        if (!fightScene.IsInCountdown() && currentTurnState == TurnState.Defending && !IsStunned())
+        {
+            hatTime += Time.deltaTime;
         }
     }
 
@@ -253,6 +269,10 @@ public class Fighter : MonoBehaviour
         {
              if (fist.GetOwner().IsBlocking())
              {
+                 foreach (var spawnedFist in spawnedFists)
+                 {
+                     spawnedFist.Reset();
+                 }
                  SetGrappled();
                  fightScene.GetOpponent(this).SetGrappled();
                  fightScene.GetOpponent(this).StartGrappleAnimation();
@@ -260,28 +280,37 @@ public class Fighter : MonoBehaviour
         }
         else
         {
-            if (fist.GetCurrentState() == PlayerFistState.Launch)
+            if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
             {
-                bool blocked = playerBlock.IsBlocking();
-                bool wasPerfectBlock = playerBlock.IsPerfectBlock();
+                bool willKnockOff = currentTurnState == TurnState.Defending && IsStunned() && !knockedOff;
+                bool blocked = playerBlock.IsBlocking() && !willKnockOff;
+                bool wasPerfectBlock = playerBlock.IsPerfectBlock() && !willKnockOff;
+
+                if (willKnockOff)
+                {
+                    TriggerKnockOff();
+                }
                 
                 fist.HandleCollisionWithPlayer(this, blocked);
-            
-                if (blocked)
+
+                if (!willKnockOff)
                 {
-                    playerBlock.CancelBlockLag();
-                    Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
-                    if (wasPerfectBlock)
+                    if (blocked)
                     {
-                        return;
-                    }
+                        playerBlock.CancelBlockLag();
+                        Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
+                        if (wasPerfectBlock)
+                        {
+                            return;
+                        }
                     
-                    playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
-                }
-                else
-                {
-                    Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
-                    playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized()));
+                        playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
+                    }
+                    else
+                    {
+                        Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
+                        playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized()));
+                    } 
                 }
 
                 playerMovement.LaunchPlayer(
@@ -289,6 +318,13 @@ public class Fighter : MonoBehaviour
                     * (blocked ? blockKnockbackPower : hitKnockbackPower));
             }
         }
+    }
+
+    public Action OnKnockOff;
+    private void TriggerKnockOff()
+    {
+        knockedOff = true;
+        OnKnockOff?.Invoke();
     }
 
     private void SetGrappled()
@@ -352,6 +388,11 @@ public class Fighter : MonoBehaviour
     public event Action<TurnState> OnTurnStateChanged;
     private void TriggerTurnStateChanged(TurnState newState)
     {
+        if (currentTurnState == TurnState.Defending)
+        {
+            knockedOff = false;
+        }
+        
         OnTurnStateChanged?.Invoke(newState);
     }
 
@@ -435,5 +476,10 @@ public class Fighter : MonoBehaviour
     public bool IsStunned()
     {
         return playerStatus.GetActiveStatusEffects().Contains(StatusType.Stunned);
+    }
+
+    public float GetHatTime()
+    {
+        return hatTime;
     }
 }

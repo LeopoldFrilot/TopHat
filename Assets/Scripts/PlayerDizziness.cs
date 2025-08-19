@@ -44,24 +44,19 @@ public class PlayerDizziness : MonoBehaviour
 
     public void DealDizzyDamage(float damage)
     {
-        if (fighterRef.IsStunned())
-        {
-            return;
-        }
-        
         if (damage > 0)
         {
-            Debug.Log($"Dealing damage: {damage}");
             SetNewStature(dizzy + damage);
+            Debug.Log($"Dealing damage: {damage}. Total Damage: {dizzy}");
             ResetRecoveryTimer();
         }
     }
 
-    private void SetNewStature(float newStature)
+    private void SetNewStature(float newDizzy)
     {
         float prevStature = dizzy;
-        newStature = Mathf.Clamp(newStature, 0f, maxDizziness);
-        dizzy = newStature;
+        newDizzy = Mathf.Clamp(newDizzy, 0f, maxDizziness);
+        dizzy = newDizzy;
         if (prevStature != dizzy)
         {
             TriggerDizzinessChanged(dizzy);
@@ -82,6 +77,6 @@ public class PlayerDizziness : MonoBehaviour
 
     public float GetNormalizedDizziness()
     {
-        return dizzy/maxDizziness;
+        return Mathf.Clamp01(dizzy/maxDizziness);
     }
 }

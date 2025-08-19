@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class FightScene : MonoBehaviour
     [SerializeField] private GameObject player1Prefab;
     [SerializeField] private GameObject player2Prefab;
     [SerializeField] private PlayableDirector countdownTimeline;
+    [SerializeField] private float targetHatTime = 60f;
     
     private PlayerHat defenderHat;
     private List<Fighter> players = new();
@@ -29,6 +31,21 @@ public class FightScene : MonoBehaviour
         pickerUI = FindFirstObjectByType<AIPickerUI>();
         playerInput = GetComponent<PlayerInputManager>();
         playerInput.onPlayerJoined += OnPlayerJoined;
+    }
+
+    private void Update()
+    {
+        if (players.Count == 2)
+        {
+            float p1 = players[0].GetHatTime();
+            float p2 = players[1].GetHatTime();
+            fightSceneUI.UpdatePointsText(p1, p2, targetHatTime);
+
+            if (p1 >= targetHatTime || p2 >= targetHatTime)
+            {
+                Restart();
+            }
+        }
     }
 
     private void OnPlayerJoined(PlayerInput playerInput)
@@ -62,6 +79,7 @@ public class FightScene : MonoBehaviour
     public void RegisterFighter(NetworkedFighterController networkedFighterController)
     {
         Fighter fighterRef = networkedFighterController.SpawnFighter(players.Count == 0 ? player1Prefab : player2Prefab, Vector3.zero, Quaternion.identity);
+        fighterRef.OnKnockOff += OnKnockOff;
         players.Add(fighterRef);
         fighterRef.SetPlayerIndex(players.IndexOf(fighterRef) + 1);
         if (players.Count == 2)
@@ -77,6 +95,11 @@ public class FightScene : MonoBehaviour
             
             Restart();
         }
+    }
+
+    private void OnKnockOff()
+    {
+        StartCoroutine(StartSwapRoles());
     }
 
     private void EnableAIForPlayer(Fighter fighterRef)

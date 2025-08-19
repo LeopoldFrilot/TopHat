@@ -34,7 +34,7 @@ public class PlayerStatus : MonoBehaviour
             return i;
         }
         
-        statusEffects.Add(new StatusEffect{type = type, valid = false});
+        statusEffects.Add(new StatusEffect{type = type, valid = true});
         TriggerStatusEffectsChanged();
         return statusEffects.Count - 1;
     }

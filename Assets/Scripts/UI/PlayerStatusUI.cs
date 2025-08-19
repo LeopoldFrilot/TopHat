@@ -17,13 +17,10 @@ public class PlayerStatusUI : MonoBehaviour
     private void Awake()
     {
         dizzinessRef = fighter.GetComponent<PlayerDizziness>();
-        dizzinessRef.OnDizzinessChanged += OnDizzinessChanged;
-        
         statusRef = fighter.GetComponent<PlayerStatus>();
-        statusRef.OnStatusEffectsChanged += OnStatusEffectsChanged;
     }
 
-    private void Start()
+    private void Update()
     {
         UpdateStatus();
     }
@@ -35,7 +32,7 @@ public class PlayerStatusUI : MonoBehaviour
         float dizzinessNormalized = dizzinessRef.GetNormalizedDizziness();
         statureSlider.value = dizzinessNormalized;
         
-        if (!Mathf.Approximately(dizzinessNormalized, 0))
+        if (dizzinessNormalized > 0)
         {
             somethingShowing = true;
         }
@@ -59,15 +56,5 @@ public class PlayerStatusUI : MonoBehaviour
         }
 
         UIRoot.SetActive(somethingShowing);
-    }
-
-    private void OnDizzinessChanged(float newStatureNormalized)
-    {
-        UpdateStatus();
-    }
-
-    private void OnStatusEffectsChanged(List<StatusType> statusTypes)
-    {
-        UpdateStatus();
     }
 }

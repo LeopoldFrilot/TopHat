@@ -6166,6 +6166,7 @@ MonoBehaviour:
   player1Prefab: {fileID: 8514386353918108479, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
   player2Prefab: {fileID: 4170276716760717819, guid: 377c78099a5453d4fb87107abc4340f6, type: 3}
   countdownTimeline: {fileID: 653258547}
+  targetHatTime: 30
 --- !u!114 &1328233074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10344,6 +10345,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2454156858444276667, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1732315394}
+    - target: {fileID: 2454156858444276667, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
     - target: {fileID: 4349166317884254684, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -10443,6 +10452,14 @@ PrefabInstance:
     - target: {fileID: 5025511427065439072, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -40.903168
+      objectReference: {fileID: 0}
+    - target: {fileID: 6681399927966777791, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1328233073}
+    - target: {fileID: 6681399927966777791, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Restart
       objectReference: {fileID: 0}
     - target: {fileID: 7027706653369689563, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
       propertyPath: m_Name

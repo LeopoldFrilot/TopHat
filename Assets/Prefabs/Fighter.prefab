@@ -2079,6 +2079,7 @@ MonoBehaviour:
   blockKnockbackPower: 6
   hitKnockbackPower: 13
   grappleResetPower: 20
+  dizzyStunTimeLength: 2.5
   hitEffectPrefab: {fileID: 4209640813906056705, guid: 7b9aa78dcb8bdb24795042246dfa75ba, type: 3}
   blockEffectPrefab: {fileID: 4209640813906056705, guid: a29ac508324d3b542a6a2bc32388fd0f, type: 3}
   dizzyDamageCurve:
@@ -2177,6 +2178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockingTime: 0.5
+  perfectBlockTime: 0.2
   blockingCooldown: 0.5
 --- !u!114 &5017118212934078332
 MonoBehaviour:

@@ -48,6 +48,7 @@ public class PlayerFist : MonoBehaviour
     private Tweener blockRotate = null;
     private TweenCallback shakeTweenComplete;
     private AudioSource windupAudio;
+    private bool consumed = false;
 
     private void Awake()
     {
@@ -128,6 +129,7 @@ public class PlayerFist : MonoBehaviour
                 break;
                 
             case PlayerFistState.Windup:
+                consumed = false;
                 shakeTweenComplete.Invoke();
                 windupAudio.Play();
                 break;
@@ -202,9 +204,10 @@ public class PlayerFist : MonoBehaviour
 
     public void HandleCollisionWithPlayer(Fighter player1, bool wasBlocked)
     {
-       rb2d.linearVelocity = Vector2.zero;
-       artTransform.DOShakeScale(.5f);
-       EventHub.TriggerPlaySoundRequested(wasBlocked ? fistBlockedSound : fistHitSound);
+        consumed = true;
+        rb2d.linearVelocity = Vector2.zero;
+        artTransform.DOShakeScale(.5f);
+        EventHub.TriggerPlaySoundRequested(wasBlocked ? fistBlockedSound : fistHitSound);
     }
 
     public Fighter GetOwner()
@@ -230,5 +233,15 @@ public class PlayerFist : MonoBehaviour
     public float GetWindupNormalized()
     {
         return (windup+baseWindup) / maxWindup;
+    }
+
+    public bool IsConsumed()
+    {
+        return consumed;
+    }
+
+    public void Reset()
+    {
+        SwitchState(PlayerFistState.Idle);
     }
 }
