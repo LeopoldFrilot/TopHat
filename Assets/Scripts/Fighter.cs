@@ -55,7 +55,7 @@ public class Fighter : MonoBehaviour
     private float hatTime;
     private bool knockedOff = false;
 
-    private NetworkedFighterController networkedFighterController;
+    public NetworkedFighterController networkedFighterController;
 
     public void Initialize(NetworkedFighterController networkedFighterController, FightScene fightScene)
     {
@@ -164,11 +164,16 @@ public class Fighter : MonoBehaviour
 
     public void CancelAction()
     {
-        OnActionCancelled(0);
+        OnActionCancelled(1);
     }
 
-    private void OnActionCancelled(float duration)
+    private void OnActionCancelled(int playerOnNetworkedController)
     {
+        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
+        {
+            return;
+        }
+
         foreach (var spawnedFist in spawnedFists)
         {
             if (spawnedFist.GetCurrentState() == PlayerFistState.Windup)
@@ -181,11 +186,16 @@ public class Fighter : MonoBehaviour
 
     public void StartAction()
     {
-        OnActionStarted();
+        OnActionStarted(1);
     }
 
-    private void OnActionStarted()
+    private void OnActionStarted(int playerOnNetworkedController)
     {
+        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
+        {
+            return;
+        }
+        
         if (!CanStartAction())
         {
             return;

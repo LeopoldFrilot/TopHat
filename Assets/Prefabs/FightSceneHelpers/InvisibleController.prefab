@@ -64,7 +64,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4413096900181570645}
         m_TargetAssemblyTypeName: InputHandler, TopHat
-        m_MethodName: Horizontal
+        m_MethodName: KeyHorizontal
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -80,7 +80,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4413096900181570645}
         m_TargetAssemblyTypeName: InputHandler, TopHat
-        m_MethodName: Vertical
+        m_MethodName: KeyVertical
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -96,7 +96,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4413096900181570645}
         m_TargetAssemblyTypeName: InputHandler, TopHat
-        m_MethodName: ActionPerformed
+        m_MethodName: KeyActionPerformed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -108,6 +108,102 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c7c08fb7-f39e-4aaa-b18a-14e775de2831
     m_ActionName: 'Main/Action[/Keyboard/space,/XInputControllerWindows/buttonSouth]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: PadHorizontal
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c7798373-dc3e-4bcf-a675-524b2e95ba35
+    m_ActionName: Main/PadHorizontal
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: Key2Horizontal
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 48b3fb79-eae2-4765-ae22-d0182ff38cf0
+    m_ActionName: 'Main/KeyHorizontal2[/Keyboard/j,/Keyboard/l]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: PadVertical
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: da3edd78-2406-44ff-a6aa-9d84928d8d6f
+    m_ActionName: Main/PadVertical
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: Key2Vertical
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c43e4051-97d0-453b-b19b-4669a42cc399
+    m_ActionName: 'Main/KeyVertical2[/Keyboard/k,/Keyboard/i]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: PadActionPerformed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 35e4667e-571e-4bda-bfe3-100955821bc8
+    m_ActionName: Main/PadAction
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: Key2ActionPerformed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fb47676d-141e-4433-9857-1c013872c1c2
+    m_ActionName: 'Main/KeyAction2[/Keyboard/rightShift]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Main

@@ -18,6 +18,7 @@ public class FightScene : MonoBehaviour
     [SerializeField] private float targetHatTime = 60f;
     
     private PlayerHat defenderHat;
+    private List<NetworkedFighterController> networkControllers = new();
     private List<Fighter> players = new();
     private FightSceneUI fightSceneUI;
     private bool vsAI;
@@ -45,6 +46,34 @@ public class FightScene : MonoBehaviour
             {
                 Restart();
             }
+        }
+    }
+
+    public void ForceAddSecondPlayer()
+    {
+        if (players.Count != 1)
+        {
+            return;
+        }
+
+        var controller = networkControllers[0];
+        
+        Fighter fighterRef = controller.SpawnFighter(players.Count == 0 ? player1Prefab : player2Prefab, Vector3.zero, Quaternion.identity);
+        fighterRef.OnKnockOff += OnKnockOff;
+        players.Add(fighterRef);
+        fighterRef.SetPlayerIndex(players.IndexOf(fighterRef) + 1);
+        if (players.Count == 2)
+        {
+            if (vsAI)
+            {
+                EnableAIForPlayer(players[1]);
+            }
+            else
+            {
+                players[1].SetAIControlled(false);
+            }
+            
+            Restart();
         }
     }
 
@@ -78,6 +107,12 @@ public class FightScene : MonoBehaviour
 
     public void RegisterFighter(NetworkedFighterController networkedFighterController)
     {
+        if (players.Count == 2)
+        {
+            return;
+        }
+        
+        networkControllers.Add(networkedFighterController);
         Fighter fighterRef = networkedFighterController.SpawnFighter(players.Count == 0 ? player1Prefab : player2Prefab, Vector3.zero, Quaternion.identity);
         fighterRef.OnKnockOff += OnKnockOff;
         players.Add(fighterRef);

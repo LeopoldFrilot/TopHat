@@ -5,34 +5,74 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : NetworkBehaviour
 {
-    private float actionTimeStart = -1;
     private bool active = true;
+    private NetworkedFighterController networkedFighterController;
     
-    public event Action<float> OnVerticalInputChanged;
-    public void Vertical(InputAction.CallbackContext ctx)
+    public event Action<float, int> OnVerticalInputChanged;
+    public void PadVertical(InputAction.CallbackContext ctx)
     {
         if (!IsActive())
         {
             return;
         }
 
-        OnVerticalInputChanged?.Invoke(ctx.ReadValue<float>());
+        OnVerticalInputChanged?.Invoke(ctx.ReadValue<float>(), 0);
     }
 
-    public event Action<float> OnHorizontalInputChanged;
-    public void Horizontal(InputAction.CallbackContext ctx)
+    public void KeyVertical(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+
+        OnVerticalInputChanged?.Invoke(ctx.ReadValue<float>(), 0);
+    }
+
+    public void Key2Vertical(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+
+        OnVerticalInputChanged?.Invoke(ctx.ReadValue<float>(), 1);
+    }
+
+    public event Action<float, int> OnHorizontalInputChanged;
+    public void PadHorizontal(InputAction.CallbackContext ctx)
     {
         if (!IsActive())
         {
             return;
         }
         
-        OnHorizontalInputChanged?.Invoke(ctx.ReadValue<float>());
+        OnHorizontalInputChanged?.Invoke(ctx.ReadValue<float>(), 0);
+    }
+    
+    public void KeyHorizontal(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        OnHorizontalInputChanged?.Invoke(ctx.ReadValue<float>(), 0);
+    }
+    
+    public void Key2Horizontal(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        OnHorizontalInputChanged?.Invoke(ctx.ReadValue<float>(), 1);
     }
 
-    public event Action OnActionStarted;
-    public event Action<float> OnActionCancelled;
-    public void ActionPerformed(InputAction.CallbackContext ctx)
+    public event Action<int> OnActionStarted;
+    public event Action<int> OnActionCancelled;
+    public void PadActionPerformed(InputAction.CallbackContext ctx)
     {
         if (!IsActive())
         {
@@ -41,19 +81,46 @@ public class InputHandler : NetworkBehaviour
         
         if (ctx.started)
         {
-            actionTimeStart = Time.time;
-            OnActionStarted?.Invoke();
+            OnActionStarted?.Invoke(0);
         }
         else if (ctx.canceled)
         {
-            OnActionCancelled?.Invoke(Time.time - actionTimeStart);
-            actionTimeStart = -1;
+            OnActionCancelled?.Invoke(0);
         }
     }
     
-    public float GetCurrentActionHoldTime()
+    public void KeyActionPerformed(InputAction.CallbackContext ctx)
     {
-        return Time.time - actionTimeStart;
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        if (ctx.started)
+        {
+            OnActionStarted?.Invoke(0);
+        }
+        else if (ctx.canceled)
+        {
+            OnActionCancelled?.Invoke(0);
+        }
+    }
+    
+    public void Key2ActionPerformed(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        if (ctx.started)
+        {
+            OnActionStarted?.Invoke(1);
+        }
+        else if (ctx.canceled)
+        {
+            OnActionCancelled?.Invoke(1);
+        }
     }
 
     private bool IsActive()
@@ -76,13 +143,9 @@ public class InputHandler : NetworkBehaviour
         active = newValue;
         if (!active)
         {
-            OnVerticalInputChanged?.Invoke(0);
-            OnHorizontalInputChanged?.Invoke(0);
-            if (actionTimeStart >= 0)
-            {
-                OnActionCancelled?.Invoke(Time.time - actionTimeStart);
-                actionTimeStart = -1;
-            }
+            OnVerticalInputChanged?.Invoke(0, 1);
+            OnHorizontalInputChanged?.Invoke(0, 1);
+            OnActionCancelled?.Invoke(1);
         }
     }
 }

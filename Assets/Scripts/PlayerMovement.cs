@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     
     private InputHandler inputHandler;
     private float currentXVal = 0;
-    private Fighter _fighter;
+    private Fighter fighter;
     private bool isJumping = false;
     private Rigidbody2D rb2d;
 
@@ -22,42 +22,42 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        _fighter = GetComponent<Fighter>();
+        fighter = GetComponent<Fighter>();
         rb2d = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
-        if (_fighter.IsInitioalized())
+        if (fighter.IsInitioalized())
         {
             Initialize();
         }
         else
         {
-            _fighter.OnInitialized += Initialize;
+            fighter.OnInitialized += Initialize;
         }
     }
 
     private void Initialize()
     {
-        inputHandler = _fighter.GetInputHandler();
+        inputHandler = fighter.GetInputHandler();
         inputHandler.OnHorizontalInputChanged += OnHorizontalInputChanged;
         inputHandler.OnVerticalInputChanged += OnVerticalInputChanged;
     }
 
     public void RegisterHorizontalInput(float value)
     {
-        OnHorizontalInputChanged(value);
+        OnHorizontalInputChanged(value, 1);
     }
 
     public void RegisterVerticalInput(float value)
     {
-        OnVerticalInputChanged(value);
+        OnVerticalInputChanged(value, 1);
     }
 
     private void Update()
     {
-        if (_fighter.CanMove())
+        if (fighter.CanMove())
         {
             transform.position += new Vector3(GetWalkSpeed() * currentXVal * Time.deltaTime, 0, 0);
         }
@@ -88,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
         }
         
         int fistsInMotion = 0;
-        foreach (var spawnedFist in _fighter.GetSpawnedFists())
+        foreach (var spawnedFist in fighter.GetSpawnedFists())
         {
             if (spawnedFist.GetCurrentState() != PlayerFistState.Idle)
             {
@@ -99,9 +99,14 @@ public class PlayerMovement : MonoBehaviour
         return speed * Mathf.Pow(.6f, fistsInMotion);
     }
 
-    private void OnHorizontalInputChanged(float value)
+    private void OnHorizontalInputChanged(float value, int playerOnNetworkedController)
     {
-        if (!_fighter.CanMove())
+        if (playerOnNetworkedController != fighter.networkedFighterController.GetPlayerIndex(fighter))
+        {
+            return;
+        }
+        
+        if (!fighter.CanMove())
         {
             value = 0;
         }
@@ -109,9 +114,14 @@ public class PlayerMovement : MonoBehaviour
         currentXVal = value;
     }
 
-    private void OnVerticalInputChanged(float value)
+    private void OnVerticalInputChanged(float value, int playerOnNetworkedController)
     {
-        if (!_fighter.CanMove())
+        if (playerOnNetworkedController != fighter.networkedFighterController.GetPlayerIndex(fighter))
+        {
+            return;
+        }
+
+        if (!fighter.CanMove())
         {
             value = 0;
         }
@@ -155,7 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJump()
     {
-        return !IsJumping() && _fighter.CanMove();
+        return !IsJumping() && fighter.CanMove();
     }
 
     public float GetHorizontalVelocity()
