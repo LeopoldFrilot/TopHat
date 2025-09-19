@@ -2121,6 +2121,7 @@ MonoBehaviour:
   animatorGrappleTriggerName: Grapple1
   animatorGrappledTriggerName: Grapple2
   grappleSound: {fileID: 8300000, guid: 848784606ebedc94296fcd0461382f8f, type: 3}
+  networkedFighterController: {fileID: 0}
 --- !u!114 &9135749140268649174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2177,7 +2178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23dea123f924faaa3fb6f0af12cdf13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockingTime: 0.5
+  blockingTime: -1
   perfectBlockTime: 0.2
   blockingCooldown: 0.5
 --- !u!114 &5017118212934078332

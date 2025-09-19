@@ -18,9 +18,15 @@ public class PlayerBlock : MonoBehaviour
 
     private void Update()
     {
-        if (blocking && Time.time >= (blockingTime + blockingTimeStart))
+        if (blocking)
         {
-            StopBlocking();
+            if (blockingTime >= 0)
+            {
+                if (Time.time >= (blockingTime + blockingTimeStart))
+                {
+                    StopBlocking();
+                }
+            }
         }
     }
 
@@ -66,5 +72,13 @@ public class PlayerBlock : MonoBehaviour
     public bool IsPerfectBlock()
     {
         return blocking && blockingTimeStart + perfectBlockTime >= Time.time;
+    }
+
+    public void HandleActionButtonCancelled()
+    {
+        if (blockingTime < 0)
+        {
+            StopBlocking(true);
+        }
     }
 }

@@ -55,7 +55,7 @@ public class Fighter : MonoBehaviour
     private float hatTime;
     private bool knockedOff = false;
 
-    public NetworkedFighterController networkedFighterController;
+    [HideInInspector] public NetworkedFighterController networkedFighterController;
 
     public void Initialize(NetworkedFighterController networkedFighterController, FightScene fightScene)
     {
@@ -107,6 +107,13 @@ public class Fighter : MonoBehaviour
         
         playerStatus.RemoveStatusEffect(grappledHandle);
         grappledHandle = -1;
+        
+        playerBlock.CancelBlockLag();
+
+        foreach (var spawnedFist in spawnedFists)
+        {
+            spawnedFist.Reset();
+        }
     }
 
     public Action OnInitialized;
@@ -181,6 +188,11 @@ public class Fighter : MonoBehaviour
                 spawnedFist.Launch();
                 break;
             }
+        }
+
+        if (currentTurnState == TurnState.Defending)
+        {
+            playerBlock.HandleActionButtonCancelled();
         }
     }
 
@@ -307,25 +319,27 @@ public class Fighter : MonoBehaviour
                 {
                     if (blocked)
                     {
-                        playerBlock.CancelBlockLag();
                         Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
                         if (wasPerfectBlock)
                         {
                             return;
                         }
-                    
-                        playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
+
+                        if (fist.GetWindupNormalized() > .95)
+                        {
+                            playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
+                            playerMovement.LaunchPlayer(
+                                new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
+                        }
                     }
                     else
                     {
                         Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
                         playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized()));
+                        playerMovement.LaunchPlayer(
+                            new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * hitKnockbackPower);
                     } 
                 }
-
-                playerMovement.LaunchPlayer(
-                    new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) 
-                    * (blocked ? blockKnockbackPower : hitKnockbackPower));
             }
         }
     }

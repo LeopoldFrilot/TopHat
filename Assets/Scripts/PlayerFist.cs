@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -43,7 +44,7 @@ public class PlayerFist : MonoBehaviour
     private Tweener idleFollow = null;
     private Tweener windupShake = null;
     private Tweener retract = null;
-    private Tweener block = null;
+    private Coroutine blockRoutine = null;
     private Tweener blockGrowth = null;
     private Tweener blockRotate = null;
     private TweenCallback shakeTweenComplete;
@@ -172,9 +173,28 @@ public class PlayerFist : MonoBehaviour
     public void StartBlock()
     {
         SwitchState(PlayerFistState.Block);
-        block = transform.DOMove(blockPosition.position, .2f).SetEase(Ease.InCubic);
+        if (blockRoutine != null)
+        {
+            StopCoroutine(blockRoutine);
+        }
+
+        blockRoutine = StartCoroutine(BlockIdle());
         blockGrowth = artTransform.DOScale(Vector3.one * 1.5f, .2f).SetEase(Ease.InCubic);
         blockRotate = artTransform.DORotate(new Vector3(0, 0, _fighter.IsFacingLeft() ? -90 : 90), .2f, RotateMode.Fast);
+    }
+
+    private IEnumerator BlockIdle()
+    {
+        while (true)
+        {
+            transform.position = Vector3.Lerp(
+                transform.position,
+                blockPosition.position,
+                Time.deltaTime * 5f
+            );
+            
+            yield return null;
+        }
     }
 
     public void StopBlock(bool fast)
@@ -182,24 +202,15 @@ public class PlayerFist : MonoBehaviour
         blockGrowth.Complete();
         blockGrowth = artTransform.DOScale(Vector3.one, .2f).SetEase(Ease.InCubic);
         blockRotate = artTransform.DORotate(new Vector3(0, 0, 0), .2f, RotateMode.Fast);
-        if (block.IsActive())
+        transform.position = blockPosition.position;
+        if (blockRoutine != null)
         {
-            block.OnComplete(() =>
-            {
-                blockGrowth.Complete();
-                SwitchState(PlayerFistState.Idle);
-            });
-            
-            if (fast)
-            {
-                block.Complete();
-            }
+            StopCoroutine(blockRoutine);
+            blockRoutine = null;
         }
-        else
-        {
-            blockGrowth.Complete();
-            SwitchState(PlayerFistState.Idle);
-        }
+        
+        blockGrowth.Complete();
+        SwitchState(PlayerFistState.Idle);
     }
 
     public void HandleCollisionWithPlayer(Fighter player1, bool wasBlocked)
@@ -217,7 +228,12 @@ public class PlayerFist : MonoBehaviour
 
     public void PauseFistControl()
     {
-        block.Complete();
+        transform.position = blockPosition.position;
+        if (blockRoutine != null)
+        {
+            StopCoroutine(blockRoutine);
+            blockRoutine = null;
+        }
         idleFollow.Complete();
     }
 
@@ -242,6 +258,7 @@ public class PlayerFist : MonoBehaviour
 
     public void Reset()
     {
+        StopBlock(true);
         SwitchState(PlayerFistState.Idle);
     }
 }
