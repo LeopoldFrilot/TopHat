@@ -318,6 +318,17 @@
                     "action": "KeyAction2",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7535e8bf-d669-4721-8f7f-42f28c6ecfc7",
+                    "path": "<Keyboard>/period",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyAction2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
