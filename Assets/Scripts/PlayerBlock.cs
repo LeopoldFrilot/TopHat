@@ -8,7 +8,7 @@ public class PlayerBlock : MonoBehaviour
     [SerializeField] private float blockingCooldown = 0.5f;
     private bool blocking = false;
     private float blockingCooldownStart;
-    private float blockingTimeStart;
+    private float parryTimeStart;
     private Fighter _fighterRef;
 
     private void Awake()
@@ -16,41 +16,23 @@ public class PlayerBlock : MonoBehaviour
         _fighterRef = gameObject.GetComponent<Fighter>();
     }
 
-    private void Update()
+    public void TryToParry()
     {
-        if (blocking)
-        {
-            if (blockingTime >= 0)
-            {
-                if (Time.time >= (blockingTime + blockingTimeStart))
-                {
-                    StopBlocking();
-                }
-            }
-        }
+        parryTimeStart = Time.time;
     }
 
-    public void CancelBlockLag()
+    public void StartBlocking()
     {
-        StopBlocking(true);
-    }
-
-    public void TryToBLock()
-    {
-        if (CanBlock())
+        blocking = true;
+        foreach (var fists in _fighterRef.GetSpawnedFists())
         {
-            blocking = true;
-            blockingTimeStart = Time.time;
-            foreach (var fists in _fighterRef.GetSpawnedFists())
-            {
-                fists.StartBlock();
-            }
+            fists.StartBlock();
         }
     }
     
     public bool IsBlocking() => blocking;
 
-    private void StopBlocking(bool cancelLag = false)
+    public void StopBlocking(bool cancelLag = false)
     {
         blocking = false;
         if (!cancelLag)
@@ -71,14 +53,6 @@ public class PlayerBlock : MonoBehaviour
 
     public bool IsPerfectBlock()
     {
-        return blocking && blockingTimeStart + perfectBlockTime >= Time.time;
-    }
-
-    public void HandleActionButtonCancelled()
-    {
-        if (blockingTime < 0)
-        {
-            StopBlocking(true);
-        }
+        return blocking && parryTimeStart + perfectBlockTime >= Time.time;
     }
 }

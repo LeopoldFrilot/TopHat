@@ -107,8 +107,6 @@ public class Fighter : MonoBehaviour
         
         playerStatus.RemoveStatusEffect(grappledHandle);
         grappledHandle = -1;
-        
-        playerBlock.CancelBlockLag();
 
         foreach (var spawnedFist in spawnedFists)
         {
@@ -127,12 +125,12 @@ public class Fighter : MonoBehaviour
         var inSpawnedFist = inFistLocation.GetComponentInChildren<PlayerFist>();
         inSpawnedFist.transform.SetParent(null);
         inSpawnedFist.transform.localScale = Vector3.one;
-        inSpawnedFist.Iniialize(this, inFistLocation, blockLocation);
+        inSpawnedFist.Iniialize(this, inFistLocation, blockLocation, PlayerFistSide.In);
         
         var outSpawnedFist = outFistLocation.GetComponentInChildren<PlayerFist>();
         outSpawnedFist.transform.SetParent(null);
         outSpawnedFist.transform.localScale = Vector3.one;
-        outSpawnedFist.Iniialize(this, outFistLocation, blockLocation);
+        outSpawnedFist.Iniialize(this, outFistLocation, blockLocation, PlayerFistSide.Out);
 
         spawnedFists = new List<PlayerFist>{ outSpawnedFist, inSpawnedFist };
     }
@@ -189,11 +187,6 @@ public class Fighter : MonoBehaviour
                 break;
             }
         }
-
-        if (currentTurnState == TurnState.Defending)
-        {
-            playerBlock.HandleActionButtonCancelled();
-        }
     }
 
     public void StartAction()
@@ -228,7 +221,7 @@ public class Fighter : MonoBehaviour
         {
             if (!playerMovement.IsJumping())
             {
-                playerBlock.TryToBLock();
+                playerBlock.TryToParry();
             }
         }
     }
@@ -251,7 +244,7 @@ public class Fighter : MonoBehaviour
 
     public bool CanMove()
     {
-        return CanStartAction() && !playerBlock.IsBlocking();
+        return CanStartAction();
     }
 
     public void FaceLeft()
@@ -322,15 +315,19 @@ public class Fighter : MonoBehaviour
                         Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
                         if (wasPerfectBlock)
                         {
+                            foreach (var spawnedFist in spawnedFists)
+                            {
+                                if (spawnedFist.fistID != fist.fistID)
+                                {
+                                    spawnedFist.ForceParryAtPosition(fist.transform.position);
+                                }
+                            }
                             return;
                         }
-
-                        if (fist.GetWindupNormalized() > .95)
-                        {
-                            playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
-                            playerMovement.LaunchPlayer(
-                                new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
-                        }
+                        
+                        playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
+                        playerMovement.LaunchPlayer(
+                            new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
                     }
                     else
                     {
@@ -405,6 +402,14 @@ public class Fighter : MonoBehaviour
         if (currentTurnState != newState)
         {
             currentTurnState = newState;
+            if (currentTurnState == TurnState.Defending)
+            {
+                playerBlock.StartBlocking();
+            }
+            else
+            {
+                playerBlock.StopBlocking();
+            }
             TriggerTurnStateChanged(currentTurnState);
         }
     }

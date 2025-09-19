@@ -13,6 +13,11 @@ public enum PlayerFistState
     Retract,
     Block
 }
+public enum PlayerFistSide
+{
+    In,
+    Out
+}
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerFist : MonoBehaviour
@@ -23,9 +28,10 @@ public class PlayerFist : MonoBehaviour
     [SerializeField] private float retractTime = .5f;
     [SerializeField] private float baseWindup = 1f;
     [SerializeField] private float idleFollowSpeed = 5f;
-    [SerializeField] private Vector2 windupOffset = new Vector2(1f, 0);
+    [SerializeField] private float parryTime = .5f;
+    [SerializeField] private Vector2 windupOffset = new(1f, 0);
     [SerializeField] private Transform artTransform;
-    [SerializeField] private List<Collider2D> fistColliders = new List<Collider2D>();
+    [SerializeField] private List<Collider2D> fistColliders = new();
     
     [Header("Audio")]
     [SerializeField] private AudioClip fistHitSound;
@@ -44,12 +50,14 @@ public class PlayerFist : MonoBehaviour
     private Tweener idleFollow = null;
     private Tweener windupShake = null;
     private Tweener retract = null;
-    private Coroutine blockRoutine = null;
     private Tweener blockGrowth = null;
     private Tweener blockRotate = null;
     private TweenCallback shakeTweenComplete;
     private AudioSource windupAudio;
+    private Coroutine blockRoutine = null;
+    private Coroutine parryRoutine = null;
     private bool consumed = false;
+    public PlayerFistSide fistID;
 
     private void Awake()
     {
@@ -87,11 +95,12 @@ public class PlayerFist : MonoBehaviour
         }
     }
 
-    public void Iniialize(Fighter fighter, Transform restingPosition, Transform blockPosition)
+    public void Iniialize(Fighter fighter, Transform restingPosition, Transform blockPosition, PlayerFistSide fistID)
     {
         this.restingPosition = restingPosition;
         this._fighter = fighter;
         this.blockPosition = blockPosition;
+        this.fistID = fistID;
     }
 
     public PlayerFistState GetCurrentState()
@@ -187,14 +196,39 @@ public class PlayerFist : MonoBehaviour
     {
         while (true)
         {
-            transform.position = Vector3.Lerp(
-                transform.position,
-                blockPosition.position,
-                Time.deltaTime * 5f
-            );
+            if (parryRoutine == null)
+            {
+                transform.position = Vector3.Lerp(
+                    transform.position,
+                    blockPosition.position,
+                    Time.deltaTime * 5f
+                );
+            }
             
             yield return null;
         }
+    }
+
+    private IEnumerator ParryAnimation(Vector3 TargetPosition)
+    {
+        float time = 0;
+        while (time < parryTime)
+        {
+            transform.position = Vector3.Lerp(
+                transform.position,
+                TargetPosition,
+                Time.deltaTime * 15f);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        
+        parryRoutine = null;
+
+        if (blockRoutine == null)
+        {
+            transform.position = restingPosition.position;
+        }
+        
     }
 
     public void StopBlock(bool fast)
@@ -202,7 +236,7 @@ public class PlayerFist : MonoBehaviour
         blockGrowth.Complete();
         blockGrowth = artTransform.DOScale(Vector3.one, .2f).SetEase(Ease.InCubic);
         blockRotate = artTransform.DORotate(new Vector3(0, 0, 0), .2f, RotateMode.Fast);
-        transform.position = blockPosition.position;
+        transform.position = restingPosition.position;
         if (blockRoutine != null)
         {
             StopCoroutine(blockRoutine);
@@ -228,7 +262,7 @@ public class PlayerFist : MonoBehaviour
 
     public void PauseFistControl()
     {
-        transform.position = blockPosition.position;
+        transform.position = restingPosition.position;
         if (blockRoutine != null)
         {
             StopCoroutine(blockRoutine);
@@ -260,5 +294,15 @@ public class PlayerFist : MonoBehaviour
     {
         StopBlock(true);
         SwitchState(PlayerFistState.Idle);
+    }
+
+    public void ForceParryAtPosition(Vector3 transformPosition)
+    {
+        if (parryRoutine != null)
+        {
+            StopCoroutine(parryRoutine);
+        }
+        
+        parryRoutine = StartCoroutine(ParryAnimation(transformPosition));
     }
 }
