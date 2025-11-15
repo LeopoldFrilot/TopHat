@@ -165,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJump()
     {
+        return false;
         return !IsJumping() && fighter.CanMove();
     }
 

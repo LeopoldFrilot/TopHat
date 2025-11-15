@@ -2178,7 +2178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23dea123f924faaa3fb6f0af12cdf13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockingTime: -1
+  blockingTime: 0.5
   perfectBlockTime: 0.2
   blockingCooldown: 0.5
 --- !u!114 &5017118212934078332
