@@ -10,28 +10,18 @@ public class AIModuleSelector : MonoBehaviour
     
     private List<GameObject> modulesForThisType = new();
     private int index = 0;
+    FightScene fightScene;
+
+    private void Awake()
+    {
+        fightScene = FindObjectOfType<FightScene>();
+    }
 
     private void RefreshModules()
     {
         modulesForThisType.Clear();
-        foreach (GameObject module in GameWizard.Instance.allAIModules)
-        {
-            if (!module)
-            {
-                continue;
-            }
-
-            AIBaseModule moduleCast = module.GetComponent<AIBaseModule>();
-            if (!moduleCast)
-            {
-                return;
-            }
-
-            if (moduleCast.GetAIModuleType() == aiModuleType)
-            {
-                modulesForThisType.Add(module);
-            }
-        }
+        GameWizard.Instance.allAIModuleMap.TryGetValue(aiModuleType, out modulesForThisType);
+        TrySwitchIndex(fightScene.GetAIIndex(aiModuleType));
     }
 
     public void GoLeft()
@@ -44,7 +34,7 @@ public class AIModuleSelector : MonoBehaviour
         TrySwitchIndex(index + 1);
     }
 
-    private void TrySwitchIndex(int newIndex)
+    public void TrySwitchIndex(int newIndex)
     {
         if (newIndex < 0 || newIndex >= modulesForThisType.Count)
         {
@@ -63,9 +53,13 @@ public class AIModuleSelector : MonoBehaviour
         return modulesForThisType[index];
     }
 
+    public int GetModuleIndex()
+    {
+        return index;
+    }
+
     private void OnEnable()
     {
         RefreshModules();
-        TrySwitchIndex(index);
     }
 }

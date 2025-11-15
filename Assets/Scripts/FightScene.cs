@@ -25,6 +25,9 @@ public class FightScene : MonoBehaviour
     private AIPickerUI pickerUI;
     private bool inCountdown;
     private PlayerInputManager playerInput;
+    private int aiAttackModule;
+    private int aiDefenseModule;
+    private int aiMovementModule;
 
     public void Awake()
     {
@@ -32,6 +35,10 @@ public class FightScene : MonoBehaviour
         pickerUI = FindFirstObjectByType<AIPickerUI>();
         playerInput = GetComponent<PlayerInputManager>();
         playerInput.onPlayerJoined += OnPlayerJoined;
+        vsAI = PlayerPrefs.GetInt("vsAI") == 1;
+        aiAttackModule = PlayerPrefs.GetInt("AIAttackIndex");
+        aiDefenseModule = PlayerPrefs.GetInt("AIDefenseIndex");
+        aiMovementModule = PlayerPrefs.GetInt("AIMovementIndex");
     }
 
     private void Update()
@@ -64,6 +71,7 @@ public class FightScene : MonoBehaviour
         fighterRef.SetPlayerIndex(players.IndexOf(fighterRef) + 1);
         if (players.Count == 2)
         {
+            InstallAIModules(aiAttackModule, aiDefenseModule, aiMovementModule);
             if (vsAI)
             {
                 EnableAIForPlayer(players[1]);
@@ -92,6 +100,7 @@ public class FightScene : MonoBehaviour
     public void ToggleAI()
     {
         vsAI = !vsAI;
+        PlayerPrefs.SetInt("vsAI",  vsAI ? 1 : 0);
         if (players.Count == 2)
         {
             if (vsAI)
@@ -119,6 +128,7 @@ public class FightScene : MonoBehaviour
         fighterRef.SetPlayerIndex(players.IndexOf(fighterRef) + 1);
         if (players.Count == 2)
         {
+            InstallAIModules(aiAttackModule, aiDefenseModule, aiMovementModule);
             if (vsAI)
             {
                 EnableAIForPlayer(players[1]);
@@ -139,7 +149,6 @@ public class FightScene : MonoBehaviour
 
     private void EnableAIForPlayer(Fighter fighterRef)
     {
-        pickerUI.TriggerModuleInstallation();
         fighterRef.SetAIControlled(true);
     }
 
@@ -179,14 +188,43 @@ public class FightScene : MonoBehaviour
         return null;
     }
 
-    public void InstallAIModules(GameObject attackModule, GameObject defenseModule, GameObject movementModule)
+    public int GetAIIndex(AIModuleTypes aiModuleType)
     {
+        switch (aiModuleType)
+        {
+           case AIModuleTypes.Attack:
+               return aiAttackModule;
+           case AIModuleTypes.Defense:
+               return aiDefenseModule;
+           case AIModuleTypes.Movement:
+               return aiMovementModule;
+        }
+        
+        return 0;
+    }
+
+    public bool IsAIEnabled()
+    {
+        return vsAI;
+    }
+
+    public void InstallAIModules(int inAttackModule, int inDefenseModule, int inMovementModule)
+    {
+        aiAttackModule = inAttackModule;
+        aiDefenseModule = inDefenseModule;
+        aiMovementModule = inMovementModule;
+        PlayerPrefs.SetInt("AIAttackIndex", inAttackModule);
+        PlayerPrefs.SetInt("AIDefenseIndex", inDefenseModule);
+        PlayerPrefs.SetInt("AIMovementIndex", inMovementModule);
         if (players.Count < 2)
         {
             return;
         }
         
-        players[1].InstallAIModules(attackModule, defenseModule, movementModule);
+        players[1].InstallAIModules(
+            GameWizard.Instance.GetAIModule(AIModuleTypes.Attack, aiAttackModule), 
+            GameWizard.Instance.GetAIModule(AIModuleTypes.Defense, aiDefenseModule), 
+            GameWizard.Instance.GetAIModule(AIModuleTypes.Movement, aiMovementModule));
     }
 
     public bool IsInCountdown()

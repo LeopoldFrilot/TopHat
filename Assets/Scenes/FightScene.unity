@@ -1068,6 +1068,7 @@ MonoBehaviour:
   attackSelector: {fileID: 8232661741018353090}
   defenderSelector: {fileID: 488193381}
   movementSelector: {fileID: 1884225893}
+  enableAIToggle: {fileID: 1041694580}
 --- !u!1 &283163798
 GameObject:
   m_ObjectHideFlags: 0

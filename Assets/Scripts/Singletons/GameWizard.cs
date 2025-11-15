@@ -6,6 +6,7 @@ using UnityEngine.Serialization;
 public class GameWizard : MonoBehaviour
 {
     public List<GameObject> allAIModules = new();
+    public Dictionary<AIModuleTypes, List<GameObject>> allAIModuleMap = new();
     
     private bool isNetworkedGame = false;
     private bool isLocalGame = false;
@@ -36,7 +37,18 @@ public class GameWizard : MonoBehaviour
 
     private void NonSingletonAwake()
     {
-        
+        allAIModuleMap.Clear();
+        foreach (GameObject aiModule in allAIModules)
+        {
+            var castModule = aiModule.GetComponent<AIBaseModule>();
+            var type = castModule.GetAIModuleType();
+            if (!allAIModuleMap.ContainsKey(type))
+            {
+                allAIModuleMap.Add(type, new List<GameObject>());
+            }
+            
+            allAIModuleMap[type].Add(aiModule);
+        }
     }
 
     public void SetGameAsNetworked()
@@ -59,5 +71,15 @@ public class GameWizard : MonoBehaviour
     public bool IsLocalGame()
     {
         return isLocalGame;
+    }
+
+    public GameObject GetAIModule(AIModuleTypes type, int index)
+    {
+        if (allAIModuleMap.TryGetValue(type, out List<GameObject> aiModules))
+        {
+            return aiModules[index];
+        }
+        
+        return null;
     }
 }
