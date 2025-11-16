@@ -53,7 +53,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (fighter.CanMove())
         {
-            transform.position += new Vector3(GetWalkSpeed() * currentXVal * Time.deltaTime, 0, 0);
+            Vector3 newPosition = transform.position + new Vector3(GetWalkSpeed() * currentXVal * Time.deltaTime, 0, 0);
+            transform.position = fighter.ClampToFightPosition(newPosition);
         }
 
         Vector3 difference = transform.position - lastPosition;
@@ -99,11 +100,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        
-        if (!fighter.CanMove())
-        {
-            value = 0;
-        }
 
         currentXVal = value;
     }
@@ -147,5 +143,10 @@ public class PlayerMovement : MonoBehaviour
     public float GetHorizontalVelocity()
     {
         return currentSpeed.x;
+    }
+
+    public bool IsHoldingLeft()
+    {
+        return currentXVal < 0;
     }
 }

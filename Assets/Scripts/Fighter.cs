@@ -49,6 +49,7 @@ public class Fighter : MonoBehaviour
     private FightScene fightScene;
     private PlayerDizziness playerDizziness;
     private PlayerStatus playerStatus;
+    private PlayerDodgeRoll playerDodgeRoll;
 
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
@@ -70,6 +71,7 @@ public class Fighter : MonoBehaviour
         playerGrapple = GetComponent<PlayerGrapple>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
+        playerDodgeRoll = GetComponent<PlayerDodgeRoll>();
         playerStatus = GetComponent<PlayerStatus>();
         
         playerDizziness = GetComponent<PlayerDizziness>();
@@ -280,6 +282,16 @@ public class Fighter : MonoBehaviour
         {
             playerGrapple.TryToGrapple();
         }
+        else
+        {
+            if (playerDodgeRoll.TryStartDodgeRoll(!playerMovement.IsHoldingLeft()))
+            {
+                foreach (var spawnedFist in spawnedFists)
+                {
+                    spawnedFist.Reset();
+                }
+            }
+        }
     }
 
     public void CancelUpAction()
@@ -321,7 +333,7 @@ public class Fighter : MonoBehaviour
         }
 
         var effects = playerStatus.GetActiveStatusEffects();
-        if (effects.Contains(StatusType.Grappled) || effects.Contains(StatusType.Stunned))
+        if (effects.Contains(StatusType.Grappled) || effects.Contains(StatusType.Stunned) || effects.Contains(StatusType.AbilityLag))
         {
             return false;
         }
@@ -634,5 +646,10 @@ public class Fighter : MonoBehaviour
     public float GetHatTime()
     {
         return hatTime;
+    }
+
+    public Vector3 ClampToFightPosition(Vector3 newPosition)
+    {
+        return fightScene.ClampToGameplayBounds(newPosition);
     }
 }

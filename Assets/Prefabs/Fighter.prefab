@@ -2098,6 +2098,7 @@ GameObject:
   - component: {fileID: 8494541973416835278}
   - component: {fileID: 4915518682772512237}
   - component: {fileID: 857252945940505770}
+  - component: {fileID: 2553607980060792913}
   m_Layer: 3
   m_Name: Fighter
   m_TagString: Untagged
@@ -2405,6 +2406,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blocksForGrapple: 3
+--- !u!114 &2553607980060792913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514386353918108479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05384a04544541d6a63c7f7dcddb43fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dodgeDistance: 5
+  dodgeTime: 0.7
+  dodgeSmoothingCoef: 0.35
 --- !u!1 &8830864449060472638
 GameObject:
   m_ObjectHideFlags: 0

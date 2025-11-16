@@ -16,6 +16,8 @@ public class FightScene : MonoBehaviour
     [SerializeField] private GameObject player2Prefab;
     [SerializeField] private PlayableDirector countdownTimeline;
     [SerializeField] private float targetHatTime = 60f;
+    [SerializeField] private Transform leftGameBoundaries;
+    [SerializeField] private Transform rightGameBoundaries;
     
     private PlayerHat defenderHat;
     private List<NetworkedFighterController> networkControllers = new();
@@ -248,6 +250,15 @@ public class FightScene : MonoBehaviour
     private void OnTurnEnded(Fighter fighter)
     {
         StartCoroutine(StartSwapRoles());
+    }
+
+    public Vector3 ClampToGameplayBounds(Vector3 position)
+    {
+        return new Vector3(
+            Mathf.Clamp(
+                position.x, leftGameBoundaries.position.x, rightGameBoundaries.position.x), 
+                position.y,
+                position.z);
     }
 
     private void OnEnable()

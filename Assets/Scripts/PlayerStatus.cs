@@ -5,7 +5,8 @@ using UnityEngine;
 public enum StatusType
 {
     Grappled,
-    Stunned
+    Stunned,
+    AbilityLag
 }
 
 public struct StatusEffect
