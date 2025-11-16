@@ -740,6 +740,37 @@ CapsuleCollider2D:
   m_Offset: {x: 0.03, y: 0.86}
   m_Size: {x: 1.94607, y: 3.314539}
   m_Direction: 0
+--- !u!1 &3095724049236262423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2429030441928929704}
+  m_Layer: 3
+  m_Name: EyePivotL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2429030441928929704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095724049236262423}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.17, y: -0.23, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2793063682508709134}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3164951098904376059
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +846,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3624291761532491832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7741169874144691364}
+  m_Layer: 3
+  m_Name: EyePivotR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7741169874144691364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624291761532491832}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.37, y: -0.23, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2793063682508709134}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3679703216050775861
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,7 +985,7 @@ MonoBehaviour:
   m_CastsShadows: 1
   m_SelfShadows: 0
   m_AlphaCutoff: 0.1
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 0000000039a04a7e
   m_ShapePath:
   - {x: -0.87, y: -1.4, z: 0}
   - {x: -0.87, y: 1.3999999, z: 0}
@@ -1488,7 +1550,7 @@ MonoBehaviour:
   m_CastsShadows: 1
   m_SelfShadows: 0
   m_AlphaCutoff: 0.1
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 0000000039a04a7e
   m_ShapePath:
   - {x: -3.65, y: -4.55, z: 0}
   - {x: -3.65, y: 4.5500007, z: 0}
@@ -1982,7 +2044,7 @@ MonoBehaviour:
   m_CastsShadows: 1
   m_SelfShadows: 0
   m_AlphaCutoff: 0.1
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 0000000039a04a7e
   m_ShapePath:
   - {x: -0.87500024, y: -1.29, z: 0}
   - {x: -0.87500024, y: 1.2900001, z: 0}
@@ -2035,6 +2097,7 @@ GameObject:
   - component: {fileID: 8319695884039667127}
   - component: {fileID: 8494541973416835278}
   - component: {fileID: 4915518682772512237}
+  - component: {fileID: 857252945940505770}
   m_Layer: 3
   m_Name: Fighter
   m_TagString: Untagged
@@ -2120,6 +2183,10 @@ MonoBehaviour:
   animatorJumpBoolName: Jump
   animatorGrappleTriggerName: Grapple1
   animatorGrappledTriggerName: Grapple2
+  eyePivots:
+  - {fileID: 2429030441928929704}
+  - {fileID: 7741169874144691364}
+  flameEyesParticles: {fileID: 7493528940974450037, guid: a7c17c7df4341804e9dcc6d38344123c, type: 3}
   grappleSound: {fileID: 8300000, guid: 848784606ebedc94296fcd0461382f8f, type: 3}
   networkedFighterController: {fileID: 0}
 --- !u!114 &9135749140268649174
@@ -2134,7 +2201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540e23b2176e4577ad1b8bc9f045b25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3.5
+  speed: 5
   verticalJumpPower: 13
   horizontalJumpPower: 4
   risingGravity: 3
@@ -2180,7 +2247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockingTime: 0.5
   perfectBlockTime: 0.2
-  blockingCooldown: 0.5
+  blockingCooldown: 0.3
 --- !u!114 &5017118212934078332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2325,6 +2392,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b458c6928e9a4a5b835df16a9929ae35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &857252945940505770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514386353918108479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb2eca16222f49f68929e3d0f10cbca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blocksForGrapple: 3
 --- !u!1 &8830864449060472638
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,7 +2540,9 @@ Transform:
   m_LocalPosition: {x: 0.043, y: 0.19, z: 0}
   m_LocalScale: {x: 0.33, y: 0.33, z: 0.33}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2429030441928929704}
+  - {fileID: 7741169874144691364}
   m_Father: {fileID: 6302533750502584730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9161683672286644069

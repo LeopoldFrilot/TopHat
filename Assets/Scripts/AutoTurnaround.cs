@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AutoTurnaround : MonoBehaviour
 {
@@ -16,16 +14,23 @@ public class AutoTurnaround : MonoBehaviour
     private void Update()
     {
         var otherPlayer = fightScene.GetOpponent(_fighterRef);
-        if (otherPlayer != null)
+        if (otherPlayer == null)
         {
-            if (transform.position.x < otherPlayer.transform.position.x)
-            {
-                _fighterRef.FaceRight();
-            }
-            else
-            {
-                _fighterRef.FaceLeft();
-            }
+            return;
+        }
+
+        if (!_fighterRef.CanMove())
+        {
+            return;
+        }
+        
+        if (transform.position.x < otherPlayer.transform.position.x)
+        {
+            _fighterRef.FaceRight();
+        }
+        else
+        {
+            _fighterRef.FaceLeft();
         }
     }
 }

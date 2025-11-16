@@ -30,12 +30,17 @@ public class Fighter : MonoBehaviour
     [SerializeField] private string animatorJumpBoolName = "Jump";
     [SerializeField] private string animatorGrappleTriggerName = "Grapple1";
     [SerializeField] private string animatorGrappledTriggerName = "Grapple2";
+
+    [Header("Particles")] 
+    [SerializeField] private List<Transform> eyePivots = new();
+    [SerializeField] private GameObject flameEyesParticles;
     
     [Header("Audio")]
     [SerializeField] AudioClip grappleSound;
 
     private List<PlayerFist> spawnedFists = new();
     private PlayerBlock playerBlock;
+    private PlayerGrapple playerGrapple;
     private bool facingLeft;
     private TurnState currentTurnState = TurnState.Attacking;
     private PlayerMovement playerMovement;
@@ -62,6 +67,7 @@ public class Fighter : MonoBehaviour
         this.fightScene = fightScene;
         this.networkedFighterController = networkedFighterController;
         playerBlock = GetComponent<PlayerBlock>();
+        playerGrapple = GetComponent<PlayerGrapple>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
         playerStatus = GetComponent<PlayerStatus>();
@@ -113,6 +119,7 @@ public class Fighter : MonoBehaviour
         grappledHandle = -1;
         
         playerBlock.CancelBlockLag();
+        playerGrapple.ResetGrapple();
 
         foreach (var spawnedFist in spawnedFists)
         {
@@ -139,6 +146,8 @@ public class Fighter : MonoBehaviour
         outSpawnedFist.Iniialize(this, outFistLocation, blockLocation);
 
         spawnedFists = new List<PlayerFist>{ outSpawnedFist, inSpawnedFist };
+
+        playerGrapple.OnBlockCountChanged += OnBlockCountChanged;
     }
 
     private void Update()
@@ -266,6 +275,11 @@ public class Fighter : MonoBehaviour
         {
             return;
         }
+
+        if (currentTurnState == TurnState.Defending)
+        {
+            playerGrapple.TryToGrapple();
+        }
     }
 
     public void CancelUpAction()
@@ -347,7 +361,17 @@ public class Fighter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        PlayerFist fist = other.transform.root.GetComponent<PlayerFist>();
+        if (!other.transform.parent)
+        {
+            return;
+        }
+        
+        PlayerFist fist = other.transform.parent.GetComponent<PlayerFist>();
+        if (fist == null)
+        {
+            fist = other.transform.root.GetComponent<PlayerFist>();
+        }
+        
         if (fist == null || spawnedFists.Contains(fist))
         {
             return;
@@ -355,15 +379,13 @@ public class Fighter : MonoBehaviour
         
         if (currentTurnState == TurnState.Attacking)
         {
-             if (fist.GetOwner().IsBlocking())
+             if (fist.GetOwner().IsGrappling())
              {
                  foreach (var spawnedFist in spawnedFists)
                  {
                      spawnedFist.Reset();
                  }
                  SetGrappled();
-                 fightScene.GetOpponent(this).SetGrappled();
-                 fightScene.GetOpponent(this).StartGrappleAnimation();
              }
         }
         else
@@ -386,17 +408,21 @@ public class Fighter : MonoBehaviour
                     if (blocked)
                     {
                         Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
-                        if (wasPerfectBlock)
+                        if (!wasPerfectBlock)
                         {
-                            return;
+                            if (fist.GetWindupNormalized() > .95)
+                            {
+                                playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
+                                playerMovement.LaunchPlayer(
+                                    new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
+                            }
+                        }
+                        else
+                        {
+                            playerBlock.CancelBlockLag();
                         }
 
-                        if (fist.GetWindupNormalized() > .95)
-                        {
-                            playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
-                            playerMovement.LaunchPlayer(
-                                new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
-                        }
+                        playerGrapple.AddSuccessfulBlock(wasPerfectBlock ? 2 : 1);
                     }
                     else
                     {
@@ -404,7 +430,37 @@ public class Fighter : MonoBehaviour
                         playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized()));
                         playerMovement.LaunchPlayer(
                             new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * hitKnockbackPower);
+                        
+                        playerGrapple.SetBlockCount(0);
                     } 
+                }
+            }
+        }
+    }
+
+    private bool IsGrappling()
+    {
+        return playerGrapple.IsGrappling();
+    }
+
+    private void OnBlockCountChanged(int blockCount, int minBlockCount)
+    {
+        ToggleFlameEyes(blockCount >= minBlockCount);
+    }
+
+    private void ToggleFlameEyes(bool On)
+    {
+        foreach (Transform eyePivot in eyePivots)
+        {
+            if (On && eyePivot.childCount == 0)
+            {
+                Instantiate(flameEyesParticles, eyePivot);
+            }
+            else if (!On && eyePivot.childCount > 0)
+            {
+                for (int i = 0; i < eyePivot.childCount; i++)
+                {
+                    Destroy(eyePivot.GetChild(i).gameObject);
                 }
             }
         }
@@ -417,7 +473,7 @@ public class Fighter : MonoBehaviour
         OnKnockOff?.Invoke();
     }
 
-    private void SetGrappled()
+    public void SetGrappled()
     {
         CancelGrappled();
         grappledHandle = playerStatus.AddStatusEffect(StatusType.Grappled);
@@ -426,6 +482,7 @@ public class Fighter : MonoBehaviour
     private void CancelGrappled()
     {
         playerStatus.RemoveStatusEffect(grappledHandle);
+        playerGrapple.ResetGrapple();
         grappledHandle = -1;
     }
 
@@ -433,15 +490,21 @@ public class Fighter : MonoBehaviour
     {
         EventHub.TriggerPlaySoundRequested(grappleSound);
         Fighter opponent = fightScene.GetOpponent(this);
-        
-        opponent.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2(((opponent.transform.position.x > 0) ? -1f : 1f) * 1.2f, 1f) * grappleResetPower);
-        opponent.StartGrappledAnimation();
         CancelGrappled();
-        opponent.CancelGrappled();
-        
+        if (opponent.IsGrappled())
+        {
+            opponent.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2(((opponent.transform.position.x > 0) ? -1f : 1f) * 1.2f, 1f) * grappleResetPower);
+            opponent.StartGrappledAnimation();
+            opponent.CancelGrappled();
+        }
     }
 
-    private void StartGrappleAnimation()
+    private bool IsGrappled()
+    {
+        return playerStatus.GetActiveStatusEffects().Contains(StatusType.Grappled);
+    }
+
+    public void StartGrappleAnimation()
     {
         mainBodyAnimator.SetTrigger(animatorGrappleTriggerName);
     }
@@ -541,26 +604,26 @@ public class Fighter : MonoBehaviour
         outSpawnedFist.transform.SetParent(outFistLocation);
         outSpawnedFist.transform.localScale = Vector3.one;
         outSpawnedFist.transform.localPosition = Vector3.zero;
-        outSpawnedFist.PauseFistControl();
+        outSpawnedFist.StartGrapple();
         
-        var inSpawnedFist = spawnedFists[0];
+        var inSpawnedFist = spawnedFists[1];
         inSpawnedFist.transform.SetParent(inFistLocation);
         inSpawnedFist.transform.localScale = Vector3.one;
         inSpawnedFist.transform.localPosition = Vector3.zero;
-        inSpawnedFist.PauseFistControl();
+        inSpawnedFist.StartGrapple();
     }
 
     public void ResumeFistControl()
     {
         var outSpawnedFist = spawnedFists[0];
         outSpawnedFist.transform.SetParent(null);
-        outSpawnedFist.ResumeFistControl();
         outSpawnedFist.transform.localScale = Vector3.one;
+        outSpawnedFist.CancelGrapple();
         
         var inSpawnedFist = spawnedFists[0];
         inSpawnedFist.transform.SetParent(null);
-        inSpawnedFist.ResumeFistControl();
         inSpawnedFist.transform.localScale = Vector3.one;
+        outSpawnedFist.CancelGrapple();
     }
 
     public bool IsStunned()

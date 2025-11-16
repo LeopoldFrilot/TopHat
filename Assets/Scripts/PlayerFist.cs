@@ -11,7 +11,8 @@ public enum PlayerFistState
     Windup,
     Launch,
     Retract,
-    Block
+    Block,
+    Grapple
 }
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -150,7 +151,7 @@ public class PlayerFist : MonoBehaviour
 
         foreach (var fistCollider in fistColliders)
         {
-            fistCollider.enabled = currentState is PlayerFistState.Block or PlayerFistState.Launch;
+            fistCollider.enabled = currentState is PlayerFistState.Block or PlayerFistState.Launch or PlayerFistState.Grapple;
         }
     }
 
@@ -181,6 +182,18 @@ public class PlayerFist : MonoBehaviour
         blockRoutine = StartCoroutine(BlockIdle());
         blockGrowth = artTransform.DOScale(Vector3.one * 1.5f, .2f).SetEase(Ease.InCubic);
         blockRotate = artTransform.DORotate(new Vector3(0, 0, _fighter.IsFacingLeft() ? -90 : 90), .2f, RotateMode.Fast);
+    }
+
+    public void StartGrapple()
+    {
+        PauseFistControl();
+        SwitchState(PlayerFistState.Grapple);
+    }
+
+    public void CancelGrapple()
+    {
+        SwitchState(PlayerFistState.Idle);
+        ResumeFistControl();
     }
 
     private IEnumerator BlockIdle()
@@ -226,7 +239,7 @@ public class PlayerFist : MonoBehaviour
         return _fighter;
     }
 
-    public void PauseFistControl()
+    private void PauseFistControl()
     {
         transform.position = blockPosition.position;
         if (blockRoutine != null)
