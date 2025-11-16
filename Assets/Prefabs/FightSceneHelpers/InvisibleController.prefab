@@ -80,22 +80,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4413096900181570645}
         m_TargetAssemblyTypeName: InputHandler, TopHat
-        m_MethodName: KeyVertical
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 08705cdb-6601-4439-9060-80d0afb839d7
-    m_ActionName: 'Main/Vertical[/Keyboard/s,/Keyboard/w]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4413096900181570645}
-        m_TargetAssemblyTypeName: InputHandler, TopHat
         m_MethodName: KeyActionPerformed
         m_Mode: 0
         m_Arguments:
@@ -144,38 +128,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4413096900181570645}
         m_TargetAssemblyTypeName: InputHandler, TopHat
-        m_MethodName: PadVertical
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: da3edd78-2406-44ff-a6aa-9d84928d8d6f
-    m_ActionName: Main/PadVertical
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4413096900181570645}
-        m_TargetAssemblyTypeName: InputHandler, TopHat
-        m_MethodName: Key2Vertical
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: c43e4051-97d0-453b-b19b-4669a42cc399
-    m_ActionName: 'Main/KeyVertical2[/Keyboard/k,/Keyboard/i]'
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4413096900181570645}
-        m_TargetAssemblyTypeName: InputHandler, TopHat
         m_MethodName: PadActionPerformed
         m_Mode: 0
         m_Arguments:
@@ -204,6 +156,102 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: fb47676d-141e-4433-9857-1c013872c1c2
     m_ActionName: 'Main/KeyAction2[/Keyboard/rightShift]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: KeyUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1476cec4-acf0-47b9-98b0-b3080ac3e09a
+    m_ActionName: 'Main/KeyUpAction[/Keyboard/w]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: PadUp
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 36185e34-5671-4b44-9195-0d591d45d79a
+    m_ActionName: 'Main/PadUpAction[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/dpad/up]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: Key2Up
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 24e5f000-b7b8-4a4f-b723-ad94f38c88cb
+    m_ActionName: 'Main/KeyUpAction2[/Keyboard/i]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: KeyDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f896e6e7-8265-4fee-ad2b-d550074a5050
+    m_ActionName: 'Main/KeyDownAction[/Keyboard/s]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: PadDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c82c11dc-8127-4812-b24d-0c746a5434e5
+    m_ActionName: 'Main/PadDownAction[/XInputControllerWindows/leftStick/down,/XInputControllerWindows/dpad/down]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4413096900181570645}
+        m_TargetAssemblyTypeName: InputHandler, TopHat
+        m_MethodName: Key2Down
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5a549165-036f-49d8-865b-e850c361f42b
+    m_ActionName: 'Main/KeyDownAction2[/Keyboard/k]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Main

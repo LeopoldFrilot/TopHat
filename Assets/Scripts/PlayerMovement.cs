@@ -42,17 +42,11 @@ public class PlayerMovement : MonoBehaviour
     {
         inputHandler = fighter.GetInputHandler();
         inputHandler.OnHorizontalInputChanged += OnHorizontalInputChanged;
-        inputHandler.OnVerticalInputChanged += OnVerticalInputChanged;
     }
 
     public void RegisterHorizontalInput(float value)
     {
         OnHorizontalInputChanged(value, fighter.networkedFighterController.GetPlayerIndex(fighter));
-    }
-
-    public void RegisterVerticalInput(float value)
-    {
-        OnVerticalInputChanged(value, fighter.networkedFighterController.GetPlayerIndex(fighter));
     }
 
     private void Update()
@@ -114,24 +108,6 @@ public class PlayerMovement : MonoBehaviour
         currentXVal = value;
     }
 
-    private void OnVerticalInputChanged(float value, int playerOnNetworkedController)
-    {
-        if (playerOnNetworkedController != fighter.networkedFighterController.GetPlayerIndex(fighter))
-        {
-            return;
-        }
-
-        if (!fighter.CanMove())
-        {
-            value = 0;
-        }
-        
-        if (value > .75f)
-        {
-            Jump();
-        }
-    }
-
     private void StartJump()
     {
         LaunchPlayer(new Vector2(currentXVal * horizontalJumpPower, verticalJumpPower));
@@ -165,7 +141,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJump()
     {
-        return false;
         return !IsJumping() && fighter.CanMove();
     }
 

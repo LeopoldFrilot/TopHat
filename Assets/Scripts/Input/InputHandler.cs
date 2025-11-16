@@ -7,37 +7,6 @@ public class InputHandler : NetworkBehaviour
 {
     private bool active = true;
     private NetworkedFighterController networkedFighterController;
-    
-    public event Action<float, int> OnVerticalInputChanged;
-    public void PadVertical(InputAction.CallbackContext ctx)
-    {
-        if (!IsActive())
-        {
-            return;
-        }
-
-        OnVerticalInputChanged?.Invoke(ctx.ReadValue<float>(), 0);
-    }
-
-    public void KeyVertical(InputAction.CallbackContext ctx)
-    {
-        if (!IsActive())
-        {
-            return;
-        }
-
-        OnVerticalInputChanged?.Invoke(ctx.ReadValue<float>(), 0);
-    }
-
-    public void Key2Vertical(InputAction.CallbackContext ctx)
-    {
-        if (!IsActive())
-        {
-            return;
-        }
-
-        OnVerticalInputChanged?.Invoke(ctx.ReadValue<float>(), 1);
-    }
 
     public event Action<float, int> OnHorizontalInputChanged;
     public void PadHorizontal(InputAction.CallbackContext ctx)
@@ -122,6 +91,112 @@ public class InputHandler : NetworkBehaviour
             OnActionCancelled?.Invoke(1);
         }
     }
+    
+    public event Action<int> OnUpActionStarted;
+    public event Action<int> OnUpActionCancelled;
+    public void PadUp(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        if (ctx.started)
+        {
+            OnUpActionStarted?.Invoke(0);
+        }
+        else if (ctx.canceled)
+        {
+            OnUpActionCancelled?.Invoke(0);
+        }
+    }
+
+    public void KeyUp(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        if (ctx.started)
+        {
+            OnUpActionStarted?.Invoke(0);
+        }
+        else if (ctx.canceled)
+        {
+            OnUpActionCancelled?.Invoke(0);
+        }
+    }
+
+    public void Key2Up(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        if (ctx.started)
+        {
+            OnUpActionStarted?.Invoke(0);
+        }
+        else if (ctx.canceled)
+        {
+            OnUpActionCancelled?.Invoke(0);
+        }
+    }
+    
+    public event Action<int> OnDownActionStarted;
+    public event Action<int> OnDownActionCancelled;
+    public void PadDown(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        if (ctx.started)
+        {
+            OnDownActionStarted?.Invoke(0);
+        }
+        else if (ctx.canceled)
+        {
+            OnDownActionCancelled?.Invoke(0);
+        }
+    }
+
+    public void KeyDown(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        if (ctx.started)
+        {
+            OnDownActionStarted?.Invoke(0);
+        }
+        else if (ctx.canceled)
+        {
+            OnDownActionCancelled?.Invoke(0);
+        }
+    }
+
+    public void Key2Down(InputAction.CallbackContext ctx)
+    {
+        if (!IsActive())
+        {
+            return;
+        }
+        
+        if (ctx.started)
+        {
+            OnDownActionStarted?.Invoke(0);
+        }
+        else if (ctx.canceled)
+        {
+            OnDownActionCancelled?.Invoke(0);
+        }
+    }
 
     private bool IsActive()
     {
@@ -143,8 +218,9 @@ public class InputHandler : NetworkBehaviour
         active = newValue;
         if (!active)
         {
-            OnVerticalInputChanged?.Invoke(0, 1);
             OnHorizontalInputChanged?.Invoke(0, 1);
+            OnUpActionStarted?.Invoke(1);
+            OnDownActionStarted?.Invoke(1);
             OnActionCancelled?.Invoke(1);
         }
     }

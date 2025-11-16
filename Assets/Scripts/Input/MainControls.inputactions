@@ -33,33 +33,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "KeyVertical",
-                    "type": "Value",
-                    "id": "08705cdb-6601-4439-9060-80d0afb839d7",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "PadVertical",
-                    "type": "Value",
-                    "id": "da3edd78-2406-44ff-a6aa-9d84928d8d6f",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "KeyVertical2",
-                    "type": "Value",
-                    "id": "c43e4051-97d0-453b-b19b-4669a42cc399",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "KeyAction",
                     "type": "Button",
                     "id": "c7c08fb7-f39e-4aaa-b18a-14e775de2831",
@@ -81,6 +54,60 @@
                     "name": "KeyAction2",
                     "type": "Button",
                     "id": "fb47676d-141e-4433-9857-1c013872c1c2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeyUpAction",
+                    "type": "Button",
+                    "id": "1476cec4-acf0-47b9-98b0-b3080ac3e09a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PadUpAction",
+                    "type": "Button",
+                    "id": "36185e34-5671-4b44-9195-0d591d45d79a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeyUpAction2",
+                    "type": "Button",
+                    "id": "24e5f000-b7b8-4a4f-b723-ad94f38c88cb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeyDownAction",
+                    "type": "Button",
+                    "id": "f896e6e7-8265-4fee-ad2b-d550074a5050",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PadDownAction",
+                    "type": "Button",
+                    "id": "c82c11dc-8127-4812-b24d-0c746a5434e5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "KeyDownAction2",
+                    "type": "Button",
+                    "id": "5a549165-036f-49d8-865b-e850c361f42b",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -188,105 +215,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "1D Axis",
-                    "id": "d8413882-8948-41f5-bda0-69b28e71a40d",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "KeyVertical",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "d39f9eb6-d6ba-48c1-952b-a7b19079e0b5",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "KeyVertical",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "bf893406-422f-4e1b-a6aa-1a825a91e38d",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "KeyVertical",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "14b306d6-580a-4e06-afd5-e5623f1ce14f",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PadVertical",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "71f7f0ed-6144-4409-bfcd-8f9b9c789346",
-                    "path": "<Gamepad>/dpad/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PadVertical",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "ec79fb67-f637-4baa-8f4d-a98fb1681249",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PadVertical",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "1D Axis",
-                    "id": "abceece7-42f1-4aef-9e61-166117ae3b23",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "KeyVertical2",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Negative",
-                    "id": "087b8ab3-4204-4adf-9419-da2e61e77e1b",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "KeyVertical2",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "1667f064-e3b0-45bf-852b-5dd236a9e938",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "KeyVertical2",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "52a1ead2-0646-4090-8a45-8c0b8a16de1f",
                     "path": "<Keyboard>/space",
@@ -299,12 +227,78 @@
                 },
                 {
                     "name": "",
+                    "id": "1a066593-1b9a-4149-9703-9912ea5d1883",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyUpAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8574ecfd-a60c-49ce-b8ed-594cb609bceb",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyDownAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "7371f470-63e4-4e93-9e2e-6e5df616766b",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "PadAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aec05589-9011-4044-aa6e-8034cc2db2f3",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PadUpAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60573195-1fa9-4425-919e-bd3ef1ba5bbd",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PadUpAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa570fcd-d5b0-47a2-8c25-2698b659dd89",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PadDownAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e264fad-7b4b-4fd7-92bb-8eb142e3464d",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PadDownAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -327,6 +321,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "KeyAction2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c05e32c1-ac7a-4fb4-92f2-c9fae521afb2",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyUpAction2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "983b4638-2bb9-40a9-b751-56897c29fc81",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyDownAction2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

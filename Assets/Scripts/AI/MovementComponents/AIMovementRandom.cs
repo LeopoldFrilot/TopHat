@@ -26,11 +26,6 @@ public class AIMovementRandom : AIMovementModule
 
     private void Update()
     {
-        if (Time.time > lastJumpTry + jumpTryRate)
-        {
-            TryJump();
-        }
-
         if (Time.time > nextDirectionChange)
         {
             ChangeRandomDirection();
@@ -53,14 +48,5 @@ public class AIMovementRandom : AIMovementModule
                 break;
         }
         nextDirectionChange = Time.time + UnityEngine.Random.Range(minRandomTime, maxRandomTime);
-    }
-
-    private void TryJump()
-    {
-        if (UnityEngine.Random.Range(0f, 1f) <= jumpChance)
-        {
-            movementRef.Jump();
-        }
-        lastJumpTry = Time.time;
     }
 }

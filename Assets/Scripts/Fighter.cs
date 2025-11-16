@@ -73,11 +73,15 @@ public class Fighter : MonoBehaviour
         inputHandler = networkedFighterController.GetComponent<InputHandler>();
         inputHandler.OnActionStarted += OnActionStarted;
         inputHandler.OnActionCancelled += OnActionCancelled;
+        inputHandler.OnUpActionStarted += OnUpActionStarted;
+        inputHandler.OnUpActionCancelled += OnUpActionCancelled;
+        inputHandler.OnDownActionStarted += OnDownActionStarted;
+        inputHandler.OnDownActionCancelled += OnDownActionCancelled;
         
         initialized = true;
         TriggerInitialized();
     }
-
+    
     private void OnDizzinessChanged(float obj)
     {
         float normalizedDizzy = playerDizziness.GetNormalizedDizziness();
@@ -230,6 +234,68 @@ public class Fighter : MonoBehaviour
             {
                 playerBlock.TryToBLock();
             }
+        }
+    }
+
+    public void CancelDownAction()
+    {
+        OnDownActionStarted(networkedFighterController.GetPlayerIndex(this));
+    }
+
+    private void OnDownActionCancelled(int playerOnNetworkedController)
+    {
+        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
+        {
+            return;
+        }
+    }
+
+    public void StartDownAction()
+    {
+        OnDownActionStarted(networkedFighterController.GetPlayerIndex(this));
+    }
+
+    private void OnDownActionStarted(int playerOnNetworkedController)
+    {
+        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
+        {
+            return;
+        }
+        
+        if (!CanStartAction())
+        {
+            return;
+        }
+    }
+
+    public void CancelUpAction()
+    {
+        OnDownActionStarted(networkedFighterController.GetPlayerIndex(this));
+    }
+
+    private void OnUpActionCancelled(int playerOnNetworkedController)
+    {
+        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
+        {
+            return;
+        }
+    }
+
+    public void StartUpAction()
+    {
+        OnDownActionStarted(networkedFighterController.GetPlayerIndex(this));
+    }
+
+    private void OnUpActionStarted(int playerOnNetworkedController)
+    {
+        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
+        {
+            return;
+        }
+        
+        if (!CanStartAction())
+        {
+            return;
         }
     }
 
