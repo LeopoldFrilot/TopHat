@@ -47,12 +47,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void RegisterHorizontalInput(float value)
     {
-        OnHorizontalInputChanged(value, 1);
+        OnHorizontalInputChanged(value, fighter.networkedFighterController.GetPlayerIndex(fighter));
     }
 
     public void RegisterVerticalInput(float value)
     {
-        OnVerticalInputChanged(value, 1);
+        OnVerticalInputChanged(value, fighter.networkedFighterController.GetPlayerIndex(fighter));
     }
 
     private void Update()

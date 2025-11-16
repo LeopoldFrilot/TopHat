@@ -171,7 +171,7 @@ public class Fighter : MonoBehaviour
 
     public void CancelAction()
     {
-        OnActionCancelled(1);
+        OnActionCancelled(networkedFighterController.GetPlayerIndex(this));
     }
 
     private void OnActionCancelled(int playerOnNetworkedController)
@@ -198,7 +198,7 @@ public class Fighter : MonoBehaviour
 
     public void StartAction()
     {
-        OnActionStarted(1);
+        OnActionStarted(networkedFighterController.GetPlayerIndex(this));
     }
 
     private void OnActionStarted(int playerOnNetworkedController)
