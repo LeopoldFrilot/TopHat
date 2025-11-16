@@ -27,6 +27,7 @@ public class PlayerFist : MonoBehaviour
     [SerializeField] private Vector2 windupOffset = new Vector2(1f, 0);
     [SerializeField] private Transform artTransform;
     [SerializeField] private List<Collider2D> fistColliders = new List<Collider2D>();
+    [SerializeField] private SpriteRenderer highlightRenderer;
     
     [Header("Audio")]
     [SerializeField] private AudioClip fistHitSound;
@@ -58,6 +59,7 @@ public class PlayerFist : MonoBehaviour
         rb2d.bodyType = RigidbodyType2D.Kinematic;
         rb2d.gravityScale = 0f;
         rb2d.constraints = RigidbodyConstraints2D.FreezePositionY;
+        highlightRenderer.enabled = false;
     }
 
     private void Start()
@@ -78,6 +80,10 @@ public class PlayerFist : MonoBehaviour
             windup = Mathf.Clamp(windup + Time.deltaTime * windupSpeed, 0, maxWindup - baseWindup);
             currentOffset = (windup + baseWindup) * windupOffset;
             transform.position = restingPosition.position - new Vector3((_fighter.IsFacingLeft() ? -1 : 1) * currentOffset.x, currentOffset.y, 0);
+            if (windup >= maxWindup - baseWindup)
+            {
+                Launch();
+            }
         }
         else if(currentState == PlayerFistState.Launch)
         {
@@ -115,6 +121,7 @@ public class PlayerFist : MonoBehaviour
                 break;
             
             case PlayerFistState.Windup:
+                highlightRenderer.enabled = false;
                 windupShake.Complete();
                 windupShake.Kill();
                 windupAudio.Stop();
@@ -131,6 +138,7 @@ public class PlayerFist : MonoBehaviour
                 break;
                 
             case PlayerFistState.Windup:
+                highlightRenderer.enabled = true;
                 consumed = false;
                 shakeTweenComplete.Invoke();
                 windupAudio.Play();

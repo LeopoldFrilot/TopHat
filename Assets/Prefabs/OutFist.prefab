@@ -88,6 +88,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OutFist
       objectReference: {fileID: 0}
+    - target: {fileID: 8098819040984249147, guid: 736715f9a80bf294da7e197ca6bd3a6c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5890752559019076102, guid: 109218d4ecc6de140933075d254c028c, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

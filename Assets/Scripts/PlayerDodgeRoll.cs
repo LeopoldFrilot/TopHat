@@ -8,12 +8,14 @@ public class PlayerDodgeRoll : MonoBehaviour
     [SerializeField] private float dodgeDistance = 10f;
     [SerializeField] private float dodgeTime = 1.5f;
     [SerializeField] private float dodgeSmoothingCoef = .3f;
+    [SerializeField] private float dodgeRollCD = 1.5f;
     
     private bool isRolling;
     private Fighter fighterRef;
     private PlayerStatus fighterStatus;
     private Coroutine dodgeRollRoutine;
     private int dodgeRollEffectHandle;
+    private double dodgeRollCDStartTime;
 
     private void Awake()
     {
@@ -49,6 +51,7 @@ public class PlayerDodgeRoll : MonoBehaviour
             yield return null;
         }
         fighterRef.transform.position = rollEndPosition;
+        StartCooldown();
         EndDodgeRoll();
     }
 
@@ -60,9 +63,19 @@ public class PlayerDodgeRoll : MonoBehaviour
         dodgeRollEffectHandle = -1;
     }
 
+    private void StartCooldown()
+    {
+        dodgeRollCDStartTime = Time.time;
+    }
+
     private bool CanDodgeRoll()
     {
         if (dodgeRollRoutine != null)
+        {
+            return false;
+        }
+
+        if (Time.time < dodgeRollCDStartTime + dodgeRollCD)
         {
             return false;
         }

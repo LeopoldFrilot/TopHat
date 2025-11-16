@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1976726529973353150, guid: 6365baaade71f914199772eb6cd49303, type: 3}
+    - target: {fileID: 420078319086327842, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -9189443869861150885, guid: 6365baaade71f914199772eb6cd49303, type: 3}
     - target: {fileID: 1345889205945301477, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -164,6 +168,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fighter2
       objectReference: {fileID: 0}
+    - target: {fileID: 8561229577257384218, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -4159369228381272831, guid: 6365baaade71f914199772eb6cd49303, type: 3}
     - target: {fileID: 8802039232445259999, guid: d0dabb9f612bc2a4488bfc09a8157b85, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
