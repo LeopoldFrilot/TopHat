@@ -2099,6 +2099,7 @@ GameObject:
   - component: {fileID: 4915518682772512237}
   - component: {fileID: 857252945940505770}
   - component: {fileID: 2553607980060792913}
+  - component: {fileID: 6135896988489413904}
   m_Layer: 3
   m_Name: Fighter
   m_TagString: Untagged
@@ -2159,14 +2160,14 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.73824006
-      value: 2.0543404
-      inSlope: 4.0784116
-      outSlope: 4.0784116
+      time: 0.49529296
+      value: 1.3405234
+      inSlope: 1.5426378
+      outSlope: 1.5426378
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.23222825
     - serializedVersion: 3
       time: 1
       value: 3
@@ -2405,7 +2406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2eca16222f49f68929e3d0f10cbca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blocksForGrapple: 3
+  meterForGrapple: 6
 --- !u!114 &2553607980060792913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2419,8 +2420,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dodgeDistance: 5
-  dodgeTime: 0.7
-  dodgeSmoothingCoef: 0.35
+  dodgeTime: 0.1
+  dodgeSmoothingCoef: 0.1
+  dodgeRollCD: 1.5
+--- !u!114 &6135896988489413904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514386353918108479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d001c922978493797fb4bf2e84f720d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxMeter: 10
 --- !u!1 &8830864449060472638
 GameObject:
   m_ObjectHideFlags: 0

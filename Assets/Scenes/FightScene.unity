@@ -781,7 +781,7 @@ Transform:
   m_GameObject: {fileID: 165597584}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.22, y: -4.37, z: 0}
+  m_LocalPosition: {x: 5.5, y: -4.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1017,6 +1017,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 265360047}
+  - component: {fileID: 265360048}
   m_Layer: 5
   m_Name: CoreGameRootUI
   m_TagString: Untagged
@@ -1047,6 +1048,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &265360048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265360046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4255ce07c64a15a00bc92e55376597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1PointsText: {fileID: 943626624}
+  player2PointsText: {fileID: 502208141}
 --- !u!1 &276840806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2659,7 +2674,7 @@ Transform:
   m_GameObject: {fileID: 588288729}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -7.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3189,7 +3204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1383212668300070564, guid: b853f00cbac95604f91ddad817b79511, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.04
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 1383212668300070564, guid: b853f00cbac95604f91ddad817b79511, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3267,7 +3282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1383212668300070564, guid: b853f00cbac95604f91ddad817b79511, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.11
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 1383212668300070564, guid: b853f00cbac95604f91ddad817b79511, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6385,7 +6400,6 @@ GameObject:
   - component: {fileID: 1328233072}
   - component: {fileID: 1328233071}
   - component: {fileID: 1328233073}
-  - component: {fileID: 1328233074}
   - component: {fileID: 1328233075}
   m_Layer: 0
   m_Name: FightScene
@@ -6476,20 +6490,7 @@ MonoBehaviour:
   targetHatTime: 30
   leftGameBoundaries: {fileID: 1543296272}
   rightGameBoundaries: {fileID: 165597585}
---- !u!114 &1328233074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1328233070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b4255ce07c64a15a00bc92e55376597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player1PointsText: {fileID: 943626624}
-  player2PointsText: {fileID: 502208141}
+  fightSceneUI: {fileID: 265360048}
 --- !u!114 &1328233075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7412,7 +7413,7 @@ Transform:
   m_GameObject: {fileID: 1543296271}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.22, y: -4.37, z: 0}
+  m_LocalPosition: {x: -5.5, y: -4.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10561,7 +10562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3925761426380241231, guid: b853f00cbac95604f91ddad817b79511, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4514797887616502812, guid: b853f00cbac95604f91ddad817b79511, type: 3}
       propertyPath: m_LocalScale.y

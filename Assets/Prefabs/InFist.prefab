@@ -351,10 +351,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxWindup: 11
-  windupSpeed: 5
+  windupSpeed: 8
   launchStrength: 15
   retractTime: 0.3
-  baseWindup: 3
+  baseWindup: 2.5
   idleFollowSpeed: 4
   windupOffset: {x: 0.25, y: 0}
   artTransform: {fileID: 396381498334708666}

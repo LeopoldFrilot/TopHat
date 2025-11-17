@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class PlayerGrapple: MonoBehaviour
 {
-    [SerializeField] private int blocksForGrapple = 3;
+    [SerializeField] private int meterForGrapple = 3;
     
-    int accumulatedBlocks = 0;
     private bool inGrapple = false;
     private Fighter _fighterRef;
 
@@ -20,7 +19,7 @@ public class PlayerGrapple: MonoBehaviour
         {
             _fighterRef.SetGrappled();
             inGrapple = true;
-            SetBlockCount(accumulatedBlocks - blocksForGrapple);
+            _fighterRef.ChangeMeter(meterForGrapple);
             _fighterRef.StartGrappleAnimation();
         }
     }
@@ -34,27 +33,16 @@ public class PlayerGrapple: MonoBehaviour
 
     private bool CanGrapple()
     {
-        return !inGrapple && accumulatedBlocks >= blocksForGrapple;
-    }
-
-    public Action<int, int> OnBlockCountChanged;
-    public void SetBlockCount(int newCount)
-    {
-        if (accumulatedBlocks != newCount)
-        {
-            accumulatedBlocks = newCount;
-            OnBlockCountChanged?.Invoke(accumulatedBlocks, blocksForGrapple);
-        }
-    }
-
-    public void AddSuccessfulBlock(int quantity = 1)
-    {
-        SetBlockCount(accumulatedBlocks + quantity);
+        return !inGrapple && _fighterRef.GetMeter() >= meterForGrapple;
     }
 
     public void ResetGrapple()
     {
         StopGrapple();
-        SetBlockCount(0);
+    }
+
+    public int GetMeterRequirement()
+    {
+        return meterForGrapple;
     }
 }

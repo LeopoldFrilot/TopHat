@@ -18,11 +18,11 @@ public class FightScene : MonoBehaviour
     [SerializeField] private float targetHatTime = 60f;
     [SerializeField] private Transform leftGameBoundaries;
     [SerializeField] private Transform rightGameBoundaries;
+    [SerializeField] private FightSceneUI fightSceneUI;
     
     private PlayerHat defenderHat;
     private List<NetworkedFighterController> networkControllers = new();
     private List<Fighter> players = new();
-    private FightSceneUI fightSceneUI;
     private bool vsAI;
     private AIPickerUI pickerUI;
     private bool inCountdown;
@@ -33,7 +33,6 @@ public class FightScene : MonoBehaviour
 
     public void Awake()
     {
-        fightSceneUI = GetComponent<FightSceneUI>();
         pickerUI = FindFirstObjectByType<AIPickerUI>();
         playerInput = GetComponent<PlayerInputManager>();
         playerInput.onPlayerJoined += OnPlayerJoined;

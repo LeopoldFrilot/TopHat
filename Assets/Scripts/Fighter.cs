@@ -50,6 +50,7 @@ public class Fighter : MonoBehaviour
     private PlayerDizziness playerDizziness;
     private PlayerStatus playerStatus;
     private PlayerDodgeRoll playerDodgeRoll;
+    private PlayerMeter playerMeter;
 
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
@@ -73,6 +74,7 @@ public class Fighter : MonoBehaviour
         AIBaseComponent = GetComponent<AIBaseComponent>();
         playerDodgeRoll = GetComponent<PlayerDodgeRoll>();
         playerStatus = GetComponent<PlayerStatus>();
+        playerMeter = GetComponent<PlayerMeter>();
         
         playerDizziness = GetComponent<PlayerDizziness>();
         playerDizziness.OnDizzinessChanged += OnDizzinessChanged;
@@ -122,6 +124,7 @@ public class Fighter : MonoBehaviour
         
         playerBlock.CancelBlockLag();
         playerGrapple.ResetGrapple();
+        playerMeter.ResetMeter();
 
         foreach (var spawnedFist in spawnedFists)
         {
@@ -149,7 +152,7 @@ public class Fighter : MonoBehaviour
 
         spawnedFists = new List<PlayerFist>{ outSpawnedFist, inSpawnedFist };
 
-        playerGrapple.OnBlockCountChanged += OnBlockCountChanged;
+        playerMeter.OnMeterChanged += OnMeterChanged;
     }
 
     private void Update()
@@ -417,14 +420,16 @@ public class Fighter : MonoBehaviour
 
                 if (!willKnockOff)
                 {
+                    float normWindup = fist.GetWindupNormalized();
+                    Debug.Log(normWindup);
                     if (blocked)
                     {
                         Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
                         if (!wasPerfectBlock)
                         {
-                            if (fist.GetWindupNormalized() > .95)
+                            if (normWindup > .65)
                             {
-                                playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
+                                playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup * .33f));
                                 playerMovement.LaunchPlayer(
                                     new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
                             }
@@ -434,16 +439,14 @@ public class Fighter : MonoBehaviour
                             playerBlock.CancelBlockLag();
                         }
 
-                        playerGrapple.AddSuccessfulBlock(wasPerfectBlock ? 2 : 1);
+                        playerMeter.ChangeMeter(wasPerfectBlock ? 2 : 1);
                     }
                     else
                     {
                         Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
-                        playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized()));
+                        playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup));
                         playerMovement.LaunchPlayer(
                             new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * hitKnockbackPower);
-                        
-                        playerGrapple.SetBlockCount(0);
                     } 
                 }
             }
@@ -455,9 +458,16 @@ public class Fighter : MonoBehaviour
         return playerGrapple.IsGrappling();
     }
 
-    private void OnBlockCountChanged(int blockCount, int minBlockCount)
+    private void OnMeterChanged(int meter)
     {
-        ToggleFlameEyes(blockCount >= minBlockCount);
+        if (currentTurnState ==  TurnState.Defending)
+        {
+            ToggleFlameEyes(meter >= playerGrapple.GetMeterRequirement());
+        }
+        else
+        {
+            ToggleFlameEyes(false);
+        }
     }
 
     private void ToggleFlameEyes(bool On)
@@ -547,6 +557,7 @@ public class Fighter : MonoBehaviour
         {
             currentTurnState = newState;
             TriggerTurnStateChanged(currentTurnState);
+            playerMeter.ResetMeter();
         }
     }
     
@@ -651,5 +662,15 @@ public class Fighter : MonoBehaviour
     public Vector3 ClampToFightPosition(Vector3 newPosition)
     {
         return fightScene.ClampToGameplayBounds(newPosition);
+    }
+
+    public void ChangeMeter(int delta)
+    {
+        playerMeter.ChangeMeter(delta);
+    }
+
+    public int GetMeter()
+    {
+        return playerMeter.GetMeter();
     }
 }
