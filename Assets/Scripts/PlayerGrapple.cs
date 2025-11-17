@@ -19,7 +19,7 @@ public class PlayerGrapple: MonoBehaviour
         {
             _fighterRef.SetGrappled();
             inGrapple = true;
-            _fighterRef.ChangeMeter(meterForGrapple);
+            _fighterRef.ChangeMeter(-meterForGrapple);
             _fighterRef.StartGrappleAnimation();
         }
     }
@@ -33,6 +33,13 @@ public class PlayerGrapple: MonoBehaviour
 
     private bool CanGrapple()
     {
+        foreach (var spawnedFist in _fighterRef.GetSpawnedFists())
+        {
+            if (spawnedFist.GetCurrentState() != PlayerFistState.Idle)
+            {
+                return false;
+            }
+        }
         return !inGrapple && _fighterRef.GetMeter() >= meterForGrapple;
     }
 

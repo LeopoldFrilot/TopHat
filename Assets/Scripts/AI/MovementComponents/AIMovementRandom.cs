@@ -26,6 +26,11 @@ public class AIMovementRandom : AIMovementModule
 
     private void Update()
     {
+        if (!IsActive())
+        {
+            return;
+        }
+
         if (Time.time > nextDirectionChange)
         {
             ChangeRandomDirection();

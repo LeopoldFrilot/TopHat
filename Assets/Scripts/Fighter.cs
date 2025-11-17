@@ -281,7 +281,7 @@ public class Fighter : MonoBehaviour
             return;
         }
 
-        if (currentTurnState == TurnState.Defending)
+        if (currentTurnState == TurnState.Attacking)
         {
             playerGrapple.TryToGrapple();
         }
@@ -394,18 +394,18 @@ public class Fighter : MonoBehaviour
         
         if (currentTurnState == TurnState.Attacking)
         {
-             if (fist.GetOwner().IsGrappling())
-             {
-                 foreach (var spawnedFist in spawnedFists)
-                 {
-                     spawnedFist.Reset();
-                 }
-                 SetGrappled();
-             }
         }
         else
         {
-            if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
+            if (fist.GetOwner().IsGrappling())
+            {
+                foreach (var spawnedFist in spawnedFists)
+                {
+                    spawnedFist.Reset();
+                }
+                SetGrappled();
+            }
+            else if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
             {
                 bool willKnockOff = currentTurnState == TurnState.Defending && IsStunned() && !knockedOff;
                 bool blocked = playerBlock.IsBlocking() && !willKnockOff;
@@ -429,6 +429,7 @@ public class Fighter : MonoBehaviour
                         {
                             if (normWindup > .65)
                             {
+                                fist.GetOwner().ChangeMeter(1);
                                 playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup * .33f));
                                 playerMovement.LaunchPlayer(
                                     new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
@@ -445,6 +446,7 @@ public class Fighter : MonoBehaviour
                     {
                         Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
                         playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup));
+                        fist.GetOwner().ChangeMeter(normWindup > .65 ? 3 : 2);
                         playerMovement.LaunchPlayer(
                             new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * hitKnockbackPower);
                     } 
@@ -460,7 +462,7 @@ public class Fighter : MonoBehaviour
 
     private void OnMeterChanged(int meter)
     {
-        if (currentTurnState ==  TurnState.Defending)
+        if (currentTurnState ==  TurnState.Attacking)
         {
             ToggleFlameEyes(meter >= playerGrapple.GetMeterRequirement());
         }
@@ -643,10 +645,10 @@ public class Fighter : MonoBehaviour
         outSpawnedFist.transform.localScale = Vector3.one;
         outSpawnedFist.CancelGrapple();
         
-        var inSpawnedFist = spawnedFists[0];
+        var inSpawnedFist = spawnedFists[1];
         inSpawnedFist.transform.SetParent(null);
         inSpawnedFist.transform.localScale = Vector3.one;
-        outSpawnedFist.CancelGrapple();
+        inSpawnedFist.CancelGrapple();
     }
 
     public bool IsStunned()
