@@ -47,7 +47,6 @@ public class PlayerDizziness : MonoBehaviour
         if (damage > 0)
         {
             SetNewStature(dizzy + damage);
-            Debug.Log($"Dealing damage: {damage}. Total Damage: {dizzy}");
             ResetRecoveryTimer();
         }
     }

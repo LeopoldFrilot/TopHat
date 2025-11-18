@@ -66,6 +66,7 @@ public class AIBaseComponent : MonoBehaviour
             
             GameObject newModule = Instantiate(module, transform);
             AIBaseModule aiBaseModule = newModule.GetComponent<AIBaseModule>(); 
+            aiBaseModule.enabled = true;
             aiBaseModule.Initialize(GetComponent<Fighter>());
         }
     }

@@ -36,22 +36,22 @@ public abstract class AIBaseModule : MonoBehaviour
         OtherFighterRef = fightSceneRef.GetOpponent(FighterRef);
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         EventHub.OnGameStarted += OnGameStarted;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         EventHub.OnGameStarted -= OnGameStarted;
     }
 
-    virtual protected bool IsActive()
+    protected virtual bool IsActive()
     {
         return OtherFighterRef != null && aiRef.IsActive();
     }
 
-    virtual public void Reset()
+    public virtual void Reset()
     {
         
     }

@@ -106,18 +106,21 @@ public class Fighter : MonoBehaviour
     private IEnumerator DizzyStun()
     {
         yield return new WaitForSeconds(dizzyStunTimeLength);
+        EndDizzy();
+    }
+
+    private void EndDizzy()
+    {
         playerStatus.RemoveStatusEffect(dizzyStunHandle);
         playerDizziness.ResetDizzy();
-        dizzyStunHandle = -1;
+        dizzyStunHandle = -1; 
     }
 
     public void Restart()
     {
         hatTime = 0;
-        
-        playerStatus.RemoveStatusEffect(dizzyStunHandle);
-        playerDizziness.ResetDizzy();
-        dizzyStunHandle = -1;
+
+        EndDizzy();
         
         playerStatus.RemoveStatusEffect(grappledHandle);
         grappledHandle = -1;
@@ -283,10 +286,7 @@ public class Fighter : MonoBehaviour
 
         if (currentTurnState == TurnState.Attacking)
         {
-            if (playerGrapple.TryToGrapple())
-            {
-                TriggerKnockOff();
-            }
+            playerGrapple.TryToGrapple();
         }
         else
         {
@@ -418,6 +418,7 @@ public class Fighter : MonoBehaviour
         {
             if (fist.GetOwner().IsGrappling())
             {
+                TriggerKnockOff();
                 foreach (var spawnedFist in spawnedFists)
                 {
                     spawnedFist.Reset();
@@ -440,7 +441,6 @@ public class Fighter : MonoBehaviour
                 if (!willKnockOff)
                 {
                     float normWindup = fist.GetWindupNormalized();
-                    Debug.Log(normWindup);
                     if (blocked)
                     {
                         Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
@@ -577,6 +577,7 @@ public class Fighter : MonoBehaviour
         if (currentTurnState != newState)
         {
             currentTurnState = newState;
+            EndDizzy();
             TriggerTurnStateChanged(currentTurnState);
         }
     }
@@ -705,5 +706,18 @@ public class Fighter : MonoBehaviour
         }
         
         return true;
+    }
+
+    public bool IsAFistsOfState(List<PlayerFistState> validStates)
+    {
+        foreach (var fist in spawnedFists)
+        {
+            if (validStates.Contains(fist.GetCurrentState()) )
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

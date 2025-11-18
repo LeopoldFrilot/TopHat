@@ -9,6 +9,7 @@ public class PlayerDodgeRoll : MonoBehaviour
     [SerializeField] private float dodgeTime = 1.5f;
     [SerializeField] private float dodgeSmoothingCoef = .3f;
     [SerializeField] private float dodgeRollCD = 1.5f;
+    [SerializeField] private Collider2D mainCollider;
     
     private bool isRolling;
     private Fighter fighterRef;
@@ -30,6 +31,7 @@ public class PlayerDodgeRoll : MonoBehaviour
             return false;
         }
         
+        mainCollider.enabled = false;
         dodgeRollRoutine = StartCoroutine(DodgeRoll(dodgeRight));
         return true;
     }
@@ -57,6 +59,7 @@ public class PlayerDodgeRoll : MonoBehaviour
 
     private void EndDodgeRoll()
     {
+        mainCollider.enabled = true;
         StopCoroutine(dodgeRollRoutine);
         dodgeRollRoutine = null;
         fighterStatus.RemoveStatusEffect(dodgeRollEffectHandle);
