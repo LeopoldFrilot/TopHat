@@ -283,7 +283,10 @@ public class Fighter : MonoBehaviour
 
         if (currentTurnState == TurnState.Attacking)
         {
-            playerGrapple.TryToGrapple();
+            if (playerGrapple.TryToGrapple())
+            {
+                TriggerKnockOff();
+            }
         }
         else
         {
@@ -372,6 +375,22 @@ public class Fighter : MonoBehaviour
     public bool IsFacingLeft()
     {
         return facingLeft;
+    }
+
+    public void ForceHitboxesValueOn()
+    {
+        foreach (var spawnedFist in spawnedFists)
+        {
+            spawnedFist.ForceHitboxesValue(true);
+        }
+    }
+
+    public void ForceHitboxesValueOff()
+    {
+        foreach (var spawnedFist in spawnedFists)
+        {
+            spawnedFist.ForceHitboxesValue(false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -559,7 +578,6 @@ public class Fighter : MonoBehaviour
         {
             currentTurnState = newState;
             TriggerTurnStateChanged(currentTurnState);
-            playerMeter.ResetMeter();
         }
     }
     
@@ -674,5 +692,18 @@ public class Fighter : MonoBehaviour
     public int GetMeter()
     {
         return playerMeter.GetMeter();
+    }
+
+    public bool AreFistsOfState(List<PlayerFistState> validStates)
+    {
+        foreach (var fist in spawnedFists)
+        {
+            if (!validStates.Contains(fist.GetCurrentState()) )
+            {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

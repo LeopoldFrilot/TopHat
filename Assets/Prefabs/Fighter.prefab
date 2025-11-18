@@ -2419,10 +2419,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05384a04544541d6a63c7f7dcddb43fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dodgeDistance: 5
-  dodgeTime: 0.1
-  dodgeSmoothingCoef: 0.1
-  dodgeRollCD: 1.5
+  dodgeDistance: 6
+  dodgeTime: 0.3
+  dodgeSmoothingCoef: 0.2
+  dodgeRollCD: 0.5
 --- !u!114 &6135896988489413904
 MonoBehaviour:
   m_ObjectHideFlags: 0

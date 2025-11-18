@@ -16,7 +16,7 @@ public abstract class AIBaseModule : MonoBehaviour
     protected AIBaseComponent aiRef;
     protected FightScene fightSceneRef;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         fightSceneRef = FindFirstObjectByType<FightScene>();
     }

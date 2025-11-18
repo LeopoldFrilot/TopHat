@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class AutoTurnaround : MonoBehaviour
 {
     private FightScene fightScene;
     private Fighter _fighterRef;
+
+    private List<PlayerFistState> validFistStatesForTurnaround = new() { PlayerFistState.Idle, PlayerFistState.Retract, PlayerFistState.Block, PlayerFistState.Launch};
 
     private void Awake()
     {
@@ -23,6 +26,16 @@ public class AutoTurnaround : MonoBehaviour
         {
             return;
         }
+
+        if (!_fighterRef.AreFistsOfState(validFistStatesForTurnaround))
+        {
+            return;
+        }
+
+        if (IsFacingOpponent(otherPlayer))
+        {
+            return;
+        }
         
         if (transform.position.x < otherPlayer.transform.position.x)
         {
@@ -31,6 +44,18 @@ public class AutoTurnaround : MonoBehaviour
         else
         {
             _fighterRef.FaceLeft();
+        }
+    }
+
+    public bool IsFacingOpponent(Fighter otherPlayer)
+    { 
+        if (transform.position.x < otherPlayer.transform.position.x)
+        {
+            return !_fighterRef.IsFacingLeft();
+        }
+        else
+        {
+            return _fighterRef.IsFacingLeft();
         }
     }
 }

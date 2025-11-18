@@ -159,7 +159,7 @@ public class PlayerFist : MonoBehaviour
 
         foreach (var fistCollider in fistColliders)
         {
-            fistCollider.enabled = currentState is PlayerFistState.Block or PlayerFistState.Launch or PlayerFistState.Grapple;
+            fistCollider.enabled = currentState is PlayerFistState.Block or PlayerFistState.Launch;
         }
     }
 
@@ -281,5 +281,13 @@ public class PlayerFist : MonoBehaviour
     {
         StopBlock(true);
         SwitchState(PlayerFistState.Idle);
+    }
+
+    public void ForceHitboxesValue(bool value)
+    {
+        foreach (var fistCollider in fistColliders)
+        {
+            fistCollider.enabled = value;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGrapple: MonoBehaviour
@@ -7,13 +8,14 @@ public class PlayerGrapple: MonoBehaviour
     
     private bool inGrapple = false;
     private Fighter _fighterRef;
+    private List<PlayerFistState> validFistStatesForGrapple = new() { PlayerFistState.Idle };
 
     private void Awake()
     {
         _fighterRef = gameObject.GetComponent<Fighter>();
     }
 
-    public void TryToGrapple()
+    public bool TryToGrapple()
     {
         if (CanGrapple())
         {
@@ -21,7 +23,10 @@ public class PlayerGrapple: MonoBehaviour
             inGrapple = true;
             _fighterRef.ChangeMeter(-meterForGrapple);
             _fighterRef.StartGrappleAnimation();
+            return true;
         }
+        
+        return false;
     }
     
     public bool IsGrappling() => inGrapple;
@@ -33,13 +38,11 @@ public class PlayerGrapple: MonoBehaviour
 
     private bool CanGrapple()
     {
-        foreach (var spawnedFist in _fighterRef.GetSpawnedFists())
+        if (!_fighterRef.AreFistsOfState(validFistStatesForGrapple))
         {
-            if (spawnedFist.GetCurrentState() != PlayerFistState.Idle)
-            {
-                return false;
-            }
+            return false;
         }
+        
         return !inGrapple && _fighterRef.GetMeter() >= meterForGrapple;
     }
 

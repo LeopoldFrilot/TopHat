@@ -5,7 +5,7 @@ public class AIAttackSpam : AIAttackModule
 {
     [SerializeField] private float windupTime = 1f;
 
-    private float lastLaunchTime = 0;
+    private double lastLaunchTime = 0;
     private void Update()
     {
         if (!IsActive())
