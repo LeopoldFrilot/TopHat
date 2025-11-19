@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2897838054604090887}
   - component: {fileID: 2805861267535412386}
   - component: {fileID: 9069682983381290036}
+  - component: {fileID: 1910836191511745339}
   m_Layer: 0
   m_Name: GameWizard
   m_TagString: Untagged
@@ -169,3 +170,17 @@ MonoBehaviour:
   - {fileID: 3643518804539879109, guid: e8abc3e3d13eccf4aa5f3fd2b153d6ba, type: 3}
   - {fileID: 3643518804539879109, guid: 10da9336a25d5bf4d9abb24a042e4ea1, type: 3}
   - {fileID: 3643518804539879109, guid: a5e8e1b69b6832b4abbb25e1c5a0a07b, type: 3}
+  hitStopManager: {fileID: 1910836191511745339}
+--- !u!114 &1910836191511745339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533359107992333831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 937cba34779744a98e2136bd713442c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableHitstop: 1

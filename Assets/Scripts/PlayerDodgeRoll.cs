@@ -16,6 +16,7 @@ public class PlayerDodgeRoll : MonoBehaviour
     private PlayerStatus fighterStatus;
     private Coroutine dodgeRollRoutine;
     private int dodgeRollEffectHandle;
+    private int dodgeRollInvulEffectHandle;
     private double dodgeRollCDStartTime;
 
     private void Awake()
@@ -43,6 +44,7 @@ public class PlayerDodgeRoll : MonoBehaviour
             (dodgeRight ? 1 : -1) * dodgeDistance, 0, 0);
         rollEndPosition = fighterRef.ClampToFightPosition(rollEndPosition);
         dodgeRollEffectHandle = fighterStatus.AddStatusEffect(StatusType.AbilityLag);
+        dodgeRollInvulEffectHandle = fighterStatus.AddStatusEffect(StatusType.Invulnerable);
         double timeStart = Time.time;
         double timeEnd = Time.time + dodgeTime;
         while (Time.time <= timeEnd)
@@ -63,7 +65,9 @@ public class PlayerDodgeRoll : MonoBehaviour
         StopCoroutine(dodgeRollRoutine);
         dodgeRollRoutine = null;
         fighterStatus.RemoveStatusEffect(dodgeRollEffectHandle);
+        fighterStatus.RemoveStatusEffect(dodgeRollInvulEffectHandle);
         dodgeRollEffectHandle = -1;
+        dodgeRollInvulEffectHandle = -1;
     }
 
     private void StartCooldown()

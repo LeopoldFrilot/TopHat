@@ -37,7 +37,7 @@ public class PlayerHat : MonoBehaviour
 
             if (idleFollow != null)
             {
-                idleFollow.Complete();
+                idleFollow.Kill();
             }
 
             if (inTransition)
@@ -95,7 +95,7 @@ public class PlayerHat : MonoBehaviour
 
     public void PausePhysics()
     {
-        hatRigidBody.bodyType = RigidbodyType2D.Kinematic;
+        hatRigidBody.bodyType = RigidbodyType2D.Static;
         collider.enabled = false;
     }
 

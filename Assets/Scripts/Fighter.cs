@@ -23,6 +23,15 @@ public class Fighter : MonoBehaviour
     [SerializeField] private GameObject hitEffectPrefab;
     [SerializeField] private GameObject blockEffectPrefab;
     [SerializeField] private AnimationCurve dizzyDamageCurve;
+    [SerializeField] private float hardHitThreshold = .65f;
+    
+    [Header("Juice")]
+    [SerializeField] private float knockOffHitstop = 1f;
+    [SerializeField] private float punchHitstop = .3f;
+    [SerializeField] private float blockHitstop = .1f;
+    [SerializeField] private float parryHitstop = .01f;
+    [SerializeField] private float hitTimeRecoveryRate = .1f;
+    [SerializeField] private float swapTimeRecoveryRate = .03f;
 
     [Header("Animation")] 
     [SerializeField] private Animator mainBodyAnimator;
@@ -296,6 +305,8 @@ public class Fighter : MonoBehaviour
                 {
                     spawnedFist.Reset();
                 }
+                
+                playerBlock.CancelBlockLag();
             }
         }
     }
@@ -410,9 +421,14 @@ public class Fighter : MonoBehaviour
         {
             return;
         }
-        
+
+        bool isInvul = playerStatus.GetActiveStatusEffects().Contains(StatusType.Invulnerable);
         if (fist.GetOwner().IsGrappling())
         {
+            if (isInvul)
+            {
+                return;
+            }
             if (GetTurnState() == TurnState.Defending)
             {
                 TriggerKnockOff();
@@ -423,19 +439,28 @@ public class Fighter : MonoBehaviour
             }
             
             SetGrappled();
+            
+            return;
         }
-        else if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
+        
+        if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
         {
-            bool willKnockOff = currentTurnState == TurnState.Defending && IsStunned() && !knockedOff;
-            bool blocked = playerBlock.IsBlocking() && !willKnockOff;
+            bool willKnockOff = currentTurnState == TurnState.Defending && IsStunned() && !knockedOff && !isInvul;
+            bool blocked = isInvul || (playerBlock.IsBlocking() && !willKnockOff);
             bool wasPerfectBlock = playerBlock.IsPerfectBlock() && !willKnockOff;
 
             if (willKnockOff)
             {
                 TriggerKnockOff();
+                GameWizard.Instance.hitStopManager.AddStop(knockOffHitstop, swapTimeRecoveryRate);
             }
                 
             fist.HandleCollisionWithPlayer(this, blocked);
+
+            if (isInvul)
+            {
+                return;
+            }
 
             if (!willKnockOff)
             {
@@ -445,17 +470,25 @@ public class Fighter : MonoBehaviour
                     Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
                     if (!wasPerfectBlock)
                     {
-                        if (normWindup > .65)
+                        GameWizard.Instance.hitStopManager.AddStop(blockHitstop);
+                        if (normWindup >= hardHitThreshold)
                         {
                             fist.GetOwner().ChangeMeter(1);
                             playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup * .33f));
                             playerMovement.LaunchPlayer(
                                 new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
+                            
+                            GameWizard.Instance.hitStopManager.AddStop(blockHitstop * (Mathf.Approximately(normWindup, 1) ? 2f : 1.5f));
+                        }
+                        else
+                        {
+                            GameWizard.Instance.hitStopManager.AddStop(blockHitstop);
                         }
                     }
                     else
                     {
                         playerBlock.CancelBlockLag();
+                        GameWizard.Instance.hitStopManager.AddStop(parryHitstop);
                     }
 
                     playerMeter.ChangeMeter(wasPerfectBlock ? 2 : 1);
@@ -464,9 +497,19 @@ public class Fighter : MonoBehaviour
                 {
                     Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
                     playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup));
-                    fist.GetOwner().ChangeMeter(normWindup > .65 ? 3 : 2);
                     playerMovement.LaunchPlayer(
                         new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * hitKnockbackPower);
+
+                    if (normWindup >= hardHitThreshold)
+                    {
+                        fist.GetOwner().ChangeMeter(3);
+                        GameWizard.Instance.hitStopManager.AddStop(punchHitstop * (Mathf.Approximately(normWindup, 1) ? 2f : 1.5f), hitTimeRecoveryRate);
+                    }
+                    else
+                    {
+                        fist.GetOwner().ChangeMeter(2);
+                        GameWizard.Instance.hitStopManager.AddStop(punchHitstop, hitTimeRecoveryRate);
+                    }
                 } 
             }
         }
@@ -508,6 +551,7 @@ public class Fighter : MonoBehaviour
     }
 
     public Action OnKnockOff;
+
     private void TriggerKnockOff()
     {
         knockedOff = true;

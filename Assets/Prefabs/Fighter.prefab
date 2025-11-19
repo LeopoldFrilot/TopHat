@@ -2180,6 +2180,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  hardHitThreshold: 0.65
+  knockOffHitstop: 0.1
+  punchHitstop: 0.1
+  blockHitstop: 0.03
+  parryHitstop: 0.001
+  hitTimeRecoveryRate: 0.2
+  swapTimeRecoveryRate: 0.03
   mainBodyAnimator: {fileID: 8261680427056463553}
   animatorSpeedFloatName: Speed
   animatorJumpBoolName: Jump

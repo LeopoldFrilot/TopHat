@@ -178,6 +178,7 @@ public class FightScene : MonoBehaviour
         EventHub.TriggerGameStarted();
         inCountdown = false;
         defenderHat.ResumePhysics();
+        countdownTimeline.Stop();
     }
 
     private void CollectHat(Fighter fighter)
