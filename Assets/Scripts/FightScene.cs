@@ -11,6 +11,7 @@ public class FightScene : MonoBehaviour
 {
     [SerializeField] private Transform player1Location;
     [SerializeField] private Transform player2Location;
+    [SerializeField] private Transform hatSpawnLocation;
     [SerializeField] private GameObject attackerHatPrefab;
     [SerializeField] private GameObject player1Prefab;
     [SerializeField] private GameObject player2Prefab;
@@ -145,7 +146,7 @@ public class FightScene : MonoBehaviour
 
     private void OnKnockOff()
     {
-        StartCoroutine(StartSwapRoles());
+        SwapRoles();
     }
 
     private void EnableAIForPlayer(Fighter fighterRef)
@@ -156,17 +157,19 @@ public class FightScene : MonoBehaviour
     private void StartFight()
     {
         inCountdown = true;
-        int randomFirst = Random.Range(0, 2);
         players[0].transform.position = player1Location.position;
-        players[0].SwitchTurnState(randomFirst == 0 ? TurnState.Attacking : TurnState.Defending);
+        players[0].SwitchTurnState(TurnState.Attacking);
         players[1].transform.position = player2Location.position;
-        players[1].SwitchTurnState(randomFirst == 1 ? TurnState.Attacking : TurnState.Defending);
+        players[1].SwitchTurnState(TurnState.Attacking);
         players[1].FaceLeft();
         if (!defenderHat)
         {
             defenderHat = Instantiate(attackerHatPrefab).GetComponent<PlayerHat>();
+            defenderHat.OnHatCollected += CollectHat;
         }
-        StartCoroutine(StartSwapRoles());
+        defenderHat.PausePhysics();
+        defenderHat.SetNewTarget(null);
+        defenderHat.transform.position = hatSpawnLocation.transform.position;
         countdownTimeline.Play();
     }
 
@@ -174,6 +177,13 @@ public class FightScene : MonoBehaviour
     {
         EventHub.TriggerGameStarted();
         inCountdown = false;
+        defenderHat.ResumePhysics();
+    }
+
+    private void CollectHat(Fighter fighter)
+    {
+        fighter.SwitchTurnState(TurnState.Defending);
+        defenderHat.SetNewTarget(fighter.GetHatLocation());
     }
 
     public Fighter GetOpponent(Fighter fighter)
@@ -233,22 +243,21 @@ public class FightScene : MonoBehaviour
         return inCountdown;
     }
 
-    private IEnumerator StartSwapRoles()
+    private void SwapRoles()
     {
         if (players.Count > 1)
         {
             Fighter originalAttacker = players[0].GetTurnState() == TurnState.Attacking ? players[0] : players[1];
             Fighter originalDefender = GetOpponent(originalAttacker);
-            originalAttacker.SwitchTurnState(TurnState.Defending);
-            defenderHat.SetNewTarget(originalAttacker.GetHatLocation());
-            yield return new WaitUntil(()=>defenderHat.IsInTransition() == false);
+            originalAttacker.SwapTurnState();
             originalDefender.SwapTurnState();
+            CollectHat(originalAttacker);
         }
     }
 
     private void OnTurnEnded(Fighter fighter)
     {
-        StartCoroutine(StartSwapRoles());
+        SwapRoles();
     }
 
     public Vector3 ClampToGameplayBounds(Vector3 position)

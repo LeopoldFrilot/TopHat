@@ -411,65 +411,63 @@ public class Fighter : MonoBehaviour
             return;
         }
         
-        if (currentTurnState == TurnState.Attacking)
+        if (fist.GetOwner().IsGrappling())
         {
-        }
-        else
-        {
-            if (fist.GetOwner().IsGrappling())
+            if (GetTurnState() == TurnState.Defending)
             {
                 TriggerKnockOff();
-                foreach (var spawnedFist in spawnedFists)
-                {
-                    spawnedFist.Reset();
-                }
-                SetGrappled();
             }
-            else if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
+            foreach (var spawnedFist in spawnedFists)
             {
-                bool willKnockOff = currentTurnState == TurnState.Defending && IsStunned() && !knockedOff;
-                bool blocked = playerBlock.IsBlocking() && !willKnockOff;
-                bool wasPerfectBlock = playerBlock.IsPerfectBlock() && !willKnockOff;
+                spawnedFist.Reset();
+            }
+            
+            SetGrappled();
+        }
+        else if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
+        {
+            bool willKnockOff = currentTurnState == TurnState.Defending && IsStunned() && !knockedOff;
+            bool blocked = playerBlock.IsBlocking() && !willKnockOff;
+            bool wasPerfectBlock = playerBlock.IsPerfectBlock() && !willKnockOff;
 
-                if (willKnockOff)
-                {
-                    TriggerKnockOff();
-                }
+            if (willKnockOff)
+            {
+                TriggerKnockOff();
+            }
                 
-                fist.HandleCollisionWithPlayer(this, blocked);
+            fist.HandleCollisionWithPlayer(this, blocked);
 
-                if (!willKnockOff)
+            if (!willKnockOff)
+            {
+                float normWindup = fist.GetWindupNormalized();
+                if (blocked)
                 {
-                    float normWindup = fist.GetWindupNormalized();
-                    if (blocked)
+                    Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
+                    if (!wasPerfectBlock)
                     {
-                        Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
-                        if (!wasPerfectBlock)
+                        if (normWindup > .65)
                         {
-                            if (normWindup > .65)
-                            {
-                                fist.GetOwner().ChangeMeter(1);
-                                playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup * .33f));
-                                playerMovement.LaunchPlayer(
-                                    new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
-                            }
+                            fist.GetOwner().ChangeMeter(1);
+                            playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup * .33f));
+                            playerMovement.LaunchPlayer(
+                                new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
                         }
-                        else
-                        {
-                            playerBlock.CancelBlockLag();
-                        }
-
-                        playerMeter.ChangeMeter(wasPerfectBlock ? 2 : 1);
                     }
                     else
                     {
-                        Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
-                        playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup));
-                        fist.GetOwner().ChangeMeter(normWindup > .65 ? 3 : 2);
-                        playerMovement.LaunchPlayer(
-                            new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * hitKnockbackPower);
-                    } 
+                        playerBlock.CancelBlockLag();
+                    }
+
+                    playerMeter.ChangeMeter(wasPerfectBlock ? 2 : 1);
                 }
+                else
+                {
+                    Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
+                    playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup));
+                    fist.GetOwner().ChangeMeter(normWindup > .65 ? 3 : 2);
+                    playerMovement.LaunchPlayer(
+                        new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * hitKnockbackPower);
+                } 
             }
         }
     }

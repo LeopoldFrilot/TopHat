@@ -10,33 +10,51 @@ public class PlayerHat : MonoBehaviour
     [SerializeField] private float transitionTime = .5f;
     [SerializeField] private float transitionArcHeight = 3f;
     [SerializeField] private float hatSpinSpeed = 100f;
+    [SerializeField] private Collider2D collider;
     
     private Transform targetPos;
     private Tweener idleFollow;
     private bool inTransition = false;
     private Coroutine transitionCoroutine;
+    private Rigidbody2D hatRigidBody;
+
+    private void Awake()
+    {
+        hatRigidBody = GetComponent<Rigidbody2D>();
+    }
 
     public void SetNewTarget(Transform newTarget)
     {
         if (targetPos != newTarget)
         {
-            inTransition = true;
             targetPos = newTarget;
+            inTransition = newTarget != null;
             
             if (transitionCoroutine != null)
             {
                 StopCoroutine(transitionCoroutine);
             }
-            
-            transitionCoroutine = StartCoroutine(MoveInArc(transform, targetPos, transitionTime, transitionArcHeight));
+
+            if (idleFollow != null)
+            {
+                idleFollow.Complete();
+            }
+
+            if (inTransition)
+            {
+                transitionCoroutine = StartCoroutine(MoveInArc(transform, targetPos, transitionTime, transitionArcHeight));
+            }
         }
     }
 
     private void OnReachedTarget()
     {
         inTransition = false;
-        idleFollow = transform.DOMove(targetPos.position, idleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
-        idleFollow.OnUpdate(() => idleFollow.ChangeEndValue(targetPos.position, true).Restart());
+        if (targetPos)
+        {
+            idleFollow = transform.DOMove(targetPos.position, idleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
+            idleFollow.OnUpdate(() => idleFollow.ChangeEndValue(targetPos.position, true).Restart());
+        }
     }
 
     public bool IsInTransition()
@@ -73,5 +91,28 @@ public class PlayerHat : MonoBehaviour
         mover.position = target.position;
         transitionCoroutine = null;
         OnReachedTarget();
+    }
+
+    public void PausePhysics()
+    {
+        hatRigidBody.bodyType = RigidbodyType2D.Kinematic;
+        collider.enabled = false;
+    }
+
+    public void ResumePhysics()
+    {
+        hatRigidBody.bodyType = RigidbodyType2D.Dynamic;
+        collider.enabled = true;
+    }
+
+    public Action<Fighter> OnHatCollected;
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        Fighter fighter = other.transform.root.GetComponent<Fighter>();
+        if (fighter != null)
+        {
+            PausePhysics();
+            OnHatCollected?.Invoke(fighter);
+        }
     }
 }
