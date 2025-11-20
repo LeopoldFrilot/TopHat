@@ -29,6 +29,7 @@ public class PlayerDodgeRoll : MonoBehaviour
         }
         
         mainCollider.enabled = false;
+        fighterRef.ChangeMeter(-Help.Tunables.meterRequirementDodgeRoll);
         dodgeRollRoutine = StartCoroutine(DodgeRoll(dodgeRight));
         return true;
     }
@@ -74,6 +75,11 @@ public class PlayerDodgeRoll : MonoBehaviour
     private bool CanDodgeRoll()
     {
         if (dodgeRollRoutine != null)
+        {
+            return false;
+        }
+
+        if (fighterRef.GetMeter() < Help.Tunables.meterRequirementDodgeRoll)
         {
             return false;
         }

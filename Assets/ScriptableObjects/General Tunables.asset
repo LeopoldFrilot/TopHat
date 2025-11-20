@@ -29,7 +29,7 @@ MonoBehaviour:
   retractTime: 0.3
   baseWindup: 2.5
   fistsIdleFollowSpeed: 4
-  windupOffset: {x: 1, y: 0}
+  windupOffset: {x: 0.3, y: 0}
   speedThresholdToRetract: 0.4
   hardHitThreshold: 0.65
   hatIdleFollowSpeed: 4
@@ -37,6 +37,7 @@ MonoBehaviour:
   transitionArcHeight: 3
   hatSpinSpeed: 1000
   timeToChargeHat: 30
+  meterRequirementDodgeRoll: 2
   meterRequirementGrapple: 6
   meterForParry: 2
   meterForBlock: 1

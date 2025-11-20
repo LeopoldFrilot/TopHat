@@ -39,6 +39,7 @@ public class MeterBar : MonoBehaviour
         }
         
         fighterRef = fighter;
+        OnMeterChanged(fighterRef.GetMeter());
         meter = fighterRef.GetComponent<PlayerMeter>();
         meter.OnMeterChanged += OnMeterChanged;
         fighterRef.OnTurnStateChanged += OnTurnStateChanged;
