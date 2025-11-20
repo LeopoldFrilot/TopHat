@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class PlayerBlock : MonoBehaviour
 {
-    [SerializeField] private float blockingTime = 0.5f;
-    [SerializeField] private float perfectBlockTime = .2f;
-    [SerializeField] private float blockingCooldown = 0.5f;
     private bool blocking = false;
     private float blockingCooldownStart;
     private float blockingTimeStart;
@@ -20,9 +17,9 @@ public class PlayerBlock : MonoBehaviour
     {
         if (blocking)
         {
-            if (blockingTime >= 0)
+            if (Help.Tunables.blockingTime >= 0)
             {
-                if (Time.time >= (blockingTime + blockingTimeStart))
+                if (Time.time >= (Help.Tunables.blockingTime + blockingTimeStart))
                 {
                     StopBlocking();
                 }
@@ -66,17 +63,17 @@ public class PlayerBlock : MonoBehaviour
 
     private bool CanBlock()
     {
-        return !blocking && Time.time >= (blockingCooldownStart + blockingCooldown);
+        return !blocking && Time.time >= (blockingCooldownStart + Help.Tunables.blockingCooldown);
     }
 
     public bool IsPerfectBlock()
     {
-        return blocking && blockingTimeStart + perfectBlockTime >= Time.time;
+        return blocking && blockingTimeStart + Help.Tunables.perfectBlockTime >= Time.time;
     }
 
     public void HandleActionButtonCancelled()
     {
-        if (blockingTime < 0)
+        if (Help.Tunables.blockingTime < 0)
         {
             StopBlocking(true);
         }

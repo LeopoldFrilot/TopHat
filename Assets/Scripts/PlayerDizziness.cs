@@ -4,9 +4,6 @@ using UnityEngine.Serialization;
 
 public class PlayerDizziness : MonoBehaviour
 {
-    [SerializeField] private float maxDizziness = 5f;
-    [SerializeField] private float dizzyRecoveryRate = 10f;
-    [SerializeField] private float delayBeforeRecovery = 0.5f;
     
     private float dizzy;
     private float nextTimeToRecover;
@@ -26,13 +23,13 @@ public class PlayerDizziness : MonoBehaviour
     {
         if (fighterRef.IsStunned())
         {
-            SetNewStature(maxDizziness);
+            SetNewStature(Help.Tunables.maxDizziness);
             return;
         }
         
         if (Time.time >= nextTimeToRecover)
         {
-            SetNewStature(dizzy - Time.deltaTime * dizzyRecoveryRate);
+            SetNewStature(dizzy - Time.deltaTime * Help.Tunables.dizzyRecoveryRate);
         }
     }
 
@@ -54,7 +51,7 @@ public class PlayerDizziness : MonoBehaviour
     private void SetNewStature(float newDizzy)
     {
         float prevStature = dizzy;
-        newDizzy = Mathf.Clamp(newDizzy, 0f, maxDizziness);
+        newDizzy = Mathf.Clamp(newDizzy, 0f, Help.Tunables.maxDizziness);
         dizzy = newDizzy;
         if (prevStature != dizzy)
         {
@@ -64,18 +61,18 @@ public class PlayerDizziness : MonoBehaviour
 
     private void ResetRecoveryTimer()
     {
-        nextTimeToRecover = Time.time + delayBeforeRecovery;
+        nextTimeToRecover = Time.time + Help.Tunables.delayBeforeRecovery;
     }
 
     public Action<float> OnDizzinessChanged;
     private void TriggerDizzinessChanged(float newStature)
     {
-        float dizzinessNormalized = newStature / maxDizziness;
+        float dizzinessNormalized = newStature / Help.Tunables.maxDizziness;
         OnDizzinessChanged?.Invoke(dizzinessNormalized);
     }
 
     public float GetNormalizedDizziness()
     {
-        return Mathf.Clamp01(dizzy/maxDizziness);
+        return Mathf.Clamp01(dizzy/Help.Tunables.maxDizziness);
     }
 }

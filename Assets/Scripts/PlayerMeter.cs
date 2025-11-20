@@ -3,26 +3,25 @@ using UnityEngine;
 
 public class PlayerMeter : MonoBehaviour
 {
-    [SerializeField] private int maxMeter = 10;
-    int accumulatedMeter = 0;
+    float accumulatedMeter = 0;
 
-    public Action<int> OnMeterChanged;
-    public void SetMeter(int newMeter)
+    public Action<float> OnMeterChanged;
+    public void SetMeter(float newMeter)
     {
-        newMeter = Mathf.Clamp(newMeter, 0, maxMeter);
-        if (accumulatedMeter != newMeter)
+        newMeter = Mathf.Clamp(newMeter, 0, Help.Tunables.maxMeter);
+        if (!Mathf.Approximately(accumulatedMeter, newMeter))
         {
             accumulatedMeter = newMeter;
             OnMeterChanged?.Invoke(accumulatedMeter);
         }
     }
 
-    public void ChangeMeter(int delta)
+    public void ChangeMeter(float delta)
     {
         SetMeter(accumulatedMeter + delta);
     }
 
-    public int GetMeter()
+    public float GetMeter()
     {
         return accumulatedMeter;
     }

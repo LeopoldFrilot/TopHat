@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerGrapple: MonoBehaviour
 {
-    [SerializeField] private int meterForGrapple = 3;
     
     private bool inGrapple = false;
     private Fighter _fighterRef;
@@ -21,7 +20,7 @@ public class PlayerGrapple: MonoBehaviour
         {
             _fighterRef.SetGrappled();
             inGrapple = true;
-            _fighterRef.ChangeMeter(-meterForGrapple);
+            _fighterRef.ChangeMeter(-Help.Tunables.meterRequirementGrapple);
             _fighterRef.StartGrappleAnimation();
             return true;
         }
@@ -43,16 +42,11 @@ public class PlayerGrapple: MonoBehaviour
             return false;
         }
         
-        return !inGrapple && _fighterRef.GetMeter() >= meterForGrapple;
+        return !inGrapple && _fighterRef.GetMeter() >= Help.Tunables.meterRequirementGrapple;
     }
 
     public void ResetGrapple()
     {
         StopGrapple();
-    }
-
-    public int GetMeterRequirement()
-    {
-        return meterForGrapple;
     }
 }

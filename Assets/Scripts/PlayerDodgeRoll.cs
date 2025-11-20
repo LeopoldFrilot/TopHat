@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class PlayerDodgeRoll : MonoBehaviour
 {
-    [SerializeField] private float dodgeDistance = 10f;
-    [SerializeField] private float dodgeTime = 1.5f;
-    [SerializeField] private float dodgeSmoothingCoef = .3f;
-    [SerializeField] private float dodgeRollCD = 1.5f;
     [SerializeField] private Collider2D mainCollider;
     
     private bool isRolling;
@@ -41,17 +37,17 @@ public class PlayerDodgeRoll : MonoBehaviour
     {
         Vector3 rollStartPosition = transform.position;
         Vector3 rollEndPosition = rollStartPosition + new Vector3(
-            (dodgeRight ? 1 : -1) * dodgeDistance, 0, 0);
+            (dodgeRight ? 1 : -1) * Help.Tunables.dodgeDistance, 0, 0);
         rollEndPosition = fighterRef.ClampToFightPosition(rollEndPosition);
         dodgeRollEffectHandle = fighterStatus.AddStatusEffect(StatusType.AbilityLag);
         dodgeRollInvulEffectHandle = fighterStatus.AddStatusEffect(StatusType.Invulnerable);
         double timeStart = Time.time;
-        double timeEnd = Time.time + dodgeTime;
+        double timeEnd = Time.time + Help.Tunables.dodgeTime;
         while (Time.time <= timeEnd)
         {
             double time = Time.time - timeStart;
-            double maxTime = dodgeTime;
-            fighterRef.transform.position = Vector3.Lerp(rollStartPosition, rollEndPosition, Mathf.Pow((float)(time/maxTime), dodgeSmoothingCoef));
+            double maxTime = Help.Tunables.dodgeTime;
+            fighterRef.transform.position = Vector3.Lerp(rollStartPosition, rollEndPosition, Mathf.Pow((float)(time/maxTime), Help.Tunables.dodgeSmoothingCoef));
             yield return null;
         }
         fighterRef.transform.position = rollEndPosition;
@@ -82,7 +78,7 @@ public class PlayerDodgeRoll : MonoBehaviour
             return false;
         }
 
-        if (Time.time < dodgeRollCDStartTime + dodgeRollCD)
+        if (Time.time < dodgeRollCDStartTime + Help.Tunables.dodgeRollCD)
         {
             return false;
         }

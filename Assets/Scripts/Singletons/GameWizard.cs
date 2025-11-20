@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,6 +9,7 @@ public class GameWizard : MonoBehaviour
     public List<GameObject> allAIModules = new();
     public Dictionary<AIModuleTypes, List<GameObject>> allAIModuleMap = new();
     public HitStop hitStopManager;
+    public Tunables_General generalTunables;
     
     private bool isNetworkedGame = false;
     private bool isLocalGame = false;

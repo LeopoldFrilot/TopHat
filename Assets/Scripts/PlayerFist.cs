@@ -18,13 +18,6 @@ public enum PlayerFistState
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerFist : MonoBehaviour
 {
-    [SerializeField] private float maxWindup = 10f;
-    [SerializeField] private float windupSpeed = 10f;
-    [SerializeField] private float launchStrength = 5f;
-    [SerializeField] private float retractTime = .5f;
-    [SerializeField] private float baseWindup = 1f;
-    [SerializeField] private float idleFollowSpeed = 5f;
-    [SerializeField] private Vector2 windupOffset = new Vector2(1f, 0);
     [SerializeField] private Transform artTransform;
     [SerializeField] private List<Collider2D> fistColliders = new List<Collider2D>();
     [SerializeField] private SpriteRenderer highlightRenderer;
@@ -68,7 +61,7 @@ public class PlayerFist : MonoBehaviour
         SwitchState(PlayerFistState.Idle, true);
         shakeTweenComplete = () =>
         {
-            windupShake = artTransform.DOShakePosition(.1f, .003f * (baseWindup + windup) * (baseWindup + windup)).SetRelative()
+            windupShake = artTransform.DOShakePosition(.1f, .003f * (Help.Tunables.baseWindup + windup) * (Help.Tunables.baseWindup + windup)).SetRelative()
                 .OnComplete(shakeTweenComplete);
         };
     }
@@ -77,17 +70,17 @@ public class PlayerFist : MonoBehaviour
     {
         if (currentState == PlayerFistState.Windup)
         {
-            windup = Mathf.Clamp(windup + Time.deltaTime * windupSpeed, 0, maxWindup - baseWindup);
-            currentOffset = (windup + baseWindup) * windupOffset;
+            windup = Mathf.Clamp(windup + Time.deltaTime * Help.Tunables.windupSpeed, 0, Help.Tunables.maxWindup - Help.Tunables.baseWindup);
+            currentOffset = (windup + Help.Tunables.baseWindup) * Help.Tunables.windupOffset;
             transform.position = restingPosition.position - new Vector3((_fighter.IsFacingLeft() ? -1 : 1) * currentOffset.x, currentOffset.y, 0);
-            if (windup >= maxWindup - baseWindup)
+            if (windup >= Help.Tunables.maxWindup - Help.Tunables.baseWindup)
             {
                 Launch();
             }
         }
         else if(currentState == PlayerFistState.Launch)
         {
-            if (Mathf.Abs(rb2d.linearVelocityX) <= .4f)
+            if (Mathf.Abs(rb2d.linearVelocityX) <= Help.Tunables.speedThresholdToRetract)
             {
                 Retract();
             }
@@ -132,7 +125,7 @@ public class PlayerFist : MonoBehaviour
         switch (currentState)
         {
             case PlayerFistState.Idle:
-                idleFollow = transform.DOMove(restingPosition.position, idleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
+                idleFollow = transform.DOMove(restingPosition.position, Help.Tunables.fistsIdleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
                 idleFollow.OnUpdate(() => idleFollow.ChangeEndValue(restingPosition.position, true).Restart());
                 windup = 0;
                 break;
@@ -146,13 +139,13 @@ public class PlayerFist : MonoBehaviour
             
             case PlayerFistState.Launch:
                 rb2d.bodyType = RigidbodyType2D.Dynamic;
-                rb2d.AddForceX((_fighter.IsFacingLeft() ? -1 : 1) * (windup + baseWindup) * launchStrength, ForceMode2D.Impulse);
+                rb2d.AddForceX((_fighter.IsFacingLeft() ? -1 : 1) * (windup + Help.Tunables.baseWindup) * Help.Tunables.launchStrength, ForceMode2D.Impulse);
                 EventHub.TriggerPlaySoundRequested(fistReleaseSound, .5f);
                 break;
             
             case PlayerFistState.Retract:
                 rb2d.bodyType = RigidbodyType2D.Kinematic;
-                retract = transform.DOMove(restingPosition.position, retractTime).SetEase(Ease.InCubic)
+                retract = transform.DOMove(restingPosition.position, Help.Tunables.retractTime).SetEase(Ease.InCubic)
                     .OnComplete(()=>SwitchState(PlayerFistState.Idle));
                 break;
         }
@@ -262,14 +255,14 @@ public class PlayerFist : MonoBehaviour
     {
         if (currentState == PlayerFistState.Idle)
         {
-            idleFollow = transform.DOMove(restingPosition.position, idleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
+            idleFollow = transform.DOMove(restingPosition.position, Help.Tunables.fistsIdleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
             idleFollow.OnUpdate(() => idleFollow.ChangeEndValue(restingPosition.position, true).Restart());
         }
     }
 
     public float GetWindupNormalized()
     {
-        return (windup+baseWindup) / maxWindup;
+        return (windup + Help.Tunables.baseWindup) / Help.Tunables.maxWindup;
     }
 
     public bool IsConsumed()

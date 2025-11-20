@@ -6,10 +6,6 @@ using UnityEngine.Serialization;
 
 public class PlayerHat : MonoBehaviour
 {
-    [SerializeField] private float idleFollowSpeed = 4f;
-    [SerializeField] private float transitionTime = .5f;
-    [SerializeField] private float transitionArcHeight = 3f;
-    [SerializeField] private float hatSpinSpeed = 100f;
     [SerializeField] private Collider2D collider;
     
     private Transform targetPos;
@@ -42,7 +38,7 @@ public class PlayerHat : MonoBehaviour
 
             if (inTransition)
             {
-                transitionCoroutine = StartCoroutine(MoveInArc(transform, targetPos, transitionTime, transitionArcHeight));
+                transitionCoroutine = StartCoroutine(MoveInArc(transform, targetPos, Help.Tunables.transitionTime, Help.Tunables.transitionArcHeight));
             }
         }
     }
@@ -52,7 +48,7 @@ public class PlayerHat : MonoBehaviour
         inTransition = false;
         if (targetPos)
         {
-            idleFollow = transform.DOMove(targetPos.position, idleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
+            idleFollow = transform.DOMove(targetPos.position, Help.Tunables.hatIdleFollowSpeed).SetSpeedBased(true).SetEase(Ease.OutCubic);
             idleFollow.OnUpdate(() => idleFollow.ChangeEndValue(targetPos.position, true).Restart());
         }
     }
@@ -70,7 +66,7 @@ public class PlayerHat : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            mover.localEulerAngles += new Vector3(0,0,Time.deltaTime * hatSpinSpeed);
+            mover.localEulerAngles += new Vector3(0,0,Time.deltaTime * Help.Tunables.hatSpinSpeed);
             float t = Mathf.Clamp01(elapsed / duration);
 
             // Get updated target position

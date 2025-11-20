@@ -16,7 +16,6 @@ public class FightScene : MonoBehaviour
     [SerializeField] private GameObject player1Prefab;
     [SerializeField] private GameObject player2Prefab;
     [SerializeField] private PlayableDirector countdownTimeline;
-    [SerializeField] private float targetHatTime = 60f;
     [SerializeField] private Transform leftGameBoundaries;
     [SerializeField] private Transform rightGameBoundaries;
     [SerializeField] private FightSceneUI fightSceneUI;
@@ -49,9 +48,9 @@ public class FightScene : MonoBehaviour
         {
             float p1 = players[0].GetHatTime();
             float p2 = players[1].GetHatTime();
-            fightSceneUI.UpdatePointsText(p1, p2, targetHatTime);
+            fightSceneUI.UpdatePointsText(p1, p2, Help.Tunables.timeToChargeHat);
 
-            if (p1 >= targetHatTime || p2 >= targetHatTime)
+            if (p1 >= Help.Tunables.timeToChargeHat || p2 >= Help.Tunables.timeToChargeHat)
             {
                 Restart();
             }

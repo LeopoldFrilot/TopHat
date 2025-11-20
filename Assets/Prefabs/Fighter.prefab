@@ -2387,7 +2387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDizziness: 5
-  dizzyRecoveryRate: 3
+  dizzyRecoveryRate: 2
   delayBeforeRecovery: 1.5
 --- !u!114 &4915518682772512237
 MonoBehaviour:

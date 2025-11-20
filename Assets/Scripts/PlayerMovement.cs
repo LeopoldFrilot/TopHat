@@ -5,11 +5,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 4f;
-    [SerializeField] private float verticalJumpPower = 8f;
-    [SerializeField] private float horizontalJumpPower = 2f;
-    [SerializeField] private float risingGravity = 2f;
-    [SerializeField] private float fallingGravity = 7f;
     
     private InputHandler inputHandler;
     private float currentXVal = 0;
@@ -66,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsJumping())
         {
-            rb2d.gravityScale = rb2d.linearVelocity.y < 0 ? fallingGravity : risingGravity;
+            rb2d.gravityScale = rb2d.linearVelocity.y < 0 ? Help.Tunables.fallingGravity : Help.Tunables.risingGravity;
         }
     }
 
@@ -91,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         
-        return speed * Mathf.Pow(.6f, fistsInMotion);
+        return Help.Tunables.speed * Mathf.Pow(Help.Tunables.fistsInMotionWalkspeedScalar, fistsInMotion);
     }
 
     private void OnHorizontalInputChanged(float value, int playerOnNetworkedController)
@@ -106,13 +101,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartJump()
     {
-        LaunchPlayer(new Vector2(currentXVal * horizontalJumpPower, verticalJumpPower));
+        LaunchPlayer(new Vector2(currentXVal * Help.Tunables.horizontalJumpPower, Help.Tunables.verticalJumpPower));
     }
 
     public void Land()
     {
         isJumping = false;
-        rb2d.gravityScale = risingGravity;
+        rb2d.gravityScale = Help.Tunables.risingGravity;
         rb2d.totalForce = Vector2.zero;
         rb2d.linearVelocity = Vector2.zero;
     }
