@@ -38,12 +38,13 @@ namespace ScriptableObjects
         public float timeToChargeHat = 30f;
         
         [Header("Meter")]
-        public float meterRequirementGrapple = 3f;
-        public float meterForParry = 1f;
-        public float meterForBlock = .5f;
-        public float meterForHitBlock_Hard = .5f;
-        public float meterForHit = 1f;
-        public float meterForHit_Hard = 1.5f;
+        public float meterRequirementDodgeRoll = 2f;
+        public float meterRequirementGrapple = 6f;
+        public float meterForParry = 2f;
+        public float meterForBlock = 1f;
+        public float meterForHitBlock_Hard = 1f;
+        public float meterForHit = 2f;
+        public float meterForHit_Hard = 3f;
 
         [Header("Dodge")]
         public float dodgeDistance = 7f;

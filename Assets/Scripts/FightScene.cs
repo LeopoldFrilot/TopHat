@@ -156,6 +156,9 @@ public class FightScene : MonoBehaviour
     private void StartFight()
     {
         inCountdown = true;
+        
+        fightSceneUI.SetPlayer1(players[0]);
+        fightSceneUI.SetPlayer2(players[1]);
         players[0].transform.position = player1Location.position;
         players[0].SwitchTurnState(TurnState.Attacking);
         players[1].transform.position = player2Location.position;

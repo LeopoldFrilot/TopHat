@@ -23,7 +23,6 @@ MonoBehaviour:
   hitKnockbackPower: 13
   grappleResetPower: 20
   dizzyStunTimeLength: 2.5
-  hardHitThreshold: 0.65
   maxWindup: 11
   windupSpeed: 8
   launchStrength: 15
@@ -32,17 +31,18 @@ MonoBehaviour:
   fistsIdleFollowSpeed: 4
   windupOffset: {x: 1, y: 0}
   speedThresholdToRetract: 0.4
+  hardHitThreshold: 0.65
   hatIdleFollowSpeed: 4
   transitionTime: 0.3
   transitionArcHeight: 3
   hatSpinSpeed: 1000
   timeToChargeHat: 30
-  meterRequirementGrapple: 3
-  meterForParry: 1
-  meterForBlock: 0.5
-  meterForHitBlock_Hard: 0.5
-  meterForHit: 1
-  meterForHit_Hard: 1.5
+  meterRequirementGrapple: 6
+  meterForParry: 2
+  meterForBlock: 1
+  meterForHitBlock_Hard: 1
+  meterForHit: 2
+  meterForHit_Hard: 3
   dodgeDistance: 7
   dodgeTime: 0.3
   dodgeSmoothingCoef: 0.2

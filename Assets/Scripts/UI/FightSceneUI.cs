@@ -15,6 +15,18 @@ public class FightSceneUI : MonoBehaviour
     [SerializeField] private Color player2Color;
     [SerializeField] private DOTweenAnimation flashAnimation;
     [SerializeField] private string colorFlashID;
+    [SerializeField] private MeterBar player1Meter;
+    [SerializeField] private MeterBar player2Meter;
+
+    public void SetPlayer1(Fighter fighter)
+    {
+        player1Meter.SetFighter(fighter);
+    }
+
+    public void SetPlayer2(Fighter fighter)
+    {
+        player2Meter.SetFighter(fighter);
+    }
 
     public void UpdatePointsText(float player1HatTime, float player2HatTime, float maxHatTime)
     {

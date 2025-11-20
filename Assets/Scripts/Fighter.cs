@@ -9,6 +9,13 @@ public enum TurnState
     Defending
 }
 
+public enum AbilityTypes
+{
+    BasicAttack,
+    DodgeRoll,
+    Grapple,
+}
+
 public class Fighter : MonoBehaviour
 {
     [SerializeField] private Transform artRoot;
