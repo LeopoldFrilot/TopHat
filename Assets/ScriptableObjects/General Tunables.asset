@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 802b21f6eb734184a608046785cc3bcc, type: 3}
+  m_Name: General Tunables
+  m_EditorClassIdentifier: 
+  maxMeter: 10
+  speed: 5
+  verticalJumpPower: 13
+  horizontalJumpPower: 4
+  risingGravity: 3
+  fallingGravity: 8
+  fistsInMotionWalkspeedScalar: 0.75
+  blockKnockbackPower: 6
+  hitKnockbackPower: 13
+  grappleResetPower: 20
+  dizzyStunTimeLength: 2.5
+  hardHitThreshold: 0.65
+  maxWindup: 11
+  windupSpeed: 8
+  launchStrength: 15
+  retractTime: 0.3
+  baseWindup: 2.5
+  fistsIdleFollowSpeed: 4
+  windupOffset: {x: 1, y: 0}
+  speedThresholdToRetract: 0.4
+  hatIdleFollowSpeed: 4
+  transitionTime: 0.3
+  transitionArcHeight: 3
+  hatSpinSpeed: 1000
+  timeToChargeHat: 30
+  meterRequirementGrapple: 3
+  meterForParry: 1
+  meterForBlock: 0.5
+  meterForHitBlock_Hard: 0.5
+  meterForHit: 1
+  meterForHit_Hard: 1.5
+  dodgeDistance: 7
+  dodgeTime: 0.3
+  dodgeSmoothingCoef: 0.2
+  dodgeRollCD: 0.5
+  maxDizziness: 5
+  dizzyRecoveryRate: 2
+  delayBeforeRecovery: 1.5
+  blockDizzyDamageReduction: 0.33
+  blockingTime: 0.5
+  perfectBlockTime: 0.2
+  blockingCooldown: 0.5
+  knockOffHitstop: 1
+  punchHitstop: 0.3
+  hitStrongHitstop: 0.45
+  hitStrongestHitstop: 0.6
+  blockHitstop: 0.1
+  blockStrongHitstop: 0.15
+  blockStrongestHitstop: 0.2
+  parryHitstop: 0.01
+  hitTimeRecoveryRate: 0.1
+  swapTimeRecoveryRate: 0.03

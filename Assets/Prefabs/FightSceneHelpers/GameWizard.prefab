@@ -171,6 +171,7 @@ MonoBehaviour:
   - {fileID: 3643518804539879109, guid: 10da9336a25d5bf4d9abb24a042e4ea1, type: 3}
   - {fileID: 3643518804539879109, guid: a5e8e1b69b6832b4abbb25e1c5a0a07b, type: 3}
   hitStopManager: {fileID: 1910836191511745339}
+  generalTunables: {fileID: 11400000, guid: 43438f6c06679b94db687465d8c8c99b, type: 2}
 --- !u!114 &1910836191511745339
 MonoBehaviour:
   m_ObjectHideFlags: 0

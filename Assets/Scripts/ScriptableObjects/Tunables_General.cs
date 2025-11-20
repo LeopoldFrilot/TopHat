@@ -2,7 +2,7 @@
 
 namespace ScriptableObjects
 {
-    [CreateAssetMenu(fileName = "New General Tunables", menuName = "Tunables/General", order = 0)]
+    [CreateAssetMenu(fileName = "New General Tunables", menuName = "ScriptableObjects/Tunables/General", order = 0)]
     public class Tunables_General : ScriptableObject
     {
         public float maxMeter = 10f;
@@ -18,7 +18,6 @@ namespace ScriptableObjects
         public float hitKnockbackPower = 13;
         public float grappleResetPower = 20f;
         public float dizzyStunTimeLength = 2.5f;
-        public float hardHitThreshold = .65f;
         
         [Header("Fists")]
         public float maxWindup = 11f;
@@ -29,6 +28,7 @@ namespace ScriptableObjects
         public float fistsIdleFollowSpeed = 4f;
         public Vector2 windupOffset = new Vector2(1f, 0);
         public float speedThresholdToRetract = .4f;
+        public float hardHitThreshold = .65f;
         
         [Header("Hat")]
         public float hatIdleFollowSpeed = 4f;
