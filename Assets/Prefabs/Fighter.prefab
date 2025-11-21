@@ -2098,8 +2098,8 @@ GameObject:
   - component: {fileID: 8494541973416835278}
   - component: {fileID: 4915518682772512237}
   - component: {fileID: 857252945940505770}
-  - component: {fileID: 2553607980060792913}
   - component: {fileID: 6135896988489413904}
+  - component: {fileID: 2078873909033394582}
   m_Layer: 3
   m_Name: Fighter
   m_TagString: Untagged
@@ -2122,6 +2122,7 @@ Transform:
   m_Children:
   - {fileID: 310334361600524232}
   - {fileID: 3516197350631636700}
+  - {fileID: 7573244918026677693}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3342531721457426399
@@ -2141,10 +2142,6 @@ MonoBehaviour:
   outFistLocation: {fileID: 4643464560084846745}
   blockLocation: {fileID: 3662762342808355139}
   playerHatLocation: {fileID: 8350552367242473314}
-  blockKnockbackPower: 6
-  hitKnockbackPower: 13
-  grappleResetPower: 20
-  dizzyStunTimeLength: 2.5
   hitEffectPrefab: {fileID: 4209640813906056705, guid: 7b9aa78dcb8bdb24795042246dfa75ba, type: 3}
   blockEffectPrefab: {fileID: 4209640813906056705, guid: a29ac508324d3b542a6a2bc32388fd0f, type: 3}
   dizzyDamageCurve:
@@ -2180,13 +2177,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  hardHitThreshold: 0.65
-  knockOffHitstop: 0.1
-  punchHitstop: 0.1
-  blockHitstop: 0.03
-  parryHitstop: 0.001
-  hitTimeRecoveryRate: 0.2
-  swapTimeRecoveryRate: 0.03
+  mainCollitder: {fileID: 3366581585000029670}
   mainBodyAnimator: {fileID: 8261680427056463553}
   animatorSpeedFloatName: Speed
   animatorJumpBoolName: Jump
@@ -2210,11 +2201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540e23b2176e4577ad1b8bc9f045b25a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  verticalJumpPower: 13
-  horizontalJumpPower: 4
-  risingGravity: 3
-  fallingGravity: 8
 --- !u!50 &2728930296739472218
 Rigidbody2D:
   serializedVersion: 5
@@ -2254,9 +2240,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23dea123f924faaa3fb6f0af12cdf13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockingTime: 0.3
-  perfectBlockTime: 0.15
-  blockingCooldown: 0.5
 --- !u!114 &5017118212934078332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2386,9 +2369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f87d0583baa042808a0a0f5cad890479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDizziness: 5
-  dizzyRecoveryRate: 2
-  delayBeforeRecovery: 1.5
 --- !u!114 &4915518682772512237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2413,24 +2393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2eca16222f49f68929e3d0f10cbca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meterForGrapple: 6
---- !u!114 &2553607980060792913
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8514386353918108479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05384a04544541d6a63c7f7dcddb43fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dodgeDistance: 7
-  dodgeTime: 0.3
-  dodgeSmoothingCoef: 0.2
-  dodgeRollCD: 0.5
-  mainCollider: {fileID: 3366581585000029670}
 --- !u!114 &6135896988489413904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2443,7 +2405,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d001c922978493797fb4bf2e84f720d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxMeter: 10
+--- !u!114 &2078873909033394582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514386353918108479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2469b7d32884af485c142792f5f1950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8830864449060472638
 GameObject:
   m_ObjectHideFlags: 0
@@ -2669,6 +2642,68 @@ MonoBehaviour:
   m_labelHash: 1.2079726e-29
   m_SpriteKey: 0
   m_SpriteHash: 529690928
+--- !u!1001 &3242918635495251151
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1345889205945301477}
+    m_Modifications:
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6381146533690671547, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+      propertyPath: m_Name
+      value: DodgeRoll
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+--- !u!4 &7573244918026677693 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4906877891921539442, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+  m_PrefabInstance: {fileID: 3242918635495251151}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5649379057471180701
 PrefabInstance:
   m_ObjectHideFlags: 0

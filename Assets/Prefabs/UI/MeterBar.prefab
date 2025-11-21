@@ -377,9 +377,13 @@ MonoBehaviour:
   - {fileID: 8187272454410175715}
   abilityIconMappings:
   - abilityType: 1
-    icon: {fileID: 21300000, guid: 6b07adf7bcfaf8849a96b2cf0e0690b8, type: 3}
+    icon: {fileID: 21300000, guid: 3b24fe0fece44a948b38dce70c26ca13, type: 3}
   - abilityType: 2
     icon: {fileID: 21300000, guid: d47025ae666490048a80a50f1d2f554e, type: 3}
+  - abilityType: 3
+    icon: {fileID: 21300000, guid: 8293c9a3fc1c41f429d6d957503faabc, type: 3}
+  - abilityType: 4
+    icon: {fileID: 21300000, guid: cb4d80eaa8441b54cbf4a9b7d933bfb5, type: 3}
   abilityIconPrefab: {fileID: 9125765327516493641, guid: 46ddfbad40a20194b83441d2c5486ceb, type: 3}
 --- !u!1 &5853119301436186415
 GameObject:

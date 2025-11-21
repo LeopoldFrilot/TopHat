@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ScriptableObjects;
 using UnityEngine;
 
 public enum TurnState
@@ -14,6 +15,8 @@ public enum AbilityTypes
     BasicAttack,
     DodgeRoll,
     Grapple,
+    HatThrow,
+    DashCancel
 }
 
 public class Fighter : MonoBehaviour
@@ -26,6 +29,7 @@ public class Fighter : MonoBehaviour
     [SerializeField] private GameObject hitEffectPrefab;
     [SerializeField] private GameObject blockEffectPrefab;
     [SerializeField] private AnimationCurve dizzyDamageCurve;
+    [SerializeField] private Collider2D mainCollitder;
 
     [Header("Animation")] 
     [SerializeField] private Animator mainBodyAnimator;
@@ -52,8 +56,8 @@ public class Fighter : MonoBehaviour
     private FightScene fightScene;
     private PlayerDizziness playerDizziness;
     private PlayerStatus playerStatus;
-    private PlayerDodgeRoll playerDodgeRoll;
     private PlayerMeter playerMeter;
+    private HatInterface hatInterface;
 
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
@@ -75,13 +79,12 @@ public class Fighter : MonoBehaviour
         playerGrapple = GetComponent<PlayerGrapple>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
-        playerDodgeRoll = GetComponent<PlayerDodgeRoll>();
         playerStatus = GetComponent<PlayerStatus>();
         playerMeter = GetComponent<PlayerMeter>();
-        
+        hatInterface = GetComponent<HatInterface>();
         playerDizziness = GetComponent<PlayerDizziness>();
-        playerDizziness.OnDizzinessChanged += OnDizzinessChanged;
         
+        playerDizziness.OnDizzinessChanged += OnDizzinessChanged;
         
         inputHandler = networkedFighterController.GetComponent<InputHandler>();
         inputHandler.OnActionStarted += OnActionStarted;
@@ -268,6 +271,11 @@ public class Fighter : MonoBehaviour
         {
             return;
         }
+
+        if (currentTurnState == TurnState.Defending)
+        {
+            hatInterface.OnMovementActionCancelled();
+        }
     }
 
     public void StartDownAction()
@@ -293,15 +301,7 @@ public class Fighter : MonoBehaviour
         }
         else
         {
-            if (playerDodgeRoll.TryStartDodgeRoll(!playerMovement.IsHoldingLeft()))
-            {
-                foreach (var spawnedFist in spawnedFists)
-                {
-                    spawnedFist.Reset();
-                }
-                
-                playerBlock.CancelBlockLag();
-            }
+            hatInterface.OnMovementActionStarted();
         }
     }
 
@@ -315,6 +315,11 @@ public class Fighter : MonoBehaviour
         if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
         {
             return;
+        }
+
+        if (currentTurnState == TurnState.Defending)
+        {
+            hatInterface.OnMainActionCancelled();
         }
     }
 
@@ -333,6 +338,11 @@ public class Fighter : MonoBehaviour
         if (!CanStartAction())
         {
             return;
+        }
+
+        if (currentTurnState == TurnState.Defending)
+        {
+            hatInterface.OnMainActionStarted();
         }
     }
 
@@ -612,6 +622,8 @@ public class Fighter : MonoBehaviour
     {
         if (currentTurnState != newState)
         {
+            SetHat(newState == TurnState.Attacking ? null : fightScene.GetHat());
+
             currentTurnState = newState;
             EndDizzy();
             TriggerTurnStateChanged(currentTurnState);
@@ -755,5 +767,15 @@ public class Fighter : MonoBehaviour
         }
         
         return false;
+    }
+
+    public void SetColliderEnabled(bool newEnabled)
+    {
+        mainCollitder.enabled = newEnabled;
+    }
+
+    public void SetHat(PlayerHat hat)
+    {
+        hatInterface.SetHat(hat);
     }
 }

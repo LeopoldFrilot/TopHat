@@ -272,13 +272,15 @@ public class FightScene : MonoBehaviour
                 position.z);
     }
 
+    public PlayerHat GetHat()
+    {
+        return defenderHat;
+    }
+
     private void OnEnable()
     {
         EventHub.OnTurnEnded += OnTurnEnded;
     }
 
-    private void OnDisable()
-    {
-        EventHub.OnTurnEnded -= OnTurnEnded;
-    }
+    private void OnDisable() => EventHub.OnTurnEnded -= OnTurnEnded;
 }

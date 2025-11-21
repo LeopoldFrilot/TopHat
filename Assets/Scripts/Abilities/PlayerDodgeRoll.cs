@@ -1,37 +1,54 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
-public class PlayerDodgeRoll : MonoBehaviour
+public class PlayerDodgeRoll : HatMovementAbility
 {
-    [SerializeField] private Collider2D mainCollider;
-    
     private bool isRolling;
-    private Fighter fighterRef;
     private PlayerStatus fighterStatus;
+    private PlayerBlock fighterBlock;
+    private PlayerMovement fighterMovement;
     private Coroutine dodgeRollRoutine;
     private int dodgeRollEffectHandle;
     private int dodgeRollInvulEffectHandle;
     private double dodgeRollCDStartTime;
 
-    private void Awake()
+    protected override void Awake()
     {
-        fighterRef = GetComponent<Fighter>();
+        base.Awake();
         fighterStatus = fighterRef.GetComponent<PlayerStatus>();
+        fighterBlock = fighterRef.GetComponent<PlayerBlock>();
+        fighterMovement = fighterRef.GetComponent<PlayerMovement>();
     }
 
-    public bool TryStartDodgeRoll(bool dodgeRight)
+    public override void Activate()
+    {
+        base.Activate();
+
+        var spawnedFists = fighterRef.GetSpawnedFists();
+        foreach (var spawnedFist in spawnedFists)
+        {
+            spawnedFist.Reset();
+        }
+
+        StartDodgeRoll(!fighterMovement.IsHoldingLeft());
+        fighterBlock.CancelBlockLag();
+    }
+
+    public override bool CanActivate()
     {
         if (!CanDodgeRoll())
         {
             return false;
         }
         
-        mainCollider.enabled = false;
-        fighterRef.ChangeMeter(-Help.Tunables.meterRequirementDodgeRoll);
+        return base.CanActivate();
+    }
+
+    private void StartDodgeRoll(bool dodgeRight)
+    {
+        fighterRef.SetColliderEnabled(false);
+        fighterRef.ChangeMeter(-GetMeterCost());
         dodgeRollRoutine = StartCoroutine(DodgeRoll(dodgeRight));
-        return true;
     }
 
     private IEnumerator DodgeRoll(bool dodgeRight)
@@ -58,7 +75,7 @@ public class PlayerDodgeRoll : MonoBehaviour
 
     private void EndDodgeRoll()
     {
-        mainCollider.enabled = true;
+        fighterRef.SetColliderEnabled(true);
         StopCoroutine(dodgeRollRoutine);
         dodgeRollRoutine = null;
         fighterStatus.RemoveStatusEffect(dodgeRollEffectHandle);
@@ -79,7 +96,7 @@ public class PlayerDodgeRoll : MonoBehaviour
             return false;
         }
 
-        if (fighterRef.GetMeter() < Help.Tunables.meterRequirementDodgeRoll)
+        if (!HasMeterForAbility())
         {
             return false;
         }

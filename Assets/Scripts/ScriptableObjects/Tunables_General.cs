@@ -5,7 +5,6 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "New General Tunables", menuName = "ScriptableObjects/Tunables/General", order = 0)]
     public class Tunables_General : ScriptableObject
     {
-        public float maxMeter = 10f;
         
         [Header("Fighter")]
         public float speed = 5f;
@@ -38,8 +37,8 @@ namespace ScriptableObjects
         public float timeToChargeHat = 30f;
         
         [Header("Meter")]
-        public float meterRequirementDodgeRoll = 2f;
-        public float meterRequirementGrapple = 6f;
+        public float maxMeter = 10f;
+        public float meterRequirementGrapple = 8f;
         public float meterForParry = 2f;
         public float meterForBlock = 1f;
         public float meterForHitBlock_Hard = 1f;

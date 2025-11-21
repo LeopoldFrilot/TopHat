@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
+using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class PlayerHat : MonoBehaviour
 {
+    [SerializeField] private HatStats hatStats;
     [SerializeField] private Collider2D collider;
     
     private Transform targetPos;
@@ -110,5 +112,10 @@ public class PlayerHat : MonoBehaviour
             PausePhysics();
             OnHatCollected?.Invoke(fighter);
         }
+    }
+
+    public HatStats GetHatStats()
+    {
+        return hatStats;
     }
 }

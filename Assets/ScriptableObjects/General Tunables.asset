@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802b21f6eb734184a608046785cc3bcc, type: 3}
   m_Name: General Tunables
   m_EditorClassIdentifier: 
-  maxMeter: 10
   speed: 5
   verticalJumpPower: 13
   horizontalJumpPower: 4
@@ -37,13 +36,13 @@ MonoBehaviour:
   transitionArcHeight: 3
   hatSpinSpeed: 1000
   timeToChargeHat: 30
-  meterRequirementDodgeRoll: 2
-  meterRequirementGrapple: 6
+  maxMeter: 10
+  meterRequirementGrapple: 8
   meterForParry: 2
-  meterForBlock: 1
-  meterForHitBlock_Hard: 1
-  meterForHit: 2
-  meterForHit_Hard: 3
+  meterForBlock: 0.3
+  meterForHitBlock_Hard: 0.3
+  meterForHit: 1
+  meterForHit_Hard: 2
   dodgeDistance: 7
   dodgeTime: 0.3
   dodgeSmoothingCoef: 0.2
@@ -55,13 +54,13 @@ MonoBehaviour:
   blockingTime: 0.5
   perfectBlockTime: 0.2
   blockingCooldown: 0.5
-  knockOffHitstop: 1
-  punchHitstop: 0.3
-  hitStrongHitstop: 0.45
-  hitStrongestHitstop: 0.6
-  blockHitstop: 0.1
-  blockStrongHitstop: 0.15
-  blockStrongestHitstop: 0.2
-  parryHitstop: 0.01
+  knockOffHitstop: 0.2
+  punchHitstop: 0.05
+  hitStrongHitstop: 0.07
+  hitStrongestHitstop: 0.1
+  blockHitstop: 0.02
+  blockStrongHitstop: 0.03
+  blockStrongestHitstop: 0.05
+  parryHitstop: 0.005
   hitTimeRecoveryRate: 0.1
-  swapTimeRecoveryRate: 0.03
+  swapTimeRecoveryRate: 0.01

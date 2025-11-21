@@ -19,6 +19,7 @@ public class MeterBar : MonoBehaviour
     [SerializeField] private AbilityIcon abilityIconPrefab;
 
     private Fighter fighterRef;
+    private HatInterface hatInterfaceRef;
     private PlayerMeter meter;
     private List<AbilityIcon> spawnedIcons = new();
     
@@ -41,6 +42,7 @@ public class MeterBar : MonoBehaviour
         }
         
         fighterRef = fighter;
+        hatInterfaceRef = fighterRef.GetComponent<HatInterface>();
         OnMeterChanged(fighterRef.GetMeter());
         OnTurnStateChanged(fighterRef.GetTurnState());
         meter = fighterRef.GetComponent<PlayerMeter>();
@@ -58,8 +60,13 @@ public class MeterBar : MonoBehaviour
         }
         else
         {
-            AddAbilitySignifier(Mathf.RoundToInt(Help.Tunables.meterRequirementDodgeRoll),
-                GetSpriteFromMapping(AbilityTypes.DodgeRoll));
+            HatAbility mainHatAbility = hatInterfaceRef.GetMainAbility();
+            AddAbilitySignifier(Mathf.RoundToInt(mainHatAbility.GetMeterCost()),
+                GetSpriteFromMapping(mainHatAbility.GetAbilityType()));
+                
+            HatAbility movementHatAbility = hatInterfaceRef.GetMovementAbility();
+            AddAbilitySignifier(Mathf.RoundToInt(movementHatAbility.GetMeterCost()),
+                GetSpriteFromMapping(movementHatAbility.GetAbilityType()));
         }
     }
 
