@@ -57,6 +57,9 @@ public class MeterBar : MonoBehaviour
         {
             AddAbilitySignifier(Mathf.RoundToInt(Help.Tunables.meterRequirementGrapple),
                 GetSpriteFromMapping(AbilityTypes.Grapple));
+            
+            AddAbilitySignifier(Mathf.RoundToInt(Help.Tunables.meterRequirementDashCancel),
+                GetSpriteFromMapping(AbilityTypes.DashCancel));
         }
         else
         {

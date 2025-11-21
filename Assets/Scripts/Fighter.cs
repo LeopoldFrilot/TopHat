@@ -58,6 +58,7 @@ public class Fighter : MonoBehaviour
     private PlayerStatus playerStatus;
     private PlayerMeter playerMeter;
     private HatInterface hatInterface;
+    private PlayerDashCancel playerDashCancel;
 
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
@@ -83,6 +84,7 @@ public class Fighter : MonoBehaviour
         playerMeter = GetComponent<PlayerMeter>();
         hatInterface = GetComponent<HatInterface>();
         playerDizziness = GetComponent<PlayerDizziness>();
+        playerDashCancel = GetComponent<PlayerDashCancel>();
         
         playerDizziness.OnDizzinessChanged += OnDizzinessChanged;
         
@@ -290,17 +292,22 @@ public class Fighter : MonoBehaviour
             return;
         }
         
-        if (!CanStartAction())
+        if (fightScene.IsInCountdown())
         {
             return;
         }
 
         if (currentTurnState == TurnState.Attacking)
         {
-            playerGrapple.TryToGrapple();
+            playerDashCancel.TryStartDashCancel(!playerMovement.IsHoldingLeft());
         }
         else
         {
+            if (!CanStartAction())
+            {
+                return;
+            }
+            
             hatInterface.OnMovementActionStarted();
         }
     }
@@ -317,7 +324,11 @@ public class Fighter : MonoBehaviour
             return;
         }
 
-        if (currentTurnState == TurnState.Defending)
+        if (currentTurnState == TurnState.Attacking)
+        {
+            
+        }
+        else
         {
             hatInterface.OnMainActionCancelled();
         }
@@ -340,7 +351,11 @@ public class Fighter : MonoBehaviour
             return;
         }
 
-        if (currentTurnState == TurnState.Defending)
+        if (currentTurnState == TurnState.Attacking)
+        {
+            playerGrapple.TryToGrapple();
+        }
+        else
         {
             hatInterface.OnMainActionStarted();
         }

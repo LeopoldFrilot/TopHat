@@ -1,8 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
-public class PlayerDodgeRoll : HatMovementAbility
+public class HatDodgeRoll : HatMovementAbility
 {
+    [SerializeField] float dodgeDistance = 7f;
+    [SerializeField] float dodgeTime = .3f;
+    [SerializeField] float dodgeSmoothingCoef = .2f;
+    [SerializeField] float dodgeRollCD = 0.5f;
+    
     private bool isRolling;
     private PlayerStatus fighterStatus;
     private PlayerBlock fighterBlock;
@@ -55,17 +61,17 @@ public class PlayerDodgeRoll : HatMovementAbility
     {
         Vector3 rollStartPosition = transform.position;
         Vector3 rollEndPosition = rollStartPosition + new Vector3(
-            (dodgeRight ? 1 : -1) * Help.Tunables.dodgeDistance, 0, 0);
+            (dodgeRight ? 1 : -1) * dodgeDistance, 0, 0);
         rollEndPosition = fighterRef.ClampToFightPosition(rollEndPosition);
         dodgeRollEffectHandle = fighterStatus.AddStatusEffect(StatusType.AbilityLag);
         dodgeRollInvulEffectHandle = fighterStatus.AddStatusEffect(StatusType.Invulnerable);
         double timeStart = Time.time;
-        double timeEnd = Time.time + Help.Tunables.dodgeTime;
+        double timeEnd = Time.time + dodgeTime;
         while (Time.time <= timeEnd)
         {
             double time = Time.time - timeStart;
-            double maxTime = Help.Tunables.dodgeTime;
-            fighterRef.transform.position = Vector3.Lerp(rollStartPosition, rollEndPosition, Mathf.Pow((float)(time/maxTime), Help.Tunables.dodgeSmoothingCoef));
+            double maxTime = dodgeTime;
+            fighterRef.transform.position = Vector3.Lerp(rollStartPosition, rollEndPosition, Mathf.Pow((float)(time/maxTime), dodgeSmoothingCoef));
             yield return null;
         }
         fighterRef.transform.position = rollEndPosition;
@@ -101,7 +107,7 @@ public class PlayerDodgeRoll : HatMovementAbility
             return false;
         }
 
-        if (Time.time < dodgeRollCDStartTime + Help.Tunables.dodgeRollCD)
+        if (Time.time < dodgeRollCDStartTime + dodgeRollCD)
         {
             return false;
         }

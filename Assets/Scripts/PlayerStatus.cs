@@ -22,7 +22,7 @@ public class PlayerStatus : MonoBehaviour
 
     public int AddStatusEffect(StatusType type)
     {
-        for (int i = 0; i < statusEffects.Count; i++)
+        /*for (int i = 0; i < statusEffects.Count; i++)
         {
             var status = statusEffects[i];
             if (status.valid)
@@ -34,7 +34,7 @@ public class PlayerStatus : MonoBehaviour
             TriggerStatusEffectsChanged();
             
             return i;
-        }
+        }*/
         
         statusEffects.Add(new StatusEffect{type = type, valid = true});
         TriggerStatusEffectsChanged();
@@ -47,6 +47,17 @@ public class PlayerStatus : MonoBehaviour
         {
             statusEffects[handle] = new StatusEffect{valid = false};
             TriggerStatusEffectsChanged();
+        }
+    }
+
+    public void RemoveStatusEffectsOfType(StatusType type)
+    {
+        for (int i = 0; i < statusEffects.Count; i++)
+        {
+            if (statusEffects[i].valid && statusEffects[i].type == type)
+            {
+                RemoveStatusEffect(i);
+            }
         }
     }
 

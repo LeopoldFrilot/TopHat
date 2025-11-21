@@ -39,17 +39,17 @@ namespace ScriptableObjects
         [Header("Meter")]
         public float maxMeter = 10f;
         public float meterRequirementGrapple = 8f;
+        public float meterRequirementDashCancel = 2f;
         public float meterForParry = 2f;
         public float meterForBlock = 1f;
         public float meterForHitBlock_Hard = 1f;
         public float meterForHit = 2f;
         public float meterForHit_Hard = 3f;
 
-        [Header("Dodge")]
-        public float dodgeDistance = 7f;
-        public float dodgeTime = .3f;
-        public float dodgeSmoothingCoef = .2f;
-        public float dodgeRollCD = 0.5f;
+        [Header("Dash Cancel")]
+        public float dashCancelDistance = 7f;
+        public float dashCancelTime = .3f;
+        public float dashCancelSmoothingCoef = .2f;
         
         [Header("Dizzy")]
         public float maxDizziness = 5f;
