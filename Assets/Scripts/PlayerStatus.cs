@@ -7,7 +7,8 @@ public enum StatusType
     Grappled,
     Stunned,
     AbilityLag,
-    Invulnerable
+    Invulnerable,
+    HatInactive,
 }
 
 public struct StatusEffect

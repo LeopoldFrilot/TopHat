@@ -26,15 +26,20 @@ public class HatInterface : MonoBehaviour
         }
     }
 
-    public void InstallHatStats(HatStats hatStats)
+    public void InstallHatStats(HatStats inHatStats)
     {
-        if (hatStats == this.hatStats)
+        if (inHatStats == hatStats)
         {
             return;
         }
-        
-        DestroyImmediate(spawnedMovementAbility);
-        DestroyImmediate(spawnedMainAbility);
+
+        hatStats = inHatStats;
+
+        if (spawnedMovementAbility)
+        {
+            Destroy(spawnedMovementAbility.gameObject);
+            Destroy(spawnedMainAbility.gameObject);
+        }
 
         if (hatStats == null)
         {
@@ -55,12 +60,12 @@ public class HatInterface : MonoBehaviour
         spawnedMovementAbility.TryCancel();
     }
 
-    public void OnMainActionCancelled()
+    public void OnMainActionStarted()
     {
         spawnedMainAbility.TryActivate();
     }
 
-    public void OnMainActionStarted()
+    public void OnMainActionCancelled()
     {
         spawnedMainAbility.TryCancel();
     }
@@ -73,5 +78,10 @@ public class HatInterface : MonoBehaviour
     public HatMovementAbility GetMovementAbility()
     {
         return spawnedMovementAbility;
+    }
+
+    public HatStats GetHatStats()
+    {
+        return hatStats;
     }
 }

@@ -53,7 +53,6 @@ public class HatDodgeRoll : HatMovementAbility
     private void StartDodgeRoll(bool dodgeRight)
     {
         fighterRef.SetColliderEnabled(false);
-        fighterRef.ChangeMeter(-GetMeterCost());
         dodgeRollRoutine = StartCoroutine(DodgeRoll(dodgeRight));
     }
 

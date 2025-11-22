@@ -16,7 +16,7 @@ public enum AbilityTypes
     DodgeRoll,
     Grapple,
     HatThrow,
-    DashCancel
+    DashCancel,
 }
 
 public class Fighter : MonoBehaviour
@@ -522,7 +522,15 @@ public class Fighter : MonoBehaviour
                     if (normWindup >= Help.Tunables.hardHitThreshold)
                     {
                         fist.GetOwner().ChangeMeter(Help.Tunables.meterForHit_Hard);
-                        GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.punchHitstop * (Mathf.Approximately(normWindup, 1) ? Help.Tunables.hitStrongestHitstop : Help.Tunables.hitStrongHitstop), Help.Tunables.hitTimeRecoveryRate);
+                        if (Mathf.Approximately(normWindup, 1))
+                        {
+                            GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.hitStrongestHitstop, Help.Tunables.hitTimeRecoveryRate);
+                            playerDizziness.DealDizzyDamage(Help.Tunables.maxDizziness);
+                        }
+                        else
+                        {
+                            GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.hitStrongHitstop, Help.Tunables.hitTimeRecoveryRate);
+                        }
                     }
                     else
                     {
@@ -792,5 +800,10 @@ public class Fighter : MonoBehaviour
     public void SetHat(PlayerHat hat)
     {
         hatInterface.SetHat(hat);
+    }
+
+    public Collider2D GetMainCollider()
+    {
+        return mainCollitder;
     }
 }

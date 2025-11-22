@@ -52,7 +52,7 @@ public class AIBaseComponent : MonoBehaviour
                 continue;
             }
             module.GetComponent<AIBaseModule>().Reset();
-            Destroy(module);
+            Destroy(module.gameObject);
         }
         
         installedModules.Clear();

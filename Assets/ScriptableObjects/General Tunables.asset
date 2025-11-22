@@ -44,7 +44,7 @@ MonoBehaviour:
   meterForHitBlock_Hard: 0.3
   meterForHit: 1
   meterForHit_Hard: 2
-  dashCancelDistance: 2
+  dashCancelDistance: 3
   dashCancelTime: 0.2
   dashCancelSmoothingCoef: 0.5
   maxDizziness: 5

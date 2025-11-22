@@ -37,6 +37,7 @@ public abstract class HatAbility : MonoBehaviour
     {
         if (CanActivate())
         {
+            fighterRef.ChangeMeter(-meterCost);
             Activate();
         }
     }

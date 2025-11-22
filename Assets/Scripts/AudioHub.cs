@@ -37,7 +37,7 @@ public class AudioHub : MonoBehaviour
     {
         if (source)
         {
-            Destroy(source);
+            Destroy(source.gameObject);
         }
     }
     
