@@ -16,15 +16,14 @@ public class AIDefenseSmart : AIDefenseModule
         }
         
         float distanceToOpponent = Vector3.Distance(FighterRef.transform.position, OtherFighterRef.transform.position);
-        Debug.Log(distanceToOpponent);
-
         if (distanceToOpponent <= spamDistance)
         {
-            if (Time.time - lastBlockTime > .01)
+            if (Time.time - lastBlockTime > .1)
             {
                 Block();
             }
-            else if (!useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementDashCancel)
+            
+            if (!useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementDashCancel)
             {
                 FighterRef.StartDownAction();
                 useExpensiveAbility = true;
@@ -35,6 +34,12 @@ public class AIDefenseSmart : AIDefenseModule
             if (OtherFighterRef.IsAFistsOfState(new() { PlayerFistState.Windup, PlayerFistState.Launch }))
             {
                 Block();
+            }
+            
+            if (!useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementDashCancel)
+            {
+                FighterRef.StartDownAction();
+                useExpensiveAbility = true;
             }
             else if (useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementGrapple)
             {
@@ -49,7 +54,8 @@ public class AIDefenseSmart : AIDefenseModule
             {
                 Block();
             }
-            else if (useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementGrapple)
+            
+            if (useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementGrapple)
             {
                 FighterRef.StartUpAction();
                 FighterRef.CancelUpAction();

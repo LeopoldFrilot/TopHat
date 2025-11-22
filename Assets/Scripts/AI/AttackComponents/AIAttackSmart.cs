@@ -33,8 +33,6 @@ public class AIAttackSmart : AIAttackModule
         }
         
         float distanceToOpponent = Vector3.Distance(FighterRef.transform.position, OtherFighterRef.transform.position);
-        Debug.Log(distanceToOpponent);
-
         if (distanceToOpponent <= spamDistance)
         {
             if (Time.time - lastLaunchTime > .01)

@@ -130,6 +130,7 @@ public class ThrowHat : HatMainAbility
     private void OnReturn()
     {
         if (thrownHat) Destroy(thrownHat.gameObject);
+        if (thrownHatAngleIndicatorPrefab) Destroy(thrownHatAngleIndicatorPrefab.gameObject);
         hatActive = false;
         playerStatus.RemoveStatusEffect(hatInactiveHandle);
         hatInactiveHandle = -1;

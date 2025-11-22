@@ -49,7 +49,7 @@ MonoBehaviour:
   thrownHatPrefab: {fileID: 4702892048849550577, guid: 533352338d9dfbd4c8f72d66e00c4c3d, type: 3}
   thrownHatAngleIndicatorPrefab: {fileID: 668464279711258360, guid: ba7f96d89e82b3a478b71c04ec95cf0d, type: 3}
   maxAngle: 35
-  angleChangeRate: 7
+  angleChangeRate: 8
   launchStrength: 20
   timeTillForceReturn: 2.5
-  stunTime: 0.5
+  stunTime: 1.5

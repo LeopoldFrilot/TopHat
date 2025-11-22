@@ -6,7 +6,7 @@ public class AutoTurnaround : MonoBehaviour
     private FightScene fightScene;
     private Fighter _fighterRef;
 
-    private List<PlayerFistState> validFistStatesForTurnaround = new() { PlayerFistState.Idle, PlayerFistState.Retract, PlayerFistState.Block, PlayerFistState.Launch};
+    private List<PlayerFistState> validFistStatesForTurnaround = new() { PlayerFistState.Idle, PlayerFistState.Retract, PlayerFistState.Launch};
 
     private void Awake()
     {

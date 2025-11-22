@@ -37,6 +37,8 @@ public class Fighter : MonoBehaviour
     [SerializeField] private string animatorJumpBoolName = "Jump";
     [SerializeField] private string animatorGrappleTriggerName = "Grapple1";
     [SerializeField] private string animatorGrappledTriggerName = "Grapple2";
+    [SerializeField] private string animatorBlockHitTriggerName = "Hatblock";
+    [SerializeField] private string animatorHitTriggerName = "Hit";
 
     [Header("Particles")] 
     [SerializeField] private List<Transform> eyePivots = new();
@@ -59,6 +61,7 @@ public class Fighter : MonoBehaviour
     private PlayerMeter playerMeter;
     private HatInterface hatInterface;
     private PlayerDashCancel playerDashCancel;
+    private AutoTurnaround playerAutoTurnaround;
 
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
@@ -85,6 +88,7 @@ public class Fighter : MonoBehaviour
         hatInterface = GetComponent<HatInterface>();
         playerDizziness = GetComponent<PlayerDizziness>();
         playerDashCancel = GetComponent<PlayerDashCancel>();
+        playerAutoTurnaround = GetComponent<AutoTurnaround>();
         
         playerDizziness.OnDizzinessChanged += OnDizzinessChanged;
         
@@ -469,9 +473,19 @@ public class Fighter : MonoBehaviour
         
         if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
         {
+            bool facingOpponent = playerAutoTurnaround.IsFacingOpponent(fist.GetOwner());
             bool willKnockOff = currentTurnState == TurnState.Defending && IsStunned() && !knockedOff && !isInvul;
-            bool blocked = isInvul || (playerBlock.IsBlocking() && !willKnockOff);
-            bool wasPerfectBlock = playerBlock.IsPerfectBlock() && !willKnockOff;
+            bool blocked = isInvul || (playerBlock.IsBlocking() && !willKnockOff && facingOpponent);
+            bool wasPerfectBlock = playerBlock.IsPerfectBlock() && !willKnockOff && facingOpponent;
+            
+            if (blocked)
+            {
+                StartBlockAnimation();
+            }
+            else
+            {
+                StartHitAnimation();
+            }
 
             if (willKnockOff)
             {
@@ -480,6 +494,7 @@ public class Fighter : MonoBehaviour
             }
                 
             fist.HandleCollisionWithPlayer(this, blocked);
+
 
             if (isInvul)
             {
@@ -637,6 +652,16 @@ public class Fighter : MonoBehaviour
     private void StartGrappledAnimation()
     {
         mainBodyAnimator.SetTrigger(animatorGrappledTriggerName);
+    }
+
+    public void StartBlockAnimation()
+    {
+        mainBodyAnimator.SetTrigger(animatorBlockHitTriggerName);
+    }
+
+    public void StartHitAnimation()
+    {
+        mainBodyAnimator.SetTrigger(animatorHitTriggerName);
     }
 
     public bool IsBlocking()
