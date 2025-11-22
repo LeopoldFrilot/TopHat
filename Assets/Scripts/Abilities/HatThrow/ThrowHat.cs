@@ -9,6 +9,7 @@ public class ThrowHat : HatMainAbility
     [SerializeField] private float angleChangeRate = .1f;
     [SerializeField] private float launchStrength = 20f;
     [SerializeField] private float timeTillForceReturn = 3f;
+    [SerializeField] private float stunTime = .5f;
     
     private PlayerStatus playerStatus;
     private HatInterface hatInterface;
@@ -115,6 +116,7 @@ public class ThrowHat : HatMainAbility
     {
         if (hitFighter != fighterRef)
         {
+            hitFighter.GetComponent<PlayerStatus>().AddStatusEffectForTime(StatusType.Stunned, stunTime);
             ForceReturn();
         }
     }
@@ -127,10 +129,15 @@ public class ThrowHat : HatMainAbility
 
     private void OnReturn()
     {
-        Destroy(thrownHat.gameObject);
+        if (thrownHat) Destroy(thrownHat.gameObject);
         hatActive = false;
         playerStatus.RemoveStatusEffect(hatInactiveHandle);
         hatInactiveHandle = -1;
         choosingAngle = false;
+    }
+
+    private void OnDisable()
+    {
+        ForceReturn();
     }
 }

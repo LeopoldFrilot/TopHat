@@ -21,12 +21,6 @@ public class PlayerDizziness : MonoBehaviour
 
     private void Update()
     {
-        if (fighterRef.IsStunned())
-        {
-            SetNewStature(Help.Tunables.maxDizziness);
-            return;
-        }
-        
         if (Time.time >= nextTimeToRecover)
         {
             SetNewStature(dizzy - Time.deltaTime * Help.Tunables.dizzyRecoveryRate);

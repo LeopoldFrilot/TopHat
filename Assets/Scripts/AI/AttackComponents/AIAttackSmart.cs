@@ -11,6 +11,7 @@ public class AIAttackSmart : AIAttackModule
     private double lastCancelTime = 0;
     private float randomlaunchTimeDiff = 0;
     private float randomCancelTimeDiff = 0;
+    private bool useExpensiveAbility = false;
     
     private void Update()
     {
@@ -40,9 +41,21 @@ public class AIAttackSmart : AIAttackModule
             {
                 Cancel();
             }
+            
             if (Time.time - lastLaunchTime > .05)
             {
                 Launch();
+            }
+            
+            if (!useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementDashCancel)
+            {
+                FighterRef.StartDownAction();
+                useExpensiveAbility = true;
+            }
+            else if (useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementGrapple)
+            {
+                FighterRef.StartUpAction();
+                useExpensiveAbility = false;
             }
         }
         else if (distanceToOpponent <= neutralDistance)

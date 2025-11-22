@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using ScriptableObjects;
 using UnityEngine;
 
 public class HatInterface : MonoBehaviour
 {
     private Fighter fighter;
+    private PlayerStatus playerStatus;
     private PlayerHat playerHat;
     private HatStats hatStats;
     private HatMovementAbility spawnedMovementAbility;
@@ -13,6 +15,8 @@ public class HatInterface : MonoBehaviour
     private void Awake()
     {
         fighter = GetComponent<Fighter>();
+        playerStatus = fighter.GetComponent<PlayerStatus>();
+        playerStatus.OnStatusEffectsChanged += OnStatusEffectsChanged;
     }
 
     public Action<PlayerHat> OnHatSet;
@@ -20,8 +24,17 @@ public class HatInterface : MonoBehaviour
     {
         if (playerHat != this.playerHat)
         {
+
+            if (playerHat)
+            {
+                InstallHatStats(playerHat.GetHatStats());
+            }
+            else
+            {
+                this.playerHat.SetVisibility(true);
+                InstallHatStats(null);
+            }
             this.playerHat = playerHat;
-            InstallHatStats(playerHat ? playerHat.GetHatStats() : null);
             OnHatSet?.Invoke(playerHat);
         }
     }
@@ -83,5 +96,13 @@ public class HatInterface : MonoBehaviour
     public HatStats GetHatStats()
     {
         return hatStats;
+    }
+
+    private void OnStatusEffectsChanged(List<StatusType> statuses)
+    {
+        if (playerHat)
+        {
+            playerHat.SetVisibility(!statuses.Contains(StatusType.HatInactive));
+        }
     }
 }

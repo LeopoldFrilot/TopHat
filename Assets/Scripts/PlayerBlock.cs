@@ -75,7 +75,12 @@ public class PlayerBlock : MonoBehaviour
     {
         if (Help.Tunables.blockingTime < 0)
         {
-            StopBlocking(true);
+            CancelBlockLag();
         }
+    }
+
+    public void EndBlock()
+    {
+        StopBlocking();
     }
 }

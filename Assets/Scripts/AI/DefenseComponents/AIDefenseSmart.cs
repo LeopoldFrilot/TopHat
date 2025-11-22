@@ -7,6 +7,7 @@ public class AIDefenseSmart : AIDefenseModule
     [SerializeField] private float neutralDistance = 12f;
 
     private float lastBlockTime = 0;
+    private bool useExpensiveAbility;
     private void Update()
     {
         if (!IsActive())
@@ -23,6 +24,11 @@ public class AIDefenseSmart : AIDefenseModule
             {
                 Block();
             }
+            else if (!useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementDashCancel)
+            {
+                FighterRef.StartDownAction();
+                useExpensiveAbility = true;
+            }
         }
         else if (distanceToOpponent <= neutralDistance)
         {
@@ -30,12 +36,24 @@ public class AIDefenseSmart : AIDefenseModule
             {
                 Block();
             }
+            else if (useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementGrapple)
+            {
+                FighterRef.StartUpAction();
+                FighterRef.CancelUpAction();
+                useExpensiveAbility = false;
+            }
         }
         else
         {
             if (OtherFighterRef.IsAFistsOfState(new() { PlayerFistState.Launch }))
             {
                 Block();
+            }
+            else if (useExpensiveAbility && FighterRef.GetMeter() >= Help.Tunables.meterRequirementGrapple)
+            {
+                FighterRef.StartUpAction();
+                FighterRef.CancelUpAction();
+                useExpensiveAbility = false;
             }
         }
     }

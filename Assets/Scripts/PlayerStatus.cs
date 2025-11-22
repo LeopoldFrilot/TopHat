@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -80,5 +81,17 @@ public class PlayerStatus : MonoBehaviour
     private void TriggerStatusEffectsChanged()
     {
         OnStatusEffectsChanged?.Invoke(GetActiveStatusEffects());
+    }
+
+    public void AddStatusEffectForTime(StatusType type, float stunTime)
+    {
+        StartCoroutine(EffectForTime(type, stunTime));
+    }
+
+    private IEnumerator EffectForTime(StatusType type, float time)
+    {
+        int handle = AddStatusEffect(type);
+        yield return new WaitForSeconds(time);
+        RemoveStatusEffect(handle);
     }
 }

@@ -214,6 +214,11 @@ public class Fighter : MonoBehaviour
         {
             if (spawnedFist.GetCurrentState() == PlayerFistState.Windup)
             {
+                if (spawnedFist.GetWindupNormalized() >= Help.Tunables.windupThresholdCantCancel)
+                {
+                    continue;
+                }
+                
                 spawnedFist.Launch();
                 break;
             }
@@ -496,8 +501,16 @@ public class Fighter : MonoBehaviour
                             playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup * Help.Tunables.blockDizzyDamageReduction));
                             playerMovement.LaunchPlayer(
                                 new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * Help.Tunables.blockKnockbackPower);
-                            
-                            GameWizard.Instance.hitStopManager.AddStop((Mathf.Approximately(normWindup, 1) ? Help.Tunables.blockStrongestHitstop : Help.Tunables.blockStrongHitstop));
+
+                            if (Mathf.Approximately(normWindup, 1))
+                            {
+                                GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.blockStrongestHitstop);
+                                playerBlock.EndBlock();
+                            }
+                            else
+                            {
+                                GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.blockStrongHitstop);
+                            }
                         }
                         else
                         {

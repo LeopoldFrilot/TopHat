@@ -10,10 +10,23 @@ public class ThrownHat : MonoBehaviour
     private HatStats hatStats;
     private Rigidbody2D rigidbody2D;
     private Fighter ownerFighter;
+    private Vector3 lastLocation;
 
     private void Awake()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        if (lastLocation != Vector3.zero)
+        {
+            Vector3 direction = (transform.position - lastLocation).normalized;
+            float angle = Mathf.Atan(direction.y/direction.x) * Mathf.Rad2Deg;
+            renderer.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle - 90)) ;
+        }
+        
+        lastLocation = transform.position;
     }
 
     public void Initialize(HatStats inHatStats, Fighter inOwnerFighter)

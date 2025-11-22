@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hatStats: {fileID: 11400000, guid: 16ceb30d7888a754093ebde8caa31971, type: 2}
   collider: {fileID: 953074489252992545}
+  spriteRenderer: {fileID: 9099300725643352183}
 --- !u!50 &2400526538019522955
 Rigidbody2D:
   serializedVersion: 5
@@ -224,3 +225,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hatStats: {fileID: 0}
   collider: {fileID: 0}
+  spriteRenderer: {fileID: 0}

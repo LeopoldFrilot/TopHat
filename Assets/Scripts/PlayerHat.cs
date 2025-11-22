@@ -9,6 +9,7 @@ public class PlayerHat : MonoBehaviour
 {
     [SerializeField] private HatStats hatStats;
     [SerializeField] private Collider2D collider;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     
     private Transform targetPos;
     private Tweener idleFollow;
@@ -117,5 +118,10 @@ public class PlayerHat : MonoBehaviour
     public HatStats GetHatStats()
     {
         return hatStats;
+    }
+
+    public void SetVisibility(bool newValue)
+    {
+        spriteRenderer.enabled = newValue;
     }
 }

@@ -28,6 +28,7 @@ namespace ScriptableObjects
         public Vector2 windupOffset = new Vector2(1f, 0);
         public float speedThresholdToRetract = .4f;
         public float hardHitThreshold = .65f;
+        public float windupThresholdCantCancel = .9f;
         
         [Header("Hat")]
         public float hatIdleFollowSpeed = 4f;
