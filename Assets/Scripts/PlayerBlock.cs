@@ -3,9 +3,12 @@ using UnityEngine;
 
 public class PlayerBlock : MonoBehaviour
 {
+    [SerializeField] private float blockingTime = 0.5f;
+    [SerializeField] private float perfectBlockTime = .2f;
+    [SerializeField] private float blockingCooldown = 0.5f;
     private bool blocking = false;
     private float blockingCooldownStart;
-    private float blockingTimeStart;
+    private float parryTimeStart;
     private Fighter _fighterRef;
 
     private void Awake()
@@ -13,41 +16,23 @@ public class PlayerBlock : MonoBehaviour
         _fighterRef = gameObject.GetComponent<Fighter>();
     }
 
-    private void Update()
+    public void TryToParry()
     {
-        if (blocking)
-        {
-            if (Help.Tunables.blockingTime >= 0)
-            {
-                if (Time.time >= (Help.Tunables.blockingTime + blockingTimeStart))
-                {
-                    StopBlocking();
-                }
-            }
-        }
+        parryTimeStart = Time.time;
     }
 
-    public void CancelBlockLag()
+    public void StartBlocking()
     {
-        StopBlocking(true);
-    }
-
-    public void TryToBLock()
-    {
-        if (CanBlock())
+        blocking = true;
+        foreach (var fists in _fighterRef.GetSpawnedFists())
         {
-            blocking = true;
-            blockingTimeStart = Time.time;
-            foreach (var fists in _fighterRef.GetSpawnedFists())
-            {
-                fists.StartBlock();
-            }
+            fists.StartBlock();
         }
     }
     
     public bool IsBlocking() => blocking;
 
-    private void StopBlocking(bool cancelLag = false)
+    public void StopBlocking(bool cancelLag = false)
     {
         blocking = false;
         if (!cancelLag)
@@ -63,24 +48,11 @@ public class PlayerBlock : MonoBehaviour
 
     private bool CanBlock()
     {
-        return !blocking && Time.time >= (blockingCooldownStart + Help.Tunables.blockingCooldown);
+        return !blocking && Time.time >= (blockingCooldownStart + blockingCooldown);
     }
 
     public bool IsPerfectBlock()
     {
-        return blocking && blockingTimeStart + Help.Tunables.perfectBlockTime >= Time.time;
-    }
-
-    public void HandleActionButtonCancelled()
-    {
-        if (Help.Tunables.blockingTime < 0)
-        {
-            CancelBlockLag();
-        }
-    }
-
-    public void EndBlock()
-    {
-        StopBlocking();
+        return blocking && parryTimeStart + perfectBlockTime >= Time.time;
     }
 }

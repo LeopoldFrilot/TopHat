@@ -1,22 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using ScriptableObjects;
 using UnityEngine;
 
 public enum TurnState
 {
     Attacking,
     Defending
-}
-
-public enum AbilityTypes
-{
-    BasicAttack,
-    DodgeRoll,
-    Grapple,
-    HatThrow,
-    DashCancel,
 }
 
 public class Fighter : MonoBehaviour
@@ -26,10 +16,13 @@ public class Fighter : MonoBehaviour
     [SerializeField] private Transform outFistLocation;
     [SerializeField] private Transform blockLocation;
     [SerializeField] private Transform playerHatLocation;
+    [SerializeField] private float blockKnockbackPower = 4;
+    [SerializeField] private float hitKnockbackPower = 10;
+    [SerializeField] private float grappleResetPower = 20f;
+    [SerializeField] private float dizzyStunTimeLength = 3f;
     [SerializeField] private GameObject hitEffectPrefab;
     [SerializeField] private GameObject blockEffectPrefab;
     [SerializeField] private AnimationCurve dizzyDamageCurve;
-    [SerializeField] private Collider2D mainCollitder;
 
     [Header("Animation")] 
     [SerializeField] private Animator mainBodyAnimator;
@@ -37,20 +30,12 @@ public class Fighter : MonoBehaviour
     [SerializeField] private string animatorJumpBoolName = "Jump";
     [SerializeField] private string animatorGrappleTriggerName = "Grapple1";
     [SerializeField] private string animatorGrappledTriggerName = "Grapple2";
-    [SerializeField] private string animatorBlockHitTriggerName = "Hatblock";
-    [SerializeField] private string animatorHitTriggerName = "Hit";
-    [SerializeField] private string animatorWinFaceBoolName = "Win";
-
-    [Header("Particles")] 
-    [SerializeField] private List<Transform> eyePivots = new();
-    [SerializeField] private GameObject flameEyesParticles;
     
     [Header("Audio")]
     [SerializeField] AudioClip grappleSound;
 
     private List<PlayerFist> spawnedFists = new();
     private PlayerBlock playerBlock;
-    private PlayerGrapple playerGrapple;
     private bool facingLeft;
     private TurnState currentTurnState = TurnState.Attacking;
     private PlayerMovement playerMovement;
@@ -59,10 +44,6 @@ public class Fighter : MonoBehaviour
     private FightScene fightScene;
     private PlayerDizziness playerDizziness;
     private PlayerStatus playerStatus;
-    private PlayerMeter playerMeter;
-    private HatInterface hatInterface;
-    private PlayerDashCancel playerDashCancel;
-    private AutoTurnaround playerAutoTurnaround;
 
     private bool AIControlled = false;
     private AIBaseComponent AIBaseComponent;
@@ -81,40 +62,20 @@ public class Fighter : MonoBehaviour
         this.fightScene = fightScene;
         this.networkedFighterController = networkedFighterController;
         playerBlock = GetComponent<PlayerBlock>();
-        playerGrapple = GetComponent<PlayerGrapple>();
         playerMovement = GetComponent<PlayerMovement>();
         AIBaseComponent = GetComponent<AIBaseComponent>();
         playerStatus = GetComponent<PlayerStatus>();
-        playerMeter = GetComponent<PlayerMeter>();
-        hatInterface = GetComponent<HatInterface>();
-        playerDizziness = GetComponent<PlayerDizziness>();
-        playerDashCancel = GetComponent<PlayerDashCancel>();
-        playerAutoTurnaround = GetComponent<AutoTurnaround>();
         
+        playerDizziness = GetComponent<PlayerDizziness>();
         playerDizziness.OnDizzinessChanged += OnDizzinessChanged;
-        playerStatus.OnStatusEffectsChanged += OnStatusEffectsChanged;
+        
         
         inputHandler = networkedFighterController.GetComponent<InputHandler>();
         inputHandler.OnActionStarted += OnActionStarted;
         inputHandler.OnActionCancelled += OnActionCancelled;
-        inputHandler.OnUpActionStarted += OnUpActionStarted;
-        inputHandler.OnUpActionCancelled += OnUpActionCancelled;
-        inputHandler.OnDownActionStarted += OnDownActionStarted;
-        inputHandler.OnDownActionCancelled += OnDownActionCancelled;
         
         initialized = true;
         TriggerInitialized();
-    }
-
-    private void OnStatusEffectsChanged(List<StatusType> status)
-    {
-        if (status.Contains(StatusType.Stunned))
-        {
-            foreach (var spawnedFist in spawnedFists)
-            {
-                spawnedFist.Reset();
-            }
-        }
     }
 
     private void OnDizzinessChanged(float obj)
@@ -130,30 +91,22 @@ public class Fighter : MonoBehaviour
 
     private IEnumerator DizzyStun()
     {
-        yield return new WaitForSeconds(Help.Tunables.dizzyStunTimeLength);
-        EndDizzy();
-    }
-
-    private void EndDizzy()
-    {
+        yield return new WaitForSeconds(dizzyStunTimeLength);
         playerStatus.RemoveStatusEffect(dizzyStunHandle);
         playerDizziness.ResetDizzy();
-        dizzyStunHandle = -1; 
+        dizzyStunHandle = -1;
     }
 
     public void Restart()
     {
-        ShowPlayer();
         hatTime = 0;
-
-        EndDizzy();
+        
+        playerStatus.RemoveStatusEffect(dizzyStunHandle);
+        playerDizziness.ResetDizzy();
+        dizzyStunHandle = -1;
         
         playerStatus.RemoveStatusEffect(grappledHandle);
         grappledHandle = -1;
-        
-        playerBlock.CancelBlockLag();
-        playerGrapple.ResetGrapple();
-        playerMeter.ResetMeter();
 
         foreach (var spawnedFist in spawnedFists)
         {
@@ -172,16 +125,14 @@ public class Fighter : MonoBehaviour
         var inSpawnedFist = inFistLocation.GetComponentInChildren<PlayerFist>();
         inSpawnedFist.transform.SetParent(null);
         inSpawnedFist.transform.localScale = Vector3.one;
-        inSpawnedFist.Iniialize(this, inFistLocation, blockLocation);
+        inSpawnedFist.Iniialize(this, inFistLocation, blockLocation, PlayerFistSide.In);
         
         var outSpawnedFist = outFistLocation.GetComponentInChildren<PlayerFist>();
         outSpawnedFist.transform.SetParent(null);
         outSpawnedFist.transform.localScale = Vector3.one;
-        outSpawnedFist.Iniialize(this, outFistLocation, blockLocation);
+        outSpawnedFist.Iniialize(this, outFistLocation, blockLocation, PlayerFistSide.Out);
 
         spawnedFists = new List<PlayerFist>{ outSpawnedFist, inSpawnedFist };
-
-        playerMeter.OnMeterChanged += OnMeterChanged;
     }
 
     private void Update()
@@ -193,7 +144,7 @@ public class Fighter : MonoBehaviour
             mainBodyAnimator.SetBool(animatorJumpBoolName, true);
         }
 
-        if (!fightScene.IsInCountdown() && !fightScene.IsInOutro() && currentTurnState == TurnState.Defending && !IsStunned())
+        if (!fightScene.IsInCountdown() && currentTurnState == TurnState.Defending && !IsStunned())
         {
             hatTime += Time.deltaTime;
         }
@@ -218,7 +169,7 @@ public class Fighter : MonoBehaviour
 
     public void CancelAction()
     {
-        OnActionCancelled(networkedFighterController.GetPlayerIndex(this));
+        OnActionCancelled(1);
     }
 
     private void OnActionCancelled(int playerOnNetworkedController)
@@ -232,25 +183,15 @@ public class Fighter : MonoBehaviour
         {
             if (spawnedFist.GetCurrentState() == PlayerFistState.Windup)
             {
-                if (spawnedFist.GetWindupNormalized() >= Help.Tunables.windupThresholdCantCancel)
-                {
-                    continue;
-                }
-                
                 spawnedFist.Launch();
                 break;
             }
-        }
-
-        if (currentTurnState == TurnState.Defending)
-        {
-            playerBlock.HandleActionButtonCancelled();
         }
     }
 
     public void StartAction()
     {
-        OnActionStarted(networkedFighterController.GetPlayerIndex(this));
+        OnActionStarted(1);
     }
 
     private void OnActionStarted(int playerOnNetworkedController)
@@ -280,119 +221,20 @@ public class Fighter : MonoBehaviour
         {
             if (!playerMovement.IsJumping())
             {
-                playerBlock.TryToBLock();
+                playerBlock.TryToParry();
             }
-        }
-    }
-
-    public void CancelDownAction()
-    {
-        OnDownActionStarted(networkedFighterController.GetPlayerIndex(this));
-    }
-
-    private void OnDownActionCancelled(int playerOnNetworkedController)
-    {
-        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
-        {
-            return;
-        }
-
-        if (currentTurnState == TurnState.Defending)
-        {
-            hatInterface.OnMovementActionCancelled();
-        }
-    }
-
-    public void StartDownAction()
-    {
-        OnDownActionStarted(networkedFighterController.GetPlayerIndex(this));
-    }
-
-    private void OnDownActionStarted(int playerOnNetworkedController)
-    {
-        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
-        {
-            return;
-        }
-        
-        if (fightScene.IsInCountdown() || fightScene.IsInOutro())
-        {
-            return;
-        }
-
-        if (currentTurnState == TurnState.Attacking)
-        {
-            playerDashCancel.TryStartDashCancel(!playerMovement.IsHoldingLeft());
-        }
-        else
-        {
-            if (!CanStartAction())
-            {
-                return;
-            }
-            
-            hatInterface.OnMovementActionStarted();
-        }
-    }
-
-    public void CancelUpAction()
-    {
-        OnDownActionStarted(networkedFighterController.GetPlayerIndex(this));
-    }
-
-    private void OnUpActionCancelled(int playerOnNetworkedController)
-    {
-        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
-        {
-            return;
-        }
-
-        if (currentTurnState == TurnState.Attacking)
-        {
-            
-        }
-        else
-        {
-            hatInterface.OnMainActionCancelled();
-        }
-    }
-
-    public void StartUpAction()
-    {
-        OnDownActionStarted(networkedFighterController.GetPlayerIndex(this));
-    }
-
-    private void OnUpActionStarted(int playerOnNetworkedController)
-    {
-        if (playerOnNetworkedController != networkedFighterController.GetPlayerIndex(this))
-        {
-            return;
-        }
-        
-        if (!CanStartAction())
-        {
-            return;
-        }
-
-        if (currentTurnState == TurnState.Attacking)
-        {
-            playerGrapple.TryToGrapple();
-        }
-        else
-        {
-            hatInterface.OnMainActionStarted();
         }
     }
 
     public bool CanStartAction()
     {
-        if (fightScene.IsInCountdown() || fightScene.IsInOutro())
+        if (fightScene.IsInCountdown())
         {
             return false;
         }
 
         var effects = playerStatus.GetActiveStatusEffects();
-        if (effects.Contains(StatusType.Grappled) || effects.Contains(StatusType.Stunned) || effects.Contains(StatusType.AbilityLag))
+        if (effects.Contains(StatusType.Grappled) || effects.Contains(StatusType.Stunned))
         {
             return false;
         }
@@ -402,7 +244,7 @@ public class Fighter : MonoBehaviour
 
     public bool CanMove()
     {
-        return CanStartAction() && !playerBlock.IsBlocking();
+        return CanStartAction();
     }
 
     public void FaceLeft()
@@ -430,204 +272,83 @@ public class Fighter : MonoBehaviour
         return facingLeft;
     }
 
-    public void ForceHitboxesValueOn()
-    {
-        foreach (var spawnedFist in spawnedFists)
-        {
-            spawnedFist.ForceHitboxesValue(true);
-        }
-    }
-
-    public void ForceHitboxesValueOff()
-    {
-        foreach (var spawnedFist in spawnedFists)
-        {
-            spawnedFist.ForceHitboxesValue(false);
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.transform.parent)
-        {
-            return;
-        }
-        
-        PlayerFist fist = other.transform.parent.GetComponent<PlayerFist>();
-        if (fist == null)
-        {
-            fist = other.transform.root.GetComponent<PlayerFist>();
-        }
-        
+        PlayerFist fist = other.transform.root.GetComponent<PlayerFist>();
         if (fist == null || spawnedFists.Contains(fist))
         {
             return;
         }
-
-        bool isInvul = playerStatus.GetActiveStatusEffects().Contains(StatusType.Invulnerable);
-        if (fist.GetOwner().IsGrappling())
-        {
-            if (isInvul)
-            {
-                return;
-            }
-            if (GetTurnState() == TurnState.Defending)
-            {
-                TriggerKnockOff();
-            }
-            foreach (var spawnedFist in spawnedFists)
-            {
-                spawnedFist.Reset();
-            }
-            
-            SetGrappled();
-            
-            return;
-        }
         
-        if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
+        if (currentTurnState == TurnState.Attacking)
         {
-            bool facingOpponent = playerAutoTurnaround.IsFacingOpponent(fist.GetOwner());
-            bool willKnockOff = currentTurnState == TurnState.Defending && IsStunned() && !knockedOff && !isInvul;
-            bool blocked = isInvul || (playerBlock.IsBlocking() && !willKnockOff && facingOpponent);
-            bool wasPerfectBlock = playerBlock.IsPerfectBlock() && !willKnockOff && facingOpponent;
-            
-            if (blocked)
-            {
-                StartBlockAnimation();
-            }
-            else
-            {
-                StartHitAnimation();
-            }
-
-            if (willKnockOff)
-            {
-                TriggerKnockOff();
-                GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.knockOffHitstop, Help.Tunables.swapTimeRecoveryRate);
-            }
-                
-            fist.HandleCollisionWithPlayer(this, blocked);
-
-
-            if (isInvul)
-            {
-                return;
-            }
-
-            if (!willKnockOff)
-            {
-                float normWindup = fist.GetWindupNormalized();
-                if (blocked)
-                {
-                    Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
-                    if (!wasPerfectBlock)
-                    {
-                        GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.blockHitstop);
-                        if (normWindup >= Help.Tunables.hardHitThreshold)
-                        {
-                            fist.GetOwner().ChangeMeter(Help.Tunables.meterForHitBlock_Hard);
-                            playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup * Help.Tunables.blockDizzyDamageReduction));
-                            playerMovement.LaunchPlayer(
-                                new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * Help.Tunables.blockKnockbackPower);
-
-                            if (Mathf.Approximately(normWindup, 1))
-                            {
-                                GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.blockStrongestHitstop);
-                                playerBlock.EndBlock();
-                            }
-                            else
-                            {
-                                GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.blockStrongHitstop);
-                            }
-                        }
-                        else
-                        {
-                            GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.blockHitstop);
-                        }
-                    }
-                    else
-                    {
-                        playerBlock.CancelBlockLag();
-                        GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.parryHitstop);
-                    }
-
-                    playerMeter.ChangeMeter(wasPerfectBlock ? Help.Tunables.meterForParry : Help.Tunables.meterForBlock);
-                }
-                else
-                {
-                    Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
-                    playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup));
-                    playerMovement.LaunchPlayer(
-                        new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * Help.Tunables.hitKnockbackPower);
-
-                    if (normWindup >= Help.Tunables.hardHitThreshold)
-                    {
-                        fist.GetOwner().ChangeMeter(Help.Tunables.meterForHit_Hard);
-                        if (Mathf.Approximately(normWindup, 1))
-                        {
-                            GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.hitStrongestHitstop, Help.Tunables.hitTimeRecoveryRate);
-                            playerDizziness.DealDizzyDamage(Help.Tunables.maxDizziness);
-                        }
-                        else
-                        {
-                            GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.hitStrongHitstop, Help.Tunables.hitTimeRecoveryRate);
-                        }
-                    }
-                    else
-                    {
-                        fist.GetOwner().ChangeMeter(Help.Tunables.meterForHit);
-                        GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.punchHitstop, Help.Tunables.hitTimeRecoveryRate);
-                    }
-                } 
-            }
-        }
-    }
-
-    private bool IsGrappling()
-    {
-        return playerGrapple.IsGrappling();
-    }
-
-    private void OnMeterChanged(float meter)
-    {
-        if (currentTurnState ==  TurnState.Attacking)
-        {
-            ToggleFlameEyes(meter >= Help.Tunables.meterRequirementGrapple);
+             if (fist.GetOwner().IsBlocking())
+             {
+                 foreach (var spawnedFist in spawnedFists)
+                 {
+                     spawnedFist.Reset();
+                 }
+                 SetGrappled();
+                 fightScene.GetOpponent(this).SetGrappled();
+                 fightScene.GetOpponent(this).StartGrappleAnimation();
+             }
         }
         else
         {
-            ToggleFlameEyes(false);
-        }
-    }
+            if (fist.GetCurrentState() == PlayerFistState.Launch && !fist.IsConsumed())
+            {
+                bool willKnockOff = currentTurnState == TurnState.Defending && IsStunned() && !knockedOff;
+                bool blocked = playerBlock.IsBlocking() && !willKnockOff;
+                bool wasPerfectBlock = playerBlock.IsPerfectBlock() && !willKnockOff;
 
-    private void ToggleFlameEyes(bool On)
-    {
-        foreach (Transform eyePivot in eyePivots)
-        {
-            if (On && eyePivot.childCount == 0)
-            {
-                Instantiate(flameEyesParticles, eyePivot);
-            }
-            else if (!On && eyePivot.childCount > 0)
-            {
-                for (int i = 0; i < eyePivot.childCount; i++)
+                if (willKnockOff)
                 {
-                    Destroy(eyePivot.GetChild(i).gameObject);
+                    TriggerKnockOff();
+                }
+                
+                fist.HandleCollisionWithPlayer(this, blocked);
+
+                if (!willKnockOff)
+                {
+                    if (blocked)
+                    {
+                        Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
+                        if (wasPerfectBlock)
+                        {
+                            foreach (var spawnedFist in spawnedFists)
+                            {
+                                if (spawnedFist.fistID != fist.fistID)
+                                {
+                                    spawnedFist.ForceParryAtPosition(fist.transform.position);
+                                }
+                            }
+                            return;
+                        }
+                        
+                        playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized() * .33f));
+                        playerMovement.LaunchPlayer(
+                            new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * blockKnockbackPower);
+                    }
+                    else
+                    {
+                        Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
+                        playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(fist.GetWindupNormalized()));
+                        playerMovement.LaunchPlayer(
+                            new Vector2(1 * (fist.transform.position.x < transform.position.x ? 1 : -1), .2f) * hitKnockbackPower);
+                    } 
                 }
             }
         }
     }
 
     public Action OnKnockOff;
-
     private void TriggerKnockOff()
     {
         knockedOff = true;
         OnKnockOff?.Invoke();
     }
 
-    public void SetGrappled()
+    private void SetGrappled()
     {
         CancelGrappled();
         grappledHandle = playerStatus.AddStatusEffect(StatusType.Grappled);
@@ -636,7 +357,6 @@ public class Fighter : MonoBehaviour
     private void CancelGrappled()
     {
         playerStatus.RemoveStatusEffect(grappledHandle);
-        playerGrapple.ResetGrapple();
         grappledHandle = -1;
     }
 
@@ -644,21 +364,15 @@ public class Fighter : MonoBehaviour
     {
         EventHub.TriggerPlaySoundRequested(grappleSound);
         Fighter opponent = fightScene.GetOpponent(this);
+        
+        opponent.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2(((opponent.transform.position.x > 0) ? -1f : 1f) * 1.2f, 1f) * grappleResetPower);
+        opponent.StartGrappledAnimation();
         CancelGrappled();
-        if (opponent.IsGrappled())
-        {
-            opponent.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2(((opponent.transform.position.x > 0) ? -1f : 1f) * 1.2f, 1f) * Help.Tunables.grappleResetPower);
-            opponent.StartGrappledAnimation();
-            opponent.CancelGrappled();
-        }
+        opponent.CancelGrappled();
+        
     }
 
-    private bool IsGrappled()
-    {
-        return playerStatus.GetActiveStatusEffects().Contains(StatusType.Grappled);
-    }
-
-    public void StartGrappleAnimation()
+    private void StartGrappleAnimation()
     {
         mainBodyAnimator.SetTrigger(animatorGrappleTriggerName);
     }
@@ -666,21 +380,6 @@ public class Fighter : MonoBehaviour
     private void StartGrappledAnimation()
     {
         mainBodyAnimator.SetTrigger(animatorGrappledTriggerName);
-    }
-
-    public void StartBlockAnimation()
-    {
-        mainBodyAnimator.SetTrigger(animatorBlockHitTriggerName);
-    }
-
-    public void StartHitAnimation()
-    {
-        mainBodyAnimator.SetTrigger(animatorHitTriggerName);
-    }
-
-    public void ToggleWinFaceAnimation(bool newValue)
-    {
-        mainBodyAnimator.SetBool(animatorWinFaceBoolName, newValue);
     }
 
     public bool IsBlocking()
@@ -702,10 +401,15 @@ public class Fighter : MonoBehaviour
     {
         if (currentTurnState != newState)
         {
-            SetHat(newState == TurnState.Attacking ? null : fightScene.GetHat());
-
             currentTurnState = newState;
-            EndDizzy();
+            if (currentTurnState == TurnState.Defending)
+            {
+                playerBlock.StartBlocking();
+            }
+            else
+            {
+                playerBlock.StopBlocking();
+            }
             TriggerTurnStateChanged(currentTurnState);
         }
     }
@@ -776,26 +480,26 @@ public class Fighter : MonoBehaviour
         outSpawnedFist.transform.SetParent(outFistLocation);
         outSpawnedFist.transform.localScale = Vector3.one;
         outSpawnedFist.transform.localPosition = Vector3.zero;
-        outSpawnedFist.StartGrapple();
+        outSpawnedFist.PauseFistControl();
         
-        var inSpawnedFist = spawnedFists[1];
+        var inSpawnedFist = spawnedFists[0];
         inSpawnedFist.transform.SetParent(inFistLocation);
         inSpawnedFist.transform.localScale = Vector3.one;
         inSpawnedFist.transform.localPosition = Vector3.zero;
-        inSpawnedFist.StartGrapple();
+        inSpawnedFist.PauseFistControl();
     }
 
     public void ResumeFistControl()
     {
         var outSpawnedFist = spawnedFists[0];
         outSpawnedFist.transform.SetParent(null);
+        outSpawnedFist.ResumeFistControl();
         outSpawnedFist.transform.localScale = Vector3.one;
-        outSpawnedFist.CancelGrapple();
         
-        var inSpawnedFist = spawnedFists[1];
+        var inSpawnedFist = spawnedFists[0];
         inSpawnedFist.transform.SetParent(null);
+        inSpawnedFist.ResumeFistControl();
         inSpawnedFist.transform.localScale = Vector3.one;
-        inSpawnedFist.CancelGrapple();
     }
 
     public bool IsStunned()
@@ -806,81 +510,5 @@ public class Fighter : MonoBehaviour
     public float GetHatTime()
     {
         return hatTime;
-    }
-
-    public Vector3 ClampToFightPosition(Vector3 newPosition)
-    {
-        return fightScene.ClampToGameplayBounds(newPosition);
-    }
-
-    public void ChangeMeter(float delta)
-    {
-        playerMeter.ChangeMeter(delta);
-    }
-
-    public float GetMeter()
-    {
-        return playerMeter.GetMeter();
-    }
-
-    public bool AreFistsOfState(List<PlayerFistState> validStates)
-    {
-        foreach (var fist in spawnedFists)
-        {
-            if (!validStates.Contains(fist.GetCurrentState()) )
-            {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-
-    public bool IsAFistsOfState(List<PlayerFistState> validStates)
-    {
-        foreach (var fist in spawnedFists)
-        {
-            if (validStates.Contains(fist.GetCurrentState()) )
-            {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-
-    public void SetColliderEnabled(bool newEnabled)
-    {
-        mainCollitder.enabled = newEnabled;
-    }
-
-    public void SetHat(PlayerHat hat)
-    {
-        hatInterface.SetHat(hat);
-    }
-
-    public Collider2D GetMainCollider()
-    {
-        return mainCollitder;
-    }
-
-    public int GetPlayerIndex()
-    {
-        return playerIndex;
-    }
-
-    public void HidePlayer()
-    {
-        artRoot.gameObject.SetActive(false);
-    }
-
-    public void ShowPlayer()
-    {
-        artRoot.gameObject.SetActive(true);
-    }
-
-    public Transform GetArtRoot()
-    {
-        return artRoot;
     }
 }
