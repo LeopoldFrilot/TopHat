@@ -8,6 +8,7 @@ public class OutroPlayer : MonoBehaviour
     protected Animator animator;
     protected Fighter winner;
     protected Fighter loser;
+    protected PlayerStatus status;
     protected PlayerHat hat;
     private int inactiveHandle;
 
@@ -19,6 +20,7 @@ public class OutroPlayer : MonoBehaviour
     public void StartOutroForHat(PlayerHat defenderHat, Fighter winner, Fighter loser)
     {
         this.winner = winner;
+        status = winner.GetComponent<PlayerStatus>();
         this.loser = loser;
         hat = defenderHat;
         active = true;
@@ -27,7 +29,7 @@ public class OutroPlayer : MonoBehaviour
 
     protected virtual void OnOutroStart()
     {
-        inactiveHandle = winner.GetComponent<PlayerStatus>().AddStatusEffect(StatusType.HatInactive);
+        inactiveHandle = status.AddStatusEffect(StatusType.HatInactive);
         winner.ToggleWinFaceAnimation(true);
     }
 
@@ -35,11 +37,6 @@ public class OutroPlayer : MonoBehaviour
     {
         OnOutroEnd();
         active = false;
-    }
-
-    protected void StartAnimation()
-    {
-        animator.StopPlayback();
     }
 
     protected virtual void OnOutroEnd()
