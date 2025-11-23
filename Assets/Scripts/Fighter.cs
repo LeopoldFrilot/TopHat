@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MilkShake;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -504,6 +505,7 @@ public class Fighter : MonoBehaviour
             if (willKnockOff)
             {
                 TriggerKnockOff();
+                fist.GetOwner().ChangeMeter(Help.Tunables.meterForHit_Hard);
                 GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.knockOffHitstop, Help.Tunables.swapTimeRecoveryRate);
             }
                 
@@ -524,6 +526,7 @@ public class Fighter : MonoBehaviour
                     if (!wasPerfectBlock)
                     {
                         GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.blockHitstop);
+                        Shaker.ShakeAll(Help.Tunables.blockCameraShake);
                         if (normWindup >= Help.Tunables.hardHitThreshold)
                         {
                             fist.GetOwner().ChangeMeter(Help.Tunables.meterForHitBlock_Hard);
@@ -545,14 +548,15 @@ public class Fighter : MonoBehaviour
                         {
                             GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.blockHitstop);
                         }
+                        
+                        playerMeter.ChangeMeter(Help.Tunables.meterForBlock);
                     }
                     else
                     {
                         playerBlock.CancelBlockLag();
                         GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.parryHitstop);
+                        playerMeter.ChangeMeter(Help.Tunables.meterForParry);
                     }
-
-                    playerMeter.ChangeMeter(wasPerfectBlock ? Help.Tunables.meterForParry : Help.Tunables.meterForBlock);
                 }
                 else
                 {
@@ -564,6 +568,7 @@ public class Fighter : MonoBehaviour
                     if (normWindup >= Help.Tunables.hardHitThreshold)
                     {
                         fist.GetOwner().ChangeMeter(Help.Tunables.meterForHit_Hard);
+                        Shaker.ShakeAll(Help.Tunables.hardPunchCameraShake);
                         if (Mathf.Approximately(normWindup, 1))
                         {
                             GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.hitStrongestHitstop, Help.Tunables.hitTimeRecoveryRate);
@@ -577,6 +582,7 @@ public class Fighter : MonoBehaviour
                     else
                     {
                         fist.GetOwner().ChangeMeter(Help.Tunables.meterForHit);
+                        Shaker.ShakeAll(Help.Tunables.smallPunchCameraShake);
                         GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.punchHitstop, Help.Tunables.hitTimeRecoveryRate);
                     }
                 } 

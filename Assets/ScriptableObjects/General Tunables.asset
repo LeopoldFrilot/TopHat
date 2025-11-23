@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802b21f6eb734184a608046785cc3bcc, type: 3}
   m_Name: General Tunables
   m_EditorClassIdentifier: 
+  winnerTextTime: 5
   speed: 5
   verticalJumpPower: 13
   horizontalJumpPower: 4
@@ -65,3 +66,6 @@ MonoBehaviour:
   parryHitstop: 0.05
   hitTimeRecoveryRate: 0.1
   swapTimeRecoveryRate: 0.05
+  smallPunchCameraShake: {fileID: 11400000, guid: edfdabaa0fbfa0f4587f1a856f53b417, type: 2}
+  hardPunchCameraShake: {fileID: 11400000, guid: bd4328bd5427ab74383676e7049ce3d3, type: 2}
+  blockCameraShake: {fileID: 11400000, guid: 924013b185b3e1149b0209a1aaebdcfb, type: 2}

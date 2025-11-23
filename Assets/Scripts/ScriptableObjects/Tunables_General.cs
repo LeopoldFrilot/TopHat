@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using MilkShake;
+using UnityEngine;
 
 namespace ScriptableObjects
 {
@@ -75,5 +76,8 @@ namespace ScriptableObjects
         public float parryHitstop = .01f;
         public float hitTimeRecoveryRate = .1f;
         public float swapTimeRecoveryRate = .03f;
+        public ShakePreset smallPunchCameraShake;
+        public ShakePreset hardPunchCameraShake;
+        public ShakePreset blockCameraShake;
     }
 }
