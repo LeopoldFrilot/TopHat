@@ -200,6 +200,8 @@ MonoBehaviour:
   hatRoot: {fileID: 4303733839315500764}
   laserPrefab: {fileID: 500009123420229320, guid: 20d9d2fbab45ad74f9ea995cb1f2e151, type: 3}
   laserBeamCameraShake: {fileID: 11400000, guid: d370f110be4f2c0459246da0ea38a762, type: 2}
+  delayBeforeLaserScreenShake: 0.5
+  screenShakeFadeTime: 0.5
 --- !u!95 &6898423124610736870
 Animator:
   serializedVersion: 7
