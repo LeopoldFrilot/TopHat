@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         int fistsInMotion = 0;
         foreach (var spawnedFist in fighter.GetSpawnedFists())
         {
-            if (spawnedFist.GetCurrentState() == PlayerFistState.Windup)
+            if (spawnedFist.GetCurrentState() != PlayerFistState.Idle)
             {
                 fistsInMotion++;
             }
