@@ -10,6 +10,7 @@ public class ThrowHat : HatMainAbility
     [SerializeField] private float launchStrength = 20f;
     [SerializeField] private float timeTillForceReturn = 3f;
     [SerializeField] private float stunTime = .5f;
+    [SerializeField] private float minStunTimeRatio = .2f;
     
     private PlayerStatus playerStatus;
     private HatInterface hatInterface;
@@ -23,7 +24,7 @@ public class ThrowHat : HatMainAbility
     private bool hatBouncing;
     private bool hatActive;
     private bool activatedConsumed;
-    
+
     protected override void Awake()
     {
         base.Awake();
@@ -116,7 +117,10 @@ public class ThrowHat : HatMainAbility
     {
         if (hitFighter != fighterRef)
         {
-            hitFighter.GetComponent<PlayerStatus>().AddStatusEffectForTime(StatusType.Stunned, stunTime);
+            if (!hitFighter.GetComponent<PlayerStatus>().GetActiveStatusEffects().Contains(StatusType.Invulnerable))
+            {
+                hitFighter.GetComponent<PlayerStatus>().AddStatusEffectForTime(StatusType.Stunned, Mathf.Clamp((Time.time - hatThrownTime)/timeTillForceReturn, minStunTimeRatio, 1) * stunTime);
+            }
             ForceReturn();
         }
     }

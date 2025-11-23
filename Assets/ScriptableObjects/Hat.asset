@@ -17,3 +17,4 @@ MonoBehaviour:
   hatIcon: {fileID: -8709012365938520547, guid: 109218d4ecc6de140933075d254c028c, type: 3}
   mainAbilityPrefab: {fileID: 6715801625476921878, guid: 8120d4a362244c34a909becb19ad0dbd, type: 3}
   movementAbilityPrefab: {fileID: 1159761125028882856, guid: e8053562dd499d440a18c2908958d4de, type: 3}
+  outroPlayerPrefab: {fileID: 9118089888452287422, guid: 71a45054f80f956498d1d622f3352cb2, type: 3}

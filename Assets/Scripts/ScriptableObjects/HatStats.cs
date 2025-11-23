@@ -10,5 +10,6 @@ namespace ScriptableObjects
         public Sprite hatIcon;
         public HatMainAbility mainAbilityPrefab;
         public HatMovementAbility movementAbilityPrefab;
+        public OutroPlayer outroPlayerPrefab;
     }
 }

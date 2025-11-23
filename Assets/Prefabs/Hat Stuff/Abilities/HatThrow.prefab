@@ -52,4 +52,5 @@ MonoBehaviour:
   angleChangeRate: 8
   launchStrength: 20
   timeTillForceReturn: 2.5
-  stunTime: 1.5
+  stunTime: 2
+  minStunTimeRatio: 0.5

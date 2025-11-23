@@ -5,6 +5,7 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "New General Tunables", menuName = "ScriptableObjects/Tunables/General", order = 0)]
     public class Tunables_General : ScriptableObject
     {
+        public float winnerTextTime = 5f;
         
         [Header("Fighter")]
         public float speed = 5f;

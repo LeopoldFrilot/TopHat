@@ -124,4 +124,11 @@ public class PlayerHat : MonoBehaviour
     {
         spriteRenderer.enabled = newValue;
     }
+
+    public OutroPlayer StartOutroForHat(Fighter winner, Fighter loser)
+    {
+        OutroPlayer op = Instantiate(hatStats.outroPlayerPrefab);
+        op.StartOutroForHat(this, winner, loser);
+        return op;
+    }
 }

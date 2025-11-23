@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,21 +20,24 @@ public class FightScene : MonoBehaviour
     [SerializeField] private Transform leftGameBoundaries;
     [SerializeField] private Transform rightGameBoundaries;
     [SerializeField] private FightSceneUI fightSceneUI;
+    [SerializeField] private GameObject winnerUIRoot;
+    [SerializeField] private TextMeshProUGUI winnerText;
+    [SerializeField] private Color p1Color;
+    [SerializeField] private Color p2Color;
     
     private PlayerHat defenderHat;
     private List<NetworkedFighterController> networkControllers = new();
     private List<Fighter> players = new();
     private bool vsAI;
-    private AIPickerUI pickerUI;
     private bool inCountdown;
     private PlayerInputManager playerInput;
     private int aiAttackModule;
     private int aiDefenseModule;
     private int aiMovementModule;
+    private bool outroActive;
 
     public void Awake()
     {
-        pickerUI = FindFirstObjectByType<AIPickerUI>();
         playerInput = GetComponent<PlayerInputManager>();
         playerInput.onPlayerJoined += OnPlayerJoined;
         vsAI = PlayerPrefs.GetInt("vsAI") == 1;
@@ -50,11 +54,38 @@ public class FightScene : MonoBehaviour
             float p2 = players[1].GetHatTime();
             fightSceneUI.UpdatePointsText(p1, p2, Help.Tunables.timeToChargeHat);
 
-            if (p1 >= Help.Tunables.timeToChargeHat || p2 >= Help.Tunables.timeToChargeHat)
+            if (!outroActive)
             {
-                Restart();
+                if (p1 >= Help.Tunables.timeToChargeHat)
+                {
+                    StartCoroutine(PlayOutro(players[0]));
+                }
+                else if (p2 >= Help.Tunables.timeToChargeHat)
+                {
+                    StartCoroutine(PlayOutro(players[1]));
+                }
             }
         }
+    }
+
+    private IEnumerator PlayOutro(Fighter winner)
+    {
+        outroActive = true;
+        OutroPlayer outroPlayer = defenderHat.StartOutroForHat(winner, GetOpponent(winner));
+        
+        yield return new WaitUntil(outroPlayer.IsInactive);
+        
+        Destroy(outroPlayer.gameObject);
+        winnerUIRoot.SetActive(true);
+        int playerIndex = winner.GetPlayerIndex();
+        winnerText.text = $"Fighter {playerIndex} wins!";
+        winnerText.color = playerIndex == 1 ? p1Color : p2Color;
+        
+        yield return new WaitForSeconds(Help.Tunables.winnerTextTime);
+        
+        winnerUIRoot.SetActive(false);
+        outroActive = false;
+        Restart();
     }
 
     public void ForceAddSecondPlayer()
@@ -244,6 +275,11 @@ public class FightScene : MonoBehaviour
     public bool IsInCountdown()
     {
         return inCountdown;
+    }
+
+    public bool IsInOutro()
+    {
+        return outroActive;
     }
 
     private void SwapRoles()

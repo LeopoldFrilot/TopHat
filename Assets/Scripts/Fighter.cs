@@ -39,6 +39,7 @@ public class Fighter : MonoBehaviour
     [SerializeField] private string animatorGrappledTriggerName = "Grapple2";
     [SerializeField] private string animatorBlockHitTriggerName = "Hatblock";
     [SerializeField] private string animatorHitTriggerName = "Hit";
+    [SerializeField] private string animatorWinFaceBoolName = "Win";
 
     [Header("Particles")] 
     [SerializeField] private List<Transform> eyePivots = new();
@@ -91,6 +92,7 @@ public class Fighter : MonoBehaviour
         playerAutoTurnaround = GetComponent<AutoTurnaround>();
         
         playerDizziness.OnDizzinessChanged += OnDizzinessChanged;
+        playerStatus.OnStatusEffectsChanged += OnStatusEffectsChanged;
         
         inputHandler = networkedFighterController.GetComponent<InputHandler>();
         inputHandler.OnActionStarted += OnActionStarted;
@@ -103,7 +105,18 @@ public class Fighter : MonoBehaviour
         initialized = true;
         TriggerInitialized();
     }
-    
+
+    private void OnStatusEffectsChanged(List<StatusType> status)
+    {
+        if (status.Contains(StatusType.Stunned))
+        {
+            foreach (var spawnedFist in spawnedFists)
+            {
+                spawnedFist.Reset();
+            }
+        }
+    }
+
     private void OnDizzinessChanged(float obj)
     {
         float normalizedDizzy = playerDizziness.GetNormalizedDizziness();
@@ -130,6 +143,7 @@ public class Fighter : MonoBehaviour
 
     public void Restart()
     {
+        ShowPlayer();
         hatTime = 0;
 
         EndDizzy();
@@ -179,7 +193,7 @@ public class Fighter : MonoBehaviour
             mainBodyAnimator.SetBool(animatorJumpBoolName, true);
         }
 
-        if (!fightScene.IsInCountdown() && currentTurnState == TurnState.Defending && !IsStunned())
+        if (!fightScene.IsInCountdown() && !fightScene.IsInOutro() && currentTurnState == TurnState.Defending && !IsStunned())
         {
             hatTime += Time.deltaTime;
         }
@@ -301,7 +315,7 @@ public class Fighter : MonoBehaviour
             return;
         }
         
-        if (fightScene.IsInCountdown())
+        if (fightScene.IsInCountdown() || fightScene.IsInOutro())
         {
             return;
         }
@@ -372,7 +386,7 @@ public class Fighter : MonoBehaviour
 
     public bool CanStartAction()
     {
-        if (fightScene.IsInCountdown())
+        if (fightScene.IsInCountdown() || fightScene.IsInOutro())
         {
             return false;
         }
@@ -664,6 +678,11 @@ public class Fighter : MonoBehaviour
         mainBodyAnimator.SetTrigger(animatorHitTriggerName);
     }
 
+    public void ToggleWinFaceAnimation(bool newValue)
+    {
+        mainBodyAnimator.SetBool(animatorWinFaceBoolName, newValue);
+    }
+
     public bool IsBlocking()
     {
         return playerBlock.IsBlocking();
@@ -843,5 +862,25 @@ public class Fighter : MonoBehaviour
     public Collider2D GetMainCollider()
     {
         return mainCollitder;
+    }
+
+    public int GetPlayerIndex()
+    {
+        return playerIndex;
+    }
+
+    public void HidePlayer()
+    {
+        artRoot.gameObject.SetActive(false);
+    }
+
+    public void ShowPlayer()
+    {
+        artRoot.gameObject.SetActive(true);
+    }
+
+    public Transform GetArtRoot()
+    {
+        return artRoot;
     }
 }
