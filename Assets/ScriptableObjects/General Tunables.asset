@@ -56,16 +56,16 @@ MonoBehaviour:
   blockingTime: 0.5
   perfectBlockTime: 0.2
   blockingCooldown: 0.5
-  knockOffHitstop: 0.01
+  knockOffHitstop: 0.03
   punchHitstop: 0.01
-  hitStrongHitstop: 0.01
-  hitStrongestHitstop: 0.01
+  hitStrongHitstop: 0.02
+  hitStrongestHitstop: 0.03
   blockHitstop: 0
   blockStrongHitstop: 0
   blockStrongestHitstop: 0
-  parryHitstop: 0.05
-  hitTimeRecoveryRate: 0.1
-  swapTimeRecoveryRate: 0.05
+  parryHitstop: 0.1
+  hitTimeRecoveryRate: 1
+  swapTimeRecoveryRate: 0.1
   smallPunchCameraShake: {fileID: 11400000, guid: edfdabaa0fbfa0f4587f1a856f53b417, type: 2}
   hardPunchCameraShake: {fileID: 11400000, guid: bd4328bd5427ab74383676e7049ce3d3, type: 2}
   blockCameraShake: {fileID: 11400000, guid: 924013b185b3e1149b0209a1aaebdcfb, type: 2}

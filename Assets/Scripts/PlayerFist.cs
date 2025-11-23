@@ -57,7 +57,7 @@ public class PlayerFist : MonoBehaviour
 
     private void Start()
     {
-        windupAudio = GameWizard.Instance.GetComponent<AudioHub>().SetUpLoopingAudio(windupSound, .1f);
+        //windupAudio = GameWizard.Instance.audioHub.SetupLoopingClip(windupSound, .1f);
         SwitchState(PlayerFistState.Idle, true);
         shakeTweenComplete = () =>
         {

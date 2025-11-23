@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
-using ScriptableObjects;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerHat : MonoBehaviour
 {

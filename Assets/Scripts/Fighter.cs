@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MilkShake;
-using ScriptableObjects;
 using UnityEngine;
 
 public enum TurnState
@@ -505,7 +504,7 @@ public class Fighter : MonoBehaviour
             if (willKnockOff)
             {
                 TriggerKnockOff();
-                fist.GetOwner().ChangeMeter(Help.Tunables.meterForHit_Hard);
+                Shaker.ShakeAll(Help.Tunables.hardPunchCameraShake);
                 GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.knockOffHitstop, Help.Tunables.swapTimeRecoveryRate);
             }
                 

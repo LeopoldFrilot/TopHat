@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ScriptableObjects;
 using UnityEngine;
 
 public class HatInterface : MonoBehaviour

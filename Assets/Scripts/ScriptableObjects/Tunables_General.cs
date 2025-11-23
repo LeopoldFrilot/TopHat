@@ -1,9 +1,7 @@
 ﻿using MilkShake;
 using UnityEngine;
 
-namespace ScriptableObjects
-{
-    [CreateAssetMenu(fileName = "New General Tunables", menuName = "ScriptableObjects/Tunables/General", order = 0)]
+[CreateAssetMenu(fileName = "General Tunables", menuName = "ScriptableObjects/Tunables/General", order = 0)]
     public class Tunables_General : ScriptableObject
     {
         public float winnerTextTime = 5f;
@@ -80,4 +78,3 @@ namespace ScriptableObjects
         public ShakePreset hardPunchCameraShake;
         public ShakePreset blockCameraShake;
     }
-}
