@@ -22,8 +22,10 @@ public class ThrownHat : MonoBehaviour
         if (lastLocation != Vector3.zero)
         {
             Vector3 direction = (transform.position - lastLocation).normalized;
-            float angle = Mathf.Atan(direction.y/direction.x) * Mathf.Rad2Deg;
-            renderer.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, angle - 90)) ;
+            float angle = Quaternion.Angle(Quaternion.LookRotation(Vector3.right, Vector3.forward),
+                Quaternion.LookRotation(direction, Vector3.forward));
+            Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, -angle - 90)) ;
+            renderer.transform.localRotation = rotation;
         }
         
         lastLocation = transform.position;
