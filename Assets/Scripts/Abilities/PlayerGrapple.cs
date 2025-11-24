@@ -22,6 +22,7 @@ public class PlayerGrapple: MonoBehaviour
             inGrapple = true;
             _fighterRef.ChangeMeter(-Help.Tunables.meterRequirementGrapple);
             _fighterRef.StartGrappleAnimation();
+            GameWizard.Instance.audioHub.PlayClip(Help.Audio.grappleStart);
             return true;
         }
         

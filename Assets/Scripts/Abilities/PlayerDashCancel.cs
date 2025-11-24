@@ -26,6 +26,7 @@ public class PlayerDashCancel : MonoBehaviour
             return false;
         }
         
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.dashCancel);
         var spawnedFists = fighterRef.GetSpawnedFists();
         foreach (var spawnedFist in spawnedFists)
         {

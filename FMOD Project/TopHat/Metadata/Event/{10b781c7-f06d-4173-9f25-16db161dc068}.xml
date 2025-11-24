@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{10b781c7-f06d-4173-9f25-16db161dc068}">
 		<property name="name">
-			<value>LASRGun_Electron Impeller Charged Fire_02</value>
+			<value>HatChargeLaser</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{6ca064f4-639a-4aea-979d-eeffec2bf77b}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{67a00936-0f9d-4d04-8b0d-05a4a575de02}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{e9b30134-3333-4a44-a5b5-6770cbe03687}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{67a00936-0f9d-4d04-8b0d-05a4a575de02}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{021375bf-7c6a-4fa5-b388-acd83fa82f7d}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{35599764-e2bc-4ded-92b3-a9b2cc21d6e2}" />

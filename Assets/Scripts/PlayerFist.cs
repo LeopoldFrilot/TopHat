@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -43,7 +44,7 @@ public class PlayerFist : MonoBehaviour
     private Tweener blockGrowth = null;
     private Tweener blockRotate = null;
     private TweenCallback shakeTweenComplete;
-    private AudioSource windupAudio;
+    private StudioEventEmitter windupAudio;
     private bool consumed = false;
 
     private void Awake()
@@ -57,7 +58,7 @@ public class PlayerFist : MonoBehaviour
 
     private void Start()
     {
-        //windupAudio = GameWizard.Instance.audioHub.SetupLoopingClip(windupSound, .1f);
+        windupAudio = GameWizard.Instance.audioHub.SetupLoopingClip(Help.Audio.punchChargeUp);
         SwitchState(PlayerFistState.Idle, true);
         shakeTweenComplete = () =>
         {
@@ -70,9 +71,15 @@ public class PlayerFist : MonoBehaviour
     {
         if (currentState == PlayerFistState.Windup)
         {
+            float prevNormWindup = GetWindupNormalized();
             windup = Mathf.Clamp(windup + Time.deltaTime * Help.Tunables.windupSpeed, 0, Help.Tunables.maxWindup - Help.Tunables.baseWindup);
             currentOffset = (windup + Help.Tunables.baseWindup) * Help.Tunables.windupOffset;
             transform.position = restingPosition.position - new Vector3((_fighter.IsFacingLeft() ? -1 : 1) * currentOffset.x, currentOffset.y, 0);
+
+            if (prevNormWindup < Help.Tunables.windupThresholdCantCancel && GetWindupNormalized() >= Help.Tunables.windupThresholdCantCancel)
+            {
+                GameWizard.Instance.audioHub.PlayClip(Help.Audio.punchSuperCharged);
+            }
             if (windup >= Help.Tunables.maxWindup - Help.Tunables.baseWindup)
             {
                 Launch();
@@ -117,7 +124,7 @@ public class PlayerFist : MonoBehaviour
                 highlightRenderer.enabled = false;
                 windupShake.Complete();
                 windupShake.Kill();
-                windupAudio.Stop();
+                GameWizard.Instance.audioHub.StopLoopingClip(windupAudio);
                 break;
         }
         
@@ -134,13 +141,13 @@ public class PlayerFist : MonoBehaviour
                 highlightRenderer.enabled = true;
                 consumed = false;
                 shakeTweenComplete.Invoke();
-                windupAudio.Play();
+                GameWizard.Instance.audioHub.PlayLoopingClip(windupAudio);
                 break;
             
             case PlayerFistState.Launch:
                 rb2d.bodyType = RigidbodyType2D.Dynamic;
                 rb2d.AddForceX((_fighter.IsFacingLeft() ? -1 : 1) * (windup + Help.Tunables.baseWindup) * Help.Tunables.launchStrength, ForceMode2D.Impulse);
-                EventHub.TriggerPlaySoundRequested(fistReleaseSound, .5f);
+                GameWizard.Instance.audioHub.PlayClip(Help.Audio.punchReleased);
                 break;
             
             case PlayerFistState.Retract:
@@ -232,7 +239,6 @@ public class PlayerFist : MonoBehaviour
         consumed = true;
         rb2d.linearVelocity = Vector2.zero;
         artTransform.DOShakeScale(.5f);
-        EventHub.TriggerPlaySoundRequested(wasBlocked ? fistBlockedSound : fistHitSound);
     }
 
     public Fighter GetOwner()
@@ -282,5 +288,10 @@ public class PlayerFist : MonoBehaviour
         {
             fistCollider.enabled = value;
         }
+    }
+
+    private void OnDisable()
+    {
+        GameWizard.Instance.audioHub.DestroyLoopingClip(windupAudio);
     }
 }

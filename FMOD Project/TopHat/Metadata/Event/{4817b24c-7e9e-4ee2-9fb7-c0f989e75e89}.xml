@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{4817b24c-7e9e-4ee2-9fb7-c0f989e75e89}">
 		<property name="name">
-			<value>click4</value>
+			<value>ButtonClick</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{31a11180-e8c4-4d27-b57e-72615bdbfa6d}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{cf13b9a4-77bf-4eea-8678-3d3ef4416ef8}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{83cba7cc-7065-435e-8f52-39a4cf5f2075}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{cf13b9a4-77bf-4eea-8678-3d3ef4416ef8}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{a2ae7fab-9ecb-48e4-87cf-3f029bee8005}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{098176d3-a812-49de-826b-bd4a8ed3aaa6}" />

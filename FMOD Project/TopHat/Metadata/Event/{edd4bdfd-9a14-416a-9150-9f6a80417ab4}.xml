@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{edd4bdfd-9a14-416a-9150-9f6a80417ab4}">
 		<property name="name">
-			<value>TAPE STOP_15</value>
+			<value>PlayerStunned</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{2935d8c0-0630-45df-9a2d-90877dcbc676}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{89f9ede0-f7e3-4712-b07b-fb24ebd7a36a}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{043e250c-0e27-4197-9a2c-276473052964}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{89f9ede0-f7e3-4712-b07b-fb24ebd7a36a}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{a3753410-6dfd-40f3-8221-1b9e5e871906}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{faffae99-6035-4071-9184-d619412db8a9}" />

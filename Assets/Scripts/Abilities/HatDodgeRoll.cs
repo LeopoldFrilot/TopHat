@@ -36,6 +36,7 @@ public class HatDodgeRoll : HatMovementAbility
             spawnedFist.Reset();
         }
 
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.dash);
         StartDodgeRoll(!fighterMovement.IsHoldingLeft());
         fighterBlock.CancelBlockLag();
     }

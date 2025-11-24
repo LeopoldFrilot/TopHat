@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -35,6 +36,7 @@ public class FightScene : MonoBehaviour
     private int aiDefenseModule;
     private int aiMovementModule;
     private bool outroActive;
+    private List<StudioEventEmitter> ambiances = new();
 
     public void Awake()
     {
@@ -44,6 +46,18 @@ public class FightScene : MonoBehaviour
         aiAttackModule = PlayerPrefs.GetInt("AIAttackIndex");
         aiDefenseModule = PlayerPrefs.GetInt("AIDefenseIndex");
         aiMovementModule = PlayerPrefs.GetInt("AIMovementIndex");
+    }
+
+    private void Start()
+    {
+        GameWizard.Instance.audioHub.SetMusic(Help.Audio.fight);
+        ambiances.Add(GameWizard.Instance.audioHub.SetupLoopingClip(Help.Audio.crowdLoop));
+        ambiances.Add(GameWizard.Instance.audioHub.SetupLoopingClip(Help.Audio.nightAmbienceLoop));
+        ambiances.Add(GameWizard.Instance.audioHub.SetupLoopingClip(Help.Audio.streetLightAmbience));
+        foreach (var ambiance in ambiances)
+        {
+            GameWizard.Instance.audioHub.PlayLoopingClip(ambiance);
+        }
     }
 
     private void Update()
@@ -80,6 +94,8 @@ public class FightScene : MonoBehaviour
         int playerIndex = winner.GetPlayerIndex();
         winnerText.text = $"Fighter {playerIndex} wins!";
         winnerText.color = playerIndex == 1 ? p1Color : p2Color;
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.winner);
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.playerWin);
         
         yield return new WaitForSeconds(Help.Tunables.winnerTextTime);
         
@@ -153,6 +169,8 @@ public class FightScene : MonoBehaviour
             return;
         }
         
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.playerEnterSound);
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.playerEnterGrunt);
         networkControllers.Add(networkedFighterController);
         Fighter fighterRef = networkedFighterController.SpawnFighter(players.Count == 0 ? player1Prefab : player2Prefab, Vector3.zero, Quaternion.identity);
         fighterRef.OnKnockOff += OnKnockOff;
@@ -204,6 +222,7 @@ public class FightScene : MonoBehaviour
         defenderHat.SetNewTarget(null);
         defenderHat.transform.position = hatSpawnLocation.transform.position;
         countdownTimeline.Play();
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.readySetGo);
     }
 
     public void OnCountdownFinished()
@@ -216,6 +235,7 @@ public class FightScene : MonoBehaviour
 
     private void CollectHat(Fighter fighter)
     {
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.hatPickup);
         fighter.SwitchTurnState(TurnState.Defending);
         defenderHat.SetNewTarget(fighter.GetHatLocation());
     }
@@ -318,5 +338,13 @@ public class FightScene : MonoBehaviour
         EventHub.OnTurnEnded += OnTurnEnded;
     }
 
-    private void OnDisable() => EventHub.OnTurnEnded -= OnTurnEnded;
+
+    private void OnDisable()
+    {
+        EventHub.OnTurnEnded -= OnTurnEnded;
+        foreach (var studioEventEmitter in ambiances)
+        {
+            GameWizard.Instance.audioHub.DestroyLoopingClip(studioEventEmitter);
+        }
+    }
 }

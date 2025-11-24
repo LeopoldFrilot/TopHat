@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{2aa8d23b-78ee-4484-9d3f-343eacbeda61}">
 		<property name="name">
-			<value>39. Effort Grunt (Male)</value>
+			<value>PlayerEnterGrunt</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{2fb16ad6-80ac-4b64-a34e-41bd3bc9f065}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{796d5d71-ac76-44b4-a603-21b662213579}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{f6801e3e-5f28-4cf2-aa10-2b6898982561}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{796d5d71-ac76-44b4-a603-21b662213579}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{457a90bf-5177-48a8-8555-8b60d9975b2e}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{a17ae3d1-5f7e-4120-b9f4-80977bf21f31}" />

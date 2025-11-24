@@ -2049,7 +2049,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: May the finest gentleman win
+  m_text: A fight for the glorious hat!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
@@ -7456,6 +7456,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298235345}
   m_CullTransparentMesh: 1
+--- !u!114 &1301716876 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2897838054604090887, guid: 3781bb580afcb67499b592759aa8a3ec, type: 3}
+  m_PrefabInstance: {fileID: 8996495532977334701}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c13b6418129485abe91ab07d1ea8862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1302724947 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4349166317884254684, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
@@ -13218,6 +13229,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9069682983381290036, guid: 3781bb580afcb67499b592759aa8a3ec, type: 3}
+      propertyPath: audioHub
+      value: 
+      objectReference: {fileID: 1301716876}
+    - target: {fileID: 9069682983381290036, guid: 3781bb580afcb67499b592759aa8a3ec, type: 3}
+      propertyPath: audioTunables
+      value: 
+      objectReference: {fileID: 11400000, guid: 2d99ad15a8fbc19458a7518fecd21a80, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

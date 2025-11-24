@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{7e74a6d7-981a-4d68-ac83-e06c987a35d5}">
 		<property name="name">
-			<value>rollover5</value>
+			<value>HoverButton</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{31a11180-e8c4-4d27-b57e-72615bdbfa6d}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{1b644a49-fe37-4e92-a714-6b27aa058096}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{9bed4772-05d4-427d-88cf-821d6e331ac3}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{1b644a49-fe37-4e92-a714-6b27aa058096}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{d25be669-74a2-4920-afff-78b9618bd174}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{1b1e7e60-e939-4d3a-83ba-1f3e0e16a986}" />

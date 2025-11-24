@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{6e4139a5-319d-4a5f-8731-c6985f2dc595}">
 		<property name="name">
-			<value>24 - Employee Discount (Pizza Bear)</value>
+			<value>ContextMusic</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{3bcc0dc8-048f-482d-a03f-2bf8bb0f903d}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{60d6dfb7-2d7d-4fe8-9fb4-69934a636387}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{e101d8d0-cf12-4b86-ba52-01d46a190bb4}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{60d6dfb7-2d7d-4fe8-9fb4-69934a636387}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{e235e948-3d49-4605-98d0-17d175f4a789}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{a06d7a35-a2e9-449b-a383-8bd276dc9451}" />
@@ -66,6 +69,9 @@
 	<object class="Timeline" id="{e101d8d0-cf12-4b86-ba52-01d46a190bb4}">
 		<relationship name="modules">
 			<destination>{c2952bb3-4361-4ac4-b919-be157e78d782}</destination>
+		</relationship>
+		<relationship name="markers">
+			<destination>{698232e7-8f32-4b42-813d-2e79dd764010}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{39fb0985-8b5f-4fde-939e-ad476da8caca}">
@@ -105,6 +111,20 @@
 		</relationship>
 		<relationship name="output">
 			<destination>{39fb0985-8b5f-4fde-939e-ad476da8caca}</destination>
+		</relationship>
+	</object>
+	<object class="LoopRegion" id="{698232e7-8f32-4b42-813d-2e79dd764010}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="length">
+			<value>139.11219954648527</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{e101d8d0-cf12-4b86-ba52-01d46a190bb4}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{b80dda16-5dec-4647-a2b6-3a60439d1f81}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{e2ba50d0-abdd-48b4-a5b3-0be4fb30ff3a}">

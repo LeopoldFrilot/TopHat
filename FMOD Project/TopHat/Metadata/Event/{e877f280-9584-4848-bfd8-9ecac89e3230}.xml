@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{e877f280-9584-4848-bfd8-9ecac89e3230}">
 		<property name="name">
-			<value>PUNCH_DESIGNED_HEAVY_86</value>
+			<value>HatTossCrash</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{5577bc10-11c5-4ea9-ba20-7eb0f98f8727}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{c62e81f1-f344-48f3-946c-d97be96a2ab8}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{4b888948-9e52-4f76-b035-21e2c63cf4dd}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{c62e81f1-f344-48f3-946c-d97be96a2ab8}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{660d7b6e-bc0f-4bff-9418-df535fecf1b2}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{2779cca9-8c87-47ed-9b1a-03d79da4eb87}" />

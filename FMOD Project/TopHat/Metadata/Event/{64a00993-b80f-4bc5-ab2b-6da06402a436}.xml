@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{64a00993-b80f-4bc5-ab2b-6da06402a436}">
 		<property name="name">
-			<value>WHOOSH_ARM_SWING_01</value>
+			<value>HatKnockedOff</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{5577bc10-11c5-4ea9-ba20-7eb0f98f8727}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{7235fad6-c4d9-4b54-ab1d-00814760ba35}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{0ce00786-1e74-40c9-890f-051e1e79fc8c}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{7235fad6-c4d9-4b54-ab1d-00814760ba35}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{e9656645-751d-4cba-92d7-32359859422c}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{7bbe6829-7bfb-4e83-bc8c-27e9d1e33b5a}" />

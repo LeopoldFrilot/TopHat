@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{c25f2ffb-f579-481a-acda-78d3c01c9524}">
 		<property name="name">
-			<value>cartoon-long-throw</value>
+			<value>GrappleSuccessful</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{31b246b6-caf0-4111-a622-e3450398ed0c}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{7b7abfa0-6fa1-4bec-804a-1954542ae10d}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{1e9bc3c7-e05c-4370-90f7-8f6b2aae11ca}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{7b7abfa0-6fa1-4bec-804a-1954542ae10d}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{8d541212-6e64-4f1d-9fa7-ceda1780fad1}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{715a7a4f-9faf-44fb-9688-9c19245a1f54}" />
@@ -87,7 +90,10 @@
 	<object class="MixerBusPanner" id="{8d541212-6e64-4f1d-9fa7-ceda1780fad1}" />
 	<object class="SingleSound" id="{2ef3c30d-5522-49aa-a321-efadfad6eb96}">
 		<property name="length">
-			<value>1.0265532879818595</value>
+			<value>0.90655328798185941</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.12</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{ed81e98d-962b-48e7-bd21-13b40b8e82ea}</destination>

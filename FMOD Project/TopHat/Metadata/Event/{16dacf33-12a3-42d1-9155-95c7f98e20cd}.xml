@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{16dacf33-12a3-42d1-9155-95c7f98e20cd}">
 		<property name="name">
-			<value>GUNPis_Pistol Fire Longer Tail_05</value>
+			<value>HatTossRelease</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{6ca064f4-639a-4aea-979d-eeffec2bf77b}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{2cf92d99-22ba-4e7d-8fe1-635f62b593df}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{e9374eb0-85ea-4425-86a2-e10286cc678f}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{2cf92d99-22ba-4e7d-8fe1-635f62b593df}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{0dcedc56-4c07-4f63-862f-bdce1894087d}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{b877ed9f-0e73-4253-81ee-0621bc92c80f}" />

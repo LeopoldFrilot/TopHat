@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{682d1c9c-7e9a-4d60-94c5-5bff37af6cbc}">
 		<property name="name">
-			<value>PUNCH_CLEAN_HEAVY_10</value>
+			<value>FistHit</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{5577bc10-11c5-4ea9-ba20-7eb0f98f8727}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{9936bbb2-7432-4ae7-bcca-7d62491eeee8}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{71aeed1d-83e9-4f51-8308-f2a4ed227843}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{9936bbb2-7432-4ae7-bcca-7d62491eeee8}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{1a65f0bb-0b4b-40a8-b683-052bc0dafdf7}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{4d547fc7-ffa5-4ab1-afbc-31ca325f5b96}" />

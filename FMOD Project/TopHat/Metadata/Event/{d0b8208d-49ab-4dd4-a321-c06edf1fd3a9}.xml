@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{d0b8208d-49ab-4dd4-a321-c06edf1fd3a9}">
 		<property name="name">
-			<value>powerup_Fist</value>
+			<value>FistChargeup</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{31b246b6-caf0-4111-a622-e3450398ed0c}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{69a1f4cb-ea1d-4849-8ede-8d3d3b17d563}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{85b0753b-0d19-4f58-9691-8762dc7a452e}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{69a1f4cb-ea1d-4849-8ede-8d3d3b17d563}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{733ecd0d-961c-41f9-ad12-2f7d2391365d}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{7c55c6ad-ab84-4a04-a168-6712c7fa507a}" />

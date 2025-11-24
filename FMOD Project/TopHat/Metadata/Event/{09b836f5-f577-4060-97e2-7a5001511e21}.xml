@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{09b836f5-f577-4060-97e2-7a5001511e21}">
 		<property name="name">
-			<value>bookFlip2</value>
+			<value>ContextPageFlip</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{cd007fa2-1e3c-486e-aa73-5a692eefda46}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{46821792-3c19-47c8-9895-edd915edc721}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{916b9fda-1ab0-40d9-87f3-ae0eb0f3030a}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{46821792-3c19-47c8-9895-edd915edc721}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{f37b5a48-596c-4fea-b3da-aa2c4dac3cce}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{433c9d74-2f24-4cb8-be99-4e4b4cbc2529}" />

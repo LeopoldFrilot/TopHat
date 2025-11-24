@@ -120,7 +120,7 @@ public class Fighter : MonoBehaviour
     private void OnDizzinessChanged(float obj)
     {
         float normalizedDizzy = playerDizziness.GetNormalizedDizziness();
-        if (normalizedDizzy >= 0.99f)
+        if (normalizedDizzy >= 0.99f && dizzyStunHandle == -1)
         {
             playerStatus.RemoveStatusEffect(dizzyStunHandle);
             dizzyStunHandle = playerStatus.AddStatusEffect(StatusType.Stunned);
@@ -130,6 +130,8 @@ public class Fighter : MonoBehaviour
 
     private IEnumerator DizzyStun()
     {
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.fighterStunnedGrunt);
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.playerStunned);
         yield return new WaitForSeconds(Help.Tunables.dizzyStunTimeLength);
         EndDizzy();
     }
@@ -504,6 +506,7 @@ public class Fighter : MonoBehaviour
             if (willKnockOff)
             {
                 TriggerKnockOff();
+                GameWizard.Instance.audioHub.PlayClip(Help.Audio.hatKnockedOff);
                 Shaker.ShakeAll(Help.Tunables.hardPunchCameraShake);
                 GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.knockOffHitstop, Help.Tunables.swapTimeRecoveryRate);
             }
@@ -521,6 +524,8 @@ public class Fighter : MonoBehaviour
                 float normWindup = fist.GetWindupNormalized();
                 if (blocked)
                 {
+                    GameWizard.Instance.audioHub.PlayClip(Help.Audio.fistGotBlocked);
+                    GameWizard.Instance.audioHub.PlayClip(Help.Audio.fighterBlockGrunt);
                     Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
                     if (!wasPerfectBlock)
                     {
@@ -552,6 +557,8 @@ public class Fighter : MonoBehaviour
                     }
                     else
                     {
+                        GameWizard.Instance.audioHub.PlayClip(Help.Audio.firstGotParried);
+                        GameWizard.Instance.audioHub.PlayClip(Help.Audio.fighterParryGrunt);
                         playerBlock.CancelBlockLag();
                         GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.parryHitstop);
                         playerMeter.ChangeMeter(Help.Tunables.meterForParry);
@@ -559,6 +566,8 @@ public class Fighter : MonoBehaviour
                 }
                 else
                 {
+                    GameWizard.Instance.audioHub.PlayClip(Help.Audio.fistHit);
+                    GameWizard.Instance.audioHub.PlayClip(Help.Audio.fighterHitGrunt);
                     Instantiate(hitEffectPrefab, blockLocation.position, Quaternion.identity);
                     playerDizziness.DealDizzyDamage(dizzyDamageCurve.Evaluate(normWindup));
                     playerMovement.LaunchPlayer(
@@ -647,11 +656,11 @@ public class Fighter : MonoBehaviour
 
     public void TriggerGrappleComplete()
     {
-        EventHub.TriggerPlaySoundRequested(grappleSound);
         Fighter opponent = fightScene.GetOpponent(this);
         CancelGrappled();
         if (opponent.IsGrappled())
         {
+            GameWizard.Instance.audioHub.PlayClip(Help.Audio.grappleConnected);
             opponent.GetComponent<PlayerMovement>().LaunchPlayer(new Vector2(((opponent.transform.position.x > 0) ? -1f : 1f) * 1.2f, 1f) * Help.Tunables.grappleResetPower);
             opponent.StartGrappledAnimation();
             opponent.CancelGrappled();
@@ -698,6 +707,7 @@ public class Fighter : MonoBehaviour
         if (other.transform.CompareTag("Ground"))
         {
             playerMovement.Land();
+            GameWizard.Instance.audioHub.PlayClip(Help.Audio.playerLanded);
             mainBodyAnimator.SetBool(animatorJumpBoolName, false);
         }
         

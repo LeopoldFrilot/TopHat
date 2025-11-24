@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{348e3bd8-a326-4c1a-8c95-160382a63a22}">
 		<property name="name">
-			<value>cloth4</value>
+			<value>GrappleStart</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{cd007fa2-1e3c-486e-aa73-5a692eefda46}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{ebd979b6-5b6c-4be8-abb4-b58483f42298}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{d8a09411-b67f-47d4-8da9-28085eb9965a}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{ebd979b6-5b6c-4be8-abb4-b58483f42298}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{2245d690-9fcd-4c7b-b2d1-ee95f3c0b31b}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{c434f368-dbd3-4605-a3af-a6d7b36d7585}" />

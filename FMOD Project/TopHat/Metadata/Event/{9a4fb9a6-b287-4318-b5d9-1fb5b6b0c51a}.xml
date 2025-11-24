@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{9a4fb9a6-b287-4318-b5d9-1fb5b6b0c51a}">
 		<property name="name">
-			<value>LASRGun_Plasma Rifle Fire_03</value>
+			<value>DashCancel</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{6ca064f4-639a-4aea-979d-eeffec2bf77b}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{e42bcade-749a-423f-8c35-c58d3317767b}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{458f15d7-2e4d-4a88-9646-6a1a65377479}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{e42bcade-749a-423f-8c35-c58d3317767b}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{124aaa4c-65a0-4af1-8a20-27bda89f88dd}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{723a2aa7-ecd9-4800-af7f-0d18c2e3ada8}" />

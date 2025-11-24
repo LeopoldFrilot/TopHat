@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using FMODUnity;
 using MilkShake;
 using UnityEngine;
 
@@ -12,6 +14,7 @@ public class OutroPlayer_DefaultHat : OutroPlayer
 
     private ShakeInstance laserShake1;
     private ShakeInstance laserShake2;
+    private StudioEventEmitter hatLaserSoundLoop;
         
     private GameObject spawnedLaser;
     protected override void OnOutroStart()
@@ -35,20 +38,30 @@ public class OutroPlayer_DefaultHat : OutroPlayer
         Quaternion rotation = Quaternion.Euler(new Vector3(0, 0, -angle)) ;
         spawnedLaser = Instantiate(laserPrefab, winner.GetHatLocation().position, rotation, transform);
         laserShake1 = Shaker.ShakeAll(laserBeamCameraShake);
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.hatChargeLaser);
         StartCoroutine(StartShake2());
     }
 
     private IEnumerator StartShake2()
     {
         yield return new WaitForSeconds(delayBeforeLaserScreenShake);
+        hatLaserSoundLoop = GameWizard.Instance.audioHub.SetupLoopingClip(Help.Audio.hatReleaseLaser);
+        GameWizard.Instance.audioHub.PlayLoopingClip(hatLaserSoundLoop);
         laserShake2 = Shaker.ShakeAll(laserBeamCameraShake);
     }
         
     public void FinishFireLaser()
     {
+        GameWizard.Instance.audioHub.DestroyLoopingClip(hatLaserSoundLoop);
         laserShake1.Stop(screenShakeFadeTime, true);
         laserShake2.Stop(screenShakeFadeTime, true);
         Destroy(spawnedLaser);
         loser.HidePlayer();
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.fighterDeath);
+    }
+
+    private void OnDisable()
+    {
+        GameWizard.Instance.audioHub.DestroyLoopingClip(hatLaserSoundLoop);
     }
 }

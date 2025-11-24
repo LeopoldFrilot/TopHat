@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{badbf93e-56b6-41e7-8629-1e67a02e824c}">
 		<property name="name">
-			<value>cloth3</value>
+			<value>HatPickup</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{cd007fa2-1e3c-486e-aa73-5a692eefda46}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{4a26ae15-6898-4cd3-8e9c-11bb4c3ff5d2}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{029218e4-08f5-4550-ae32-13a983b9ee13}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{4a26ae15-6898-4cd3-8e9c-11bb4c3ff5d2}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{3035d9bc-eaeb-43a6-9007-c9ee85e3e661}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{b16e4677-e2e5-44db-8eb0-de647135e227}" />
@@ -87,7 +90,7 @@
 	<object class="MixerBusPanner" id="{3035d9bc-eaeb-43a6-9007-c9ee85e3e661}" />
 	<object class="SingleSound" id="{5ea8965c-f0d7-4991-841b-62cb40bc37d6}">
 		<property name="length">
-			<value>0.4765625</value>
+			<value>0.47656250000000006</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{31893add-531f-43ea-9648-e05bf46b30bb}</destination>

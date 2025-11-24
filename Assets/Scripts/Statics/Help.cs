@@ -9,7 +9,10 @@ using Random = UnityEngine.Random;
 
 public static class Help
 {
-    public static Tunables_General Tunables => GameWizard.Instance.generalTunables;public static float MinutesToSeconds(float minutes)
+    public static Tunables_General Tunables => GameWizard.Instance.generalTunables;
+    public static Tunables_Audio Audio => GameWizard.Instance.audioTunables;
+    
+    public static float MinutesToSeconds(float minutes)
     {
         return minutes * 60f;
     }

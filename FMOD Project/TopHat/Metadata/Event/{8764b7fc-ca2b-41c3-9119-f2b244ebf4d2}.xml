@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{8764b7fc-ca2b-41c3-9119-f2b244ebf4d2}">
 		<property name="name">
-			<value>Coin Flung</value>
+			<value>FistGotParried</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{98c24414-dff3-4729-b12d-554e9807ff8b}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{d6ad2f02-8b8c-4ecc-9c1d-44190a2cf87f}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{e77b2ba7-da28-4531-949c-23d00ae5a5b9}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{d6ad2f02-8b8c-4ecc-9c1d-44190a2cf87f}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{81ed5e59-eff0-4807-9bc8-2ca6c0c538b6}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{cb106604-e7d2-4468-b899-b5392021dbd1}" />

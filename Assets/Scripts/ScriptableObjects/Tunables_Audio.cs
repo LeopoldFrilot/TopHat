@@ -30,14 +30,16 @@ using UnityEngine;
         public Audio hatPickup;
         public Audio hatKnockedOff;
         public Audio playerLanded;
-        public Audio playerStunnedLoop;
+        public Audio playerStunned;
         
         [Header("Fighter grunts")]
         public Audio playerEnterGrunt;
-        public Audio idleGruntLoop;
         public Audio walkLoop;
+        public Audio fighterHitGrunt;
+        public Audio fighterBlockGrunt;
+        public Audio fighterParryGrunt;
         public Audio fighterDeath;
-        public Audio playerStunned;
+        public Audio fighterStunnedGrunt;
         public Audio playerWin;
 
         [Header("Ability specific")] 
@@ -47,7 +49,6 @@ using UnityEngine;
         public Audio hatTossBounce;
         public Audio hatTossCrash;
         public Audio hatTossReturn;
-        public Audio hatTossTravelLoop;
         public Audio dashCancel;
         public Audio grappleStart;
         public Audio grappleConnected;
@@ -59,4 +60,5 @@ using UnityEngine;
         [Header("Misc")]
         public Audio contextPageFlip;
         public Audio readySetGo;
+        public Audio winner;
     }

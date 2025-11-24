@@ -1,0 +1,350 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d95d6dfc9aa445ba5d1700e2bbb9c19, type: 3}
+  m_Name: Audio Tunables
+  m_EditorClassIdentifier: 
+  mainMenu:
+    soundEvent:
+      Guid:
+        Data1: 1618967413
+        Data2: 1251219680
+        Data3: 984944543
+        Data4: 1209061234
+      Path: event:/_Used/MainMenuMusic
+  context:
+    soundEvent:
+      Guid:
+        Data1: 1849768357
+        Data2: 1247752605
+        Data3: -1731841657
+        Data4: -1782239905
+      Path: event:/_Used/ContextMusic
+  tutorial:
+    soundEvent:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+  fight:
+    soundEvent:
+      Guid:
+        Data1: -1818132243
+        Data2: 1287170252
+        Data3: -538923329
+        Data4: -949372824
+      Path: event:/_Used/FightMusic
+  buttonClick:
+    soundEvent:
+      Guid:
+        Data1: 1209512524
+        Data2: 1323466398
+        Data3: -104810593
+        Data4: -1990269047
+      Path: event:/_Used/ButtonClick
+  buttonHover:
+    soundEvent:
+      Guid:
+        Data1: 2121574103
+        Data2: 1298700314
+        Data3: 1826653100
+        Data4: -717915496
+      Path: event:/_Used/HoverButton
+  crowdLoop:
+    soundEvent:
+      Guid:
+        Data1: -326530256
+        Data2: 1087764907
+        Data3: -1803523143
+        Data4: -440146713
+      Path: event:/_Used/FightCrowd
+  nightAmbienceLoop:
+    soundEvent:
+      Guid:
+        Data1: 1399942298
+        Data2: 1185891314
+        Data3: 1278151816
+        Data4: 2096605175
+      Path: event:/_Used/AfternoonAmbiance
+  streetLightAmbience:
+    soundEvent:
+      Guid:
+        Data1: 299382876
+        Data2: 1246108500
+        Data3: -1311289959
+        Data4: -821217521
+      Path: event:/_Used/StreetLightsAmbiance
+  playerEnterSound:
+    soundEvent:
+      Guid:
+        Data1: 1796265993
+        Data2: 1215649547
+        Data3: -1677663615
+        Data4: 485061720
+      Path: event:/_Used/PlayerEntered
+  punchChargeUp:
+    soundEvent:
+      Guid:
+        Data1: -793239411
+        Data2: 1305758123
+        Data3: 1858085283
+        Data4: -1445781537
+      Path: event:/_Used/FistChargeup
+  punchSuperCharged:
+    soundEvent:
+      Guid:
+        Data1: -1297157011
+        Data2: 1188681257
+        Data3: -1127490421
+        Data4: -2030126156
+      Path: event:/_Used/PunchSuperCharged
+  punchReleased:
+    soundEvent:
+      Guid:
+        Data1: 742186829
+        Data2: 1267020209
+        Data3: 1072691090
+        Data4: 1557500775
+      Path: event:/_Used/PunchReleased
+  fistHit:
+    soundEvent:
+      Guid:
+        Data1: 1747786908
+        Data2: 1298169498
+        Data3: -10762860
+        Data4: -1133727945
+      Path: event:/_Used/FistHit
+  fistGotBlocked:
+    soundEvent:
+      Guid:
+        Data1: -2018178699
+        Data2: 1291388773
+        Data3: -1265075821
+        Data4: 1227254148
+      Path: event:/_Used/FistGotBlocked
+  firstGotParried:
+    soundEvent:
+      Guid:
+        Data1: -2023442436
+        Data2: 1103350315
+        Data3: -1292756591
+        Data4: -755700924
+      Path: event:/_Used/FistGotParried
+  hatPickup:
+    soundEvent:
+      Guid:
+        Data1: -1159988930
+        Data2: 1105680054
+        Data3: 1730029958
+        Data4: 1283600032
+      Path: event:/_Used/HatPickup
+  hatKnockedOff:
+    soundEvent:
+      Guid:
+        Data1: 1688209811
+        Data2: 1271248911
+        Data3: -1603458133
+        Data4: 916718180
+      Path: event:/_Used/HatKnockedOff
+  playerLanded:
+    soundEvent:
+      Guid:
+        Data1: 2108928811
+        Data2: 1202741416
+        Data3: -102125695
+        Data4: 732732944
+      Path: event:/_Used/PlayerLanded
+  playerStunned:
+    soundEvent:
+      Guid:
+        Data1: -304824835
+        Data2: 1097505300
+        Data3: 1788825745
+        Data4: -1267056256
+      Path: event:/_Used/PlayerStunned
+  playerEnterGrunt:
+    soundEvent:
+      Guid:
+        Data1: 715706939
+        Data2: 1149532398
+        Data3: 1043611549
+        Data4: 1641725612
+      Path: event:/_Used/PlayerEnterGrunt
+  walkLoop:
+    soundEvent:
+      Guid:
+        Data1: 1459643588
+        Data2: 1326251716
+        Data3: 940410040
+        Data4: -1666244715
+      Path: event:/_Used/WalkLoop
+  fighterHitGrunt:
+    soundEvent:
+      Guid:
+        Data1: 846997346
+        Data2: 1298844424
+        Data3: 35588491
+        Data4: -1626707603
+      Path: event:/_Used/FighterHitGrunt
+  fighterBlockGrunt:
+    soundEvent:
+      Guid:
+        Data1: -2098812524
+        Data2: 1211784664
+        Data3: 1736117153
+        Data4: -1147387072
+      Path: event:/_Used/FighterBlockGrunt
+  fighterParryGrunt:
+    soundEvent:
+      Guid:
+        Data1: -2023442436
+        Data2: 1103350315
+        Data3: -1292756591
+        Data4: -755700924
+      Path: event:/_Used/FistGotParried
+  fighterDeath:
+    soundEvent:
+      Guid:
+        Data1: -2059006483
+        Data2: 1117923443
+        Data3: -373778301
+        Data4: -240609994
+      Path: event:/_Used/FighterDeath
+  fighterStunnedGrunt:
+    soundEvent:
+      Guid:
+        Data1: 46793135
+        Data2: 1314551059
+        Data3: -1212438634
+        Data4: 217785019
+      Path: event:/_Used/FighterStunned
+  playerWin:
+    soundEvent:
+      Guid:
+        Data1: 981625178
+        Data2: 1218237719
+        Data3: 1479615367
+        Data4: -1701420075
+      Path: event:/_Used/PlayerWin
+  dash:
+    soundEvent:
+      Guid:
+        Data1: -1511876334
+        Data2: 1201669077
+        Data3: -1084085871
+        Data4: -511386659
+      Path: event:/_Used/Dash
+  hatTossHold:
+    soundEvent:
+      Guid:
+        Data1: -1935216294
+        Data2: 1091479678
+        Data3: 1722941879
+        Data4: -1100615465
+      Path: event:/_Used/HatTossHold
+  hatTossRelease:
+    soundEvent:
+      Guid:
+        Data1: 383438643
+        Data2: 1120998051
+        Data3: -946514543
+        Data4: -853504263
+      Path: event:/_Used/HatTossRelease
+  hatTossBounce:
+    soundEvent:
+      Guid:
+        Data1: 1894755909
+        Data2: 1201965086
+        Data3: -1138632021
+        Data4: 208687516
+      Path: event:/_Used/HatTossBounce
+  hatTossCrash:
+    soundEvent:
+      Guid:
+        Data1: -394792320
+        Data2: 1212716420
+        Data3: -895559489
+        Data4: 808623816
+      Path: event:/_Used/HatTossCrash
+  hatTossReturn:
+    soundEvent:
+      Guid:
+        Data1: -221017667
+        Data2: 1222238824
+        Data3: 1718502296
+        Data4: -1861455028
+      Path: event:/_Used/HatTossReturn
+  dashCancel:
+    soundEvent:
+      Guid:
+        Data1: -1706051162
+        Data2: 1125692039
+        Data3: -1256203851
+        Data4: 449163446
+      Path: event:/_Used/DashCancel
+  grappleStart:
+    soundEvent:
+      Guid:
+        Data1: 881736664
+        Data2: 1276814118
+        Data3: 51811724
+        Data4: 574269058
+      Path: event:/_Used/GrappleStart
+  grappleConnected:
+    soundEvent:
+      Guid:
+        Data1: -1033949189
+        Data2: 1209726329
+        Data3: -747054420
+        Data4: 613752000
+      Path: event:/_Used/GrappleSuccessful
+  hatChargeLaser:
+    soundEvent:
+      Guid:
+        Data1: 280461767
+        Data2: 1098117229
+        Data3: -619305569
+        Data4: 1757420822
+      Path: event:/_Used/HatChargeLaser
+  hatReleaseLaser:
+    soundEvent:
+      Guid:
+        Data1: 524128698
+        Data2: 1324609468
+        Data3: -547452283
+        Data4: -650605496
+      Path: event:/_Used/HatReleaseLaserLoop
+  contextPageFlip:
+    soundEvent:
+      Guid:
+        Data1: 163067637
+        Data2: 1080096119
+        Data3: 1350230679
+        Data4: 555634945
+      Path: event:/_Used/ContextPageFlip
+  readySetGo:
+    soundEvent:
+      Guid:
+        Data1: -759084904
+        Data2: 1339825754
+        Data3: -891363952
+        Data4: -1594380699
+      Path: event:/_Used/ReadySetGo
+  winner:
+    soundEvent:
+      Guid:
+        Data1: 357083385
+        Data2: 1278319931
+        Data3: 2075581312
+        Data4: -2005842914
+      Path: event:/_Used/Winner

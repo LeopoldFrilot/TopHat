@@ -51,5 +51,9 @@ public class ThrownHat : MonoBehaviour
         {
             OnFighterTriggerEntered.Invoke(hitFighter);
         }
+        else
+        {
+            GameWizard.Instance.audioHub.PlayClip(Help.Audio.hatTossBounce);
+        }
     }
 }

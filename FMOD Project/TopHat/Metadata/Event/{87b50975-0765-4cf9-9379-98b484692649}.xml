@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{87b50975-0765-4cf9-9379-98b484692649}">
 		<property name="name">
-			<value>HIT_SHORT_04</value>
+			<value>FistGotBlocked</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{5577bc10-11c5-4ea9-ba20-7eb0f98f8727}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{0a659c9a-10df-4475-95a7-31e2a83d1921}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{3fcae801-9c10-4e81-9cca-691b1ec637cc}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{0a659c9a-10df-4475-95a7-31e2a83d1921}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{dfd4aaff-41fb-49ce-ac6a-000f086492df}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{ac0a45d2-cca0-4ce2-a743-1742a19a0a07}" />

@@ -7,6 +7,7 @@ public class GameWizard : MonoBehaviour
     public Dictionary<AIModuleTypes, List<GameObject>> allAIModuleMap = new();
     public HitStop hitStopManager;
     public Tunables_General generalTunables;
+    public Tunables_Audio audioTunables;
     public AudioHub audioHub;
     
     private bool isNetworkedGame = false;

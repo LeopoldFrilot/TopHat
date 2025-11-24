@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{85460ded-2873-42a2-8398-b8e93695a8f1}">
 		<property name="name">
-			<value>34. Effort Grunt (Male)</value>
+			<value>FighterDeath</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{2fb16ad6-80ac-4b64-a34e-41bd3bc9f065}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{384eefba-3417-4af2-a2fc-4c61614522bb}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{c1460995-e33e-456a-9d36-1a32946dc6e1}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{384eefba-3417-4af2-a2fc-4c61614522bb}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{a6509fc0-bf6f-4790-97a5-5c5a0ba3f2ce}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{3a6e7ae8-3539-4588-914c-be6be87d9b7c}" />
@@ -87,7 +90,10 @@
 	<object class="MixerBusPanner" id="{a6509fc0-bf6f-4790-97a5-5c5a0ba3f2ce}" />
 	<object class="SingleSound" id="{ffaf6d80-8fda-4e7d-b635-40b49ddcfd36}">
 		<property name="length">
-			<value>1.3453741496598639</value>
+			<value>1.2453741496598638</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.10000000000000001</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{763b69c4-6fcf-4dbc-93ca-28da6b4fdfe0}</destination>

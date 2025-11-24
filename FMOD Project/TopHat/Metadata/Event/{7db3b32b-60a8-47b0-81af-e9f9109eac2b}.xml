@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{7db3b32b-60a8-47b0-81af-e9f9109eac2b}">
 		<property name="name">
-			<value>cloth1</value>
+			<value>PlayerLanded</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{cd007fa2-1e3c-486e-aa73-5a692eefda46}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{f9f742a5-d10c-431d-9ae2-291a154620fd}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{e373d0fc-b457-4e1e-b42e-756e6aef5595}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{f9f742a5-d10c-431d-9ae2-291a154620fd}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{c075c6fe-ef1c-4679-8dd3-e4dc08c63b8f}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{cfe26212-ee45-4b34-8a61-e43cb380d10c}" />
@@ -94,6 +97,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{82b988ae-5e2c-403e-b749-357362ee0308}">
+		<property name="volume">
+			<value>-10</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>

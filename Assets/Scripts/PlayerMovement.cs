@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using FMODUnity;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 lastPosition;
     private Vector2 currentSpeed;
+    private StudioEventEmitter walkLoop;
 
     private void Awake()
     {
@@ -23,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
+        walkLoop = GameWizard.Instance.audioHub.SetupLoopingClip(Help.Audio.walkLoop);
         if (fighter.IsInitioalized())
         {
             Initialize();
@@ -54,6 +57,15 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 difference = transform.position - lastPosition;
         currentSpeed = new Vector2(difference.x / Time.deltaTime, difference.y / Time.deltaTime);
+
+        if (currentSpeed != Vector2.zero && !isJumping)
+        {
+            GameWizard.Instance.audioHub.PlayLoopingClip(walkLoop);
+        }
+        else
+        {
+            GameWizard.Instance.audioHub.StopLoopingClip(walkLoop); 
+        }
         lastPosition = transform.position;
     }
 
@@ -143,5 +155,10 @@ public class PlayerMovement : MonoBehaviour
     public bool IsHoldingLeft()
     {
         return currentXVal < 0;
+    }
+
+    private void OnDisable()
+    {
+        GameWizard.Instance.audioHub.DestroyLoopingClip(walkLoop);
     }
 }

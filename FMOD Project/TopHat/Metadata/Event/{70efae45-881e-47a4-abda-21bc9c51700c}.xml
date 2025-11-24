@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{70efae45-881e-47a4-abda-21bc9c51700c}">
 		<property name="name">
-			<value>HIT_METAL_WRENCH_HEAVIEST_02</value>
+			<value>HatTossBounce</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{5577bc10-11c5-4ea9-ba20-7eb0f98f8727}</destination>
+			<destination>{900ac1aa-eb55-49fd-b85f-cfe033bc2c78}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{4e01979d-459d-4b83-9956-ec3b93483fbf}</destination>
@@ -31,6 +31,9 @@
 		<relationship name="timeline">
 			<destination>{20c08e53-53f5-4bee-aa08-75ffdb003007}</destination>
 		</relationship>
+		<relationship name="banks">
+			<destination>{ce134fe1-7469-47c5-823e-abbc3356638d}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixer" id="{4e01979d-459d-4b83-9956-ec3b93483fbf}">
 		<relationship name="masterBus">
@@ -50,7 +53,7 @@
 			<destination>{96cb7eb2-37a0-4ba5-b92e-2e9354568a88}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{1d5d5c91-e745-4237-bdaf-888ae978157c}</destination>
+			<destination>{58514de1-8d92-438f-b9cc-ed12c4979083}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{c3d2cb94-c298-4063-9f7b-ef3e67e35eeb}" />
@@ -87,13 +90,19 @@
 	<object class="MixerBusPanner" id="{96cb7eb2-37a0-4ba5-b92e-2e9354568a88}" />
 	<object class="SingleSound" id="{3418cc7a-03e4-4b32-b5f0-12a947356c6b}">
 		<property name="length">
-			<value>0.32376041666666666</value>
+			<value>0.30876041666666665</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.014999999999999999</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{66c39f2c-6019-4214-8a71-ae851acbf556}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{b495e0ae-5e6d-4a61-adef-208353273ee7}">
+		<property name="volume">
+			<value>-17</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>

@@ -89,6 +89,7 @@ public class ThrowHat : HatMainAbility
 
     private void OnRelease()
     {
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.hatTossRelease);
         hatInactiveHandle = playerStatus.AddStatusEffect(StatusType.HatInactive);
         choosingAngle = false;
 
@@ -119,6 +120,9 @@ public class ThrowHat : HatMainAbility
         {
             if (!hitFighter.GetComponent<PlayerStatus>().GetActiveStatusEffects().Contains(StatusType.Invulnerable))
             {
+                GameWizard.Instance.audioHub.PlayClip(Help.Audio.fighterStunnedGrunt);
+                GameWizard.Instance.audioHub.PlayClip(Help.Audio.playerStunned);
+                GameWizard.Instance.audioHub.PlayClip(Help.Audio.hatTossCrash);
                 hitFighter.GetComponent<PlayerStatus>().AddStatusEffectForTime(StatusType.Stunned, Mathf.Clamp((Time.time - hatThrownTime)/timeTillForceReturn, minStunTimeRatio, 1) * stunTime);
             }
             ForceReturn();
@@ -127,6 +131,7 @@ public class ThrowHat : HatMainAbility
 
     private void ForceReturn()
     {
+        GameWizard.Instance.audioHub.PlayClip(Help.Audio.hatTossReturn);
         hatBouncing = false;
         OnReturn();
     }

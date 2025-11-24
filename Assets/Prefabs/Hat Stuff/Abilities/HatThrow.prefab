@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76faddf6c8764b83a51dab4ba452736b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meterCost: 1
+  meterCost: 7
   abilityType: 3
   thrownHatPrefab: {fileID: 4702892048849550577, guid: 533352338d9dfbd4c8f72d66e00c4c3d, type: 3}
   thrownHatAngleIndicatorPrefab: {fileID: 668464279711258360, guid: ba7f96d89e82b3a478b71c04ec95cf0d, type: 3}
