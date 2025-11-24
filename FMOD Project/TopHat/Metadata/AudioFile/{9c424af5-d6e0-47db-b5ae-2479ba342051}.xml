@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{9c424af5-d6e0-47db-b5ae-2479ba342051}">
+		<property name="assetPath">
+			<value>jingles_PIZZI02.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.9557369614512472</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6de9696b-b7cd-4337-9f43-d00da4476d9a}</destination>
+		</relationship>
+	</object>
+</objects>

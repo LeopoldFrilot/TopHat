@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{ace21ae0-4d16-43e0-9f24-4ed0dae96a4b}">
+		<property name="assetPath">
+			<value>REMOVE_CASSETTE_07.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.72823958333333338</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6de9696b-b7cd-4337-9f43-d00da4476d9a}</destination>
+		</relationship>
+	</object>
+</objects>

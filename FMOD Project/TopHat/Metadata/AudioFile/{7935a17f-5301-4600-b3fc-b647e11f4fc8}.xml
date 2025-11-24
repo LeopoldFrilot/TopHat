@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{7935a17f-5301-4600-b3fc-b647e11f4fc8}">
+		<property name="assetPath">
+			<value>GUNSupr_Silenced Pistol Fire Short_01.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.25312499999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6de9696b-b7cd-4337-9f43-d00da4476d9a}</destination>
+		</relationship>
+	</object>
+</objects>

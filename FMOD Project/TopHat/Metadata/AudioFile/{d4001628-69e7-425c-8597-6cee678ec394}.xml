@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{d4001628-69e7-425c-8597-6cee678ec394}">
+		<property name="assetPath">
+			<value>clothBelt2.ogg</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.75329166666666669</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6de9696b-b7cd-4337-9f43-d00da4476d9a}</destination>
+		</relationship>
+	</object>
+</objects>

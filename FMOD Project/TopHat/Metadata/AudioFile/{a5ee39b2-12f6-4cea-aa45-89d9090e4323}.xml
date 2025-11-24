@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{a5ee39b2-12f6-4cea-aa45-89d9090e4323}">
+		<property name="assetPath">
+			<value>25. Effort Grunt (Male).wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.47117913832199548</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6de9696b-b7cd-4337-9f43-d00da4476d9a}</destination>
+		</relationship>
+	</object>
+</objects>
