@@ -25,6 +25,9 @@ public class FightScene : MonoBehaviour
     [SerializeField] private TextMeshProUGUI winnerText;
     [SerializeField] private Color p1Color;
     [SerializeField] private Color p2Color;
+    [SerializeField] private int smartAIAttackIndex;
+    [SerializeField] private int smartAIDefenseIndex;
+    [SerializeField] private int smartAIMovementIndex;
     
     private PlayerHat defenderHat;
     private List<NetworkedFighterController> networkControllers = new();
@@ -189,6 +192,19 @@ public class FightScene : MonoBehaviour
             }
             
             Restart();
+        }
+        else
+        {
+            if (GameWizard.Instance.sceneStatics.startFightSceneWithSmartAI)
+            {
+                GameWizard.Instance.sceneStatics.startFightSceneWithSmartAI = false;
+                InstallAIModules(smartAIAttackIndex, smartAIDefenseIndex, smartAIMovementIndex);
+                if (!vsAI)
+                {
+                    ToggleAI();
+                }
+                ForceAddSecondPlayer();
+            }
         }
     }
 

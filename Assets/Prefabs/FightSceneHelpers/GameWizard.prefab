@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9069682983381290036}
   - component: {fileID: 1910836191511745339}
   - component: {fileID: 8277568307348318882}
+  - component: {fileID: 8657312692544863959}
   m_Layer: 0
   m_Name: GameWizard
   m_TagString: Untagged
@@ -47,6 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c13b6418129485abe91ab07d1ea8862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterBusPath: 
+  musicBusPath: 
+  uiBusPath: 
+  effectsBusPath: 
 --- !u!114 &9069682983381290036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +80,9 @@ MonoBehaviour:
   - {fileID: 3643518804539879109, guid: a5e8e1b69b6832b4abbb25e1c5a0a07b, type: 3}
   hitStopManager: {fileID: 1910836191511745339}
   generalTunables: {fileID: 11400000, guid: 43438f6c06679b94db687465d8c8c99b, type: 2}
+  audioTunables: {fileID: 11400000, guid: 2d99ad15a8fbc19458a7518fecd21a80, type: 2}
+  audioHub: {fileID: 2897838054604090887}
+  sceneStatics: {fileID: 8657312692544863959}
 --- !u!114 &1910836191511745339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,3 +127,16 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
+--- !u!114 &8657312692544863959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533359107992333831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 317d992bffcc469fb5ab35d0308ef04e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startFightSceneWithSmartAI: 0

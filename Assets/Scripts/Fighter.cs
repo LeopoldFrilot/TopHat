@@ -525,10 +525,10 @@ public class Fighter : MonoBehaviour
                 if (blocked)
                 {
                     GameWizard.Instance.audioHub.PlayClip(Help.Audio.fistGotBlocked);
-                    GameWizard.Instance.audioHub.PlayClip(Help.Audio.fighterBlockGrunt);
                     Instantiate(blockEffectPrefab, blockLocation.position, Quaternion.identity);
                     if (!wasPerfectBlock)
                     {
+                        GameWizard.Instance.audioHub.PlayClip(Help.Audio.fighterBlockGrunt);
                         GameWizard.Instance.hitStopManager.AddStop(Help.Tunables.blockHitstop);
                         Shaker.ShakeAll(Help.Tunables.blockCameraShake);
                         if (normWindup >= Help.Tunables.hardHitThreshold)
@@ -767,7 +767,7 @@ public class Fighter : MonoBehaviour
             AIBaseComponent.SetActive(false);
         }
         
-        inputHandler.SetActive(!AIControlled);
+        //inputHandler.SetActive(!AIControlled);
     }
 
     public void InstallAIModules(GameObject attackModule, GameObject defenseModule, GameObject movementModule)

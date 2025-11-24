@@ -7456,17 +7456,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298235345}
   m_CullTransparentMesh: 1
---- !u!114 &1301716876 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2897838054604090887, guid: 3781bb580afcb67499b592759aa8a3ec, type: 3}
-  m_PrefabInstance: {fileID: 8996495532977334701}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c13b6418129485abe91ab07d1ea8862, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &1302724947 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4349166317884254684, guid: f53b329d207ad4c4797fc9cf981b60c4, type: 3}
@@ -7661,6 +7650,9 @@ MonoBehaviour:
   winnerText: {fileID: 1635801063}
   p1Color: {r: 0.61960787, g: 0.24705884, b: 0.24705884, a: 1}
   p2Color: {r: 0.24313726, g: 0.2627451, b: 0.6156863, a: 1}
+  smartAIAttackIndex: 3
+  smartAIDefenseIndex: 3
+  smartAIMovementIndex: 4
 --- !u!114 &1328233075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13229,14 +13221,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9069682983381290036, guid: 3781bb580afcb67499b592759aa8a3ec, type: 3}
-      propertyPath: audioHub
-      value: 
-      objectReference: {fileID: 1301716876}
-    - target: {fileID: 9069682983381290036, guid: 3781bb580afcb67499b592759aa8a3ec, type: 3}
-      propertyPath: audioTunables
-      value: 
-      objectReference: {fileID: 11400000, guid: 2d99ad15a8fbc19458a7518fecd21a80, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

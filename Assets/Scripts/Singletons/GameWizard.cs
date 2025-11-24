@@ -9,6 +9,7 @@ public class GameWizard : MonoBehaviour
     public Tunables_General generalTunables;
     public Tunables_Audio audioTunables;
     public AudioHub audioHub;
+    public InBetweenScenesStatics sceneStatics;
     
     private bool isNetworkedGame = false;
     private bool isLocalGame = false;

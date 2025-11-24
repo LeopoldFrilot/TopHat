@@ -13,6 +13,7 @@ public class StorySceneManager : MonoBehaviour
     private void Start()
     {
         LoadScene(index);
+        GameWizard.Instance.audioHub.SetMusic(Help.Audio.context);
     }
 
     private void LoadScene(int index)
@@ -28,10 +29,12 @@ public class StorySceneManager : MonoBehaviour
         index++;
         if (index < storyScenes.Count)
         {
+            GameWizard.Instance.audioHub.PlayClip(Help.Audio.contextPageFlip);
             LoadScene(index);
         }
         else
         {
+            GameWizard.Instance.sceneStatics.startFightSceneWithSmartAI = true;
             SceneManager.LoadScene(endOfStorySceneToLoad);
         }
     }
